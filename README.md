@@ -11,6 +11,7 @@ Octrian Adiluhung Tito Putra / 2341720078 <br>
 SIBTTA adalah program berbasis web yang dirancang untuk mempermudah mahasiswa dalam menyelesaikan status tanggungan jurusan serta pusat untuk memenuhi syarat pengambilan ijazah. Dengan sistem ini, mahasiswa, admin, dan verifikator dapat terhubung secara efisien melalui platform digital.
 
 📋 Fitur Utama <br>
+
 ✅ Pelacakan Tanggungan: <br>
 - Laporan Tugas Akhir/Skripsi
 - Program/Aplikasi Tugas Akhir/Skripsi
@@ -44,6 +45,7 @@ SIBTTA adalah program berbasis web yang dirancang untuk mempermudah mahasiswa da
 - Verifikator: Memverifikasi dokumen tanggungan.
 
 🛠 Teknologi yang Digunakan <br>
+
 🌐 Frontend:
 - HTML dan CSS
 
