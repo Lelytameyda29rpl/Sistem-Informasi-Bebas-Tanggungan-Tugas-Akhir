@@ -15,8 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
 
     <title>Login</title>
@@ -90,7 +89,7 @@
                                 <a href="landing.php" class="btn btn-light rounded-pill mb-3 kembali">
                                     <i class="bi bi-arrow-left-circle me-2"></i> Kembali
                                 </a>
-                                <form class="px-4 py-3" action="" method="POST">
+                                <form class="px-4 py-3" action="login_proses.php" method="POST">
                                     <h5 class="card-title fw-bold">Login</h5>
                                     <div class="card my-3 border-warning">
                                         <div class="card-body text-dark bg-warning">
@@ -99,9 +98,9 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleDropdownFormEmail1" class="form-label">Email address</label>
-                                        <input type="email" name="email" class="form-control" id="exampleDropdownFormEmail1"
-                                            placeholder="email@polinema.ac.id" required>
+                                        <label for="exampleDropdownFormEmail1" class="form-label">Username</label>
+                                        <input type="username" name="username" class="form-control" id="exampleDropdownFormEmail1"
+                                            placeholder="Gatot" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleDropdownFormPassword1" class="form-label">Password</label>
