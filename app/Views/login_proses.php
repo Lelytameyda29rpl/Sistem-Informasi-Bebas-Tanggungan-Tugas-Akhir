@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $use_driver = 'sqlsrv';
 $host = "LAPTOP-AO638EKA";
 $username = 'sa';
@@ -43,11 +44,12 @@ if ($use_driver == 'sqlsrv') {
                 // Store user info in session
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role_user']; // Assuming 'role' stores user role
+                $_SESSION['nama'] = $user['nama']; // Assuming full_name column exists
 
                 // Redirect based on role
                 switch ($user['role_user']) {
-                    case 'superadmin':
-                        header("Location: superadmin_dashboard.php");
+                    case 'Admin':
+                        header("Location: Superadmin/admin_dashboard.php");
                         exit();
                     case 'admin_pusat':
                         header("Location: Verifikator/Admin-Pusat/admin_pusat_dashboard.php");
@@ -56,7 +58,7 @@ if ($use_driver == 'sqlsrv') {
                         header("Location: admin_jurusan_dashboard.php");
                         exit();
                     case 'mahasiswa':
-                        header("Location: .php");
+                        header("Location: mahasiswa_dashboard.php");
                         exit();
                     default:
                         echo "<p style='color: red;'>Invalid role assigned to user!</p>";
