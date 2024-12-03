@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -89,18 +93,28 @@
                                 <a href="landing.php" class="btn btn-light rounded-pill mb-3 kembali">
                                     <i class="bi bi-arrow-left-circle me-2"></i> Kembali
                                 </a>
-                                <form class="px-4 py-3" action="login_proses.php" method="POST">
+
+                                <?php if (isset($_SESSION['error'])): ?>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <?php echo htmlspecialchars($_SESSION['error']); ?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <?php unset($_SESSION['error']); ?>
+                                <?php endif; ?>
+
+                                <form class="px-4 py-3" action="../Models/login_proses.php" method="POST">
                                     <h5 class="card-title fw-bold">Login</h5>
                                     <div class="card my-3 border-warning">
                                         <div class="card-body text-dark bg-warning">
                                             <p style="font-size: 75%; margin-bottom: 0px;"><b>Bagi Mahasiswa:</b> gunakan akun Siakad <br>
-                                                <b>Bagi Admin/Verifikator:</b> gunakan akun Portal Polinema</p>
+                                                <b>Bagi Admin/Verifikator:</b> gunakan akun Portal Polinema
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleDropdownFormEmail1" class="form-label">Username</label>
                                         <input type="username" name="username" class="form-control" id="exampleDropdownFormEmail1"
-                                            placeholder="Gatot" required>
+                                            placeholder="Username" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleDropdownFormPassword1" class="form-label">Password</label>
