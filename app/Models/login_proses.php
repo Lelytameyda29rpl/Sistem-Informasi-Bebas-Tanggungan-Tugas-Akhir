@@ -1,60 +1,38 @@
 <?php
 session_start();
-$use_driver = 'sqlsrv';
-$host = "LAPTOP-AO638EKA";
-$username = 'sa';
-$password = '123';
-$database = 'BebasTanggunganTA2';
-$db;
+include '../../config/database.php';
 
-if ($use_driver == 'sqlsrv') {
-    $credential = [
-        'Database' => $database,
-        'UID' => $username,
-        'PWD' => $password
-    ];
+$db_instance = new Database();
+$db = $db_instance->connect(); // Koneksi ke database menggunakan Database class
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $db = sqlsrv_connect($host, $credential);
-        
-        if (!$db) {
-            $errors = sqlsrv_errors();
-            die("Connection failed: " . htmlspecialchars($errors[0]['message']));
-            header("Location: ../views/login.php"); // Redirect to login page
-            exit();
-        }
-
-        // Get data from the form
+        // Ambil data dari form login
         $input_username = $_POST['username'];
         $input_password = $_POST['password'];
 
-        // Query to check if the username exists
-        $sql = "SELECT * FROM [User] WHERE username = ?";
-        $params = array($input_username);
-        $stmt = sqlsrv_query($db, $sql, $params);
+        // Query untuk memeriksa username
+        $sql = "SELECT * FROM [User] WHERE username = :username";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':username', $input_username);
+        $stmt->execute();
 
-        if ($stmt === false) {
-            $_SESSION['error'] = print_r(sqlsrv_errors(), true);
-            header("Location: login.php");
-            exit();
-        }
-
-        $user = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            // Directly compare passwords without hashing
+            // Langsung membandingkan password tanpa hashing (disarankan menggunakan hashing untuk keamanan)
             if ($input_password === $user['password']) {
-                // Store user info in session
+                // Simpan informasi pengguna ke dalam session
                 $_SESSION['username'] = $user['username'];
-                $_SESSION['role'] = $user['role_user']; // Assuming 'role' stores user role
+                $_SESSION['role'] = $user['role_user'];
 
-                // Redirect based on role
+                // Redirect berdasarkan role
                 switch ($user['role_user']) {
                     case 'admin':
                         header("Location: ../views/Superadmin/admin_dashboard.php");
                         exit();
-                    case 'Admin_pusat':
-                        header("Location: ../views/Verifikator/Admin-Pusat/admin_pusat_dashboard.php");
+                    case 'admin_pusat':
+                        header("Location: ../views/Verifikator/Admin-Pusat/dashboard_Admin_Pusat.php");
                         exit();
                     case 'admin_jurusan':
                         header("Location: admin_jurusan_dashboard.php");
@@ -63,9 +41,9 @@ if ($use_driver == 'sqlsrv') {
                         header("Location: ../views/mahasiswa/dashboard_Mahasiswa.php");
                         exit();
                     default:
-                    $_SESSION['error'] = "Invalid role assigned to user!";
-                    header("Location: ../views/login.php");
-                    exit();
+                        $_SESSION['error'] = "Invalid role assigned to user!";
+                        header("Location: ../views/login.php");
+                        exit();
                 }
             } else {
                 $_SESSION['error'] = "Invalid username or password!";
@@ -77,10 +55,10 @@ if ($use_driver == 'sqlsrv') {
             header("Location: ../views/login.php");
             exit();
         }
-
-    } catch (Exception $e) { $_SESSION['error'] = "Exception occurred: " . htmlspecialchars($e->getMessage());
-        header("Location: login.php");
-        exit();echo "<p style='color: red;'>Exception occurred: " . htmlspecialchars($e->getMessage()) . "</p>";
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Exception occurred: " . htmlspecialchars($e->getMessage());
+        header("Location: ../views/login.php");
+        exit();
     }
 }
 ?>
