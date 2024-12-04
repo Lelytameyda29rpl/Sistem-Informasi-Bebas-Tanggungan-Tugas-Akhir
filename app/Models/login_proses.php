@@ -39,10 +39,10 @@ try {
                     header("Location: ../Views/Superadmin/admin_dashboard.php");
                     exit();
                 case 'admin_pusat':
-                    header("Location: ../views/Verifikator/Admin-Pusat/admin_pusat_dashboard.php");
+                    header("Location: ../views/Verifikator/dashboard_admin_pusat.php");
                     exit();
                 case 'admin_jurusan':
-                    header("Location: admin_jurusan_dashboard.php");
+                    header("Location: ../views/Verifikator/dashboard_admin_jurusan.php");
                     exit();
                 case 'mahasiswa':
                     header("Location: ../views/mahasiswa/dashboard_Mahasiswa.php");
