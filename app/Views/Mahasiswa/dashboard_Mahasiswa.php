@@ -140,25 +140,70 @@
             }
         }
 
+        // // Event Listener untuk menu item
+        // document.querySelectorAll('.menu-item').forEach(item => {
+        //     item.addEventListener('click', function (e) {
+        //         e.preventDefault();
+
+        //         // Hapus kelas aktif pada semua menu
+        //         document.querySelectorAll('.menu-item').forEach(menu => menu.classList.remove('active'));
+
+        //         // Tambahkan kelas aktif pada menu yang diklik
+        //         this.classList.add('active');
+
+        //         // Tampilkan tab yang sesuai
+        //         const tabId = this.getAttribute('href').substring(1); // Ambil ID dari href (#)
+        //         showTab(tabId);
+        //     });
+        // });
+
+        // // Tampilkan tab pertama kali
+        // showTab('beranda');
+
         // Event Listener untuk menu item
         document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
+        item.addEventListener('click', function (e) {
+        e.preventDefault();
 
-                // Hapus kelas aktif pada semua menu
-                document.querySelectorAll('.menu-item').forEach(menu => menu.classList.remove('active'));
+        // Hapus kelas aktif pada semua menu
+        document.querySelectorAll('.menu-item').forEach(menu => menu.classList.remove('active'));
 
-                // Tambahkan kelas aktif pada menu yang diklik
-                this.classList.add('active');
+        // Tambahkan kelas aktif pada menu yang diklik
+        this.classList.add('active');
 
-                // Tampilkan tab yang sesuai
-                const tabId = this.getAttribute('href').substring(1); // Ambil ID dari href (#)
-                showTab(tabId);
-            });
+        // Tampilkan tab yang sesuai
+        const tabId = this.getAttribute('href').substring(1); // Ambil ID dari href (#)
+        showTab(tabId);
+
+        // Simpan tab aktif ke localStorage
+        localStorage.setItem('activeTab', tabId);
+        });
         });
 
-        // Tampilkan tab pertama kali
-        showTab('beranda');
+        // load halaman yang sama
+        // Default
+        window.addEventListener('load', () => {
+        const activeTab = localStorage.getItem('activeTab') || 'beranda'; // Default ke 'beranda'
+        showTab(activeTab);
+
+        // Tandai menu aktif
+        document.querySelectorAll('.menu-item').forEach(menu => {
+            if (menu.getAttribute('href') === `#${activeTab}`) {
+                menu.classList.add('active');
+            } else {
+                menu.classList.remove('active');
+            }
+        });
+        });
+
+        // logout
+        document.querySelector('.logout').addEventListener('click', function (e) {
+        e.preventDefault(); // Mencegah tindakan default
+        localStorage.clear(); // Hapus semua data yang tersimpan
+        sessionStorage.clear(); // Opsional: Hapus sessionStorage jika digunakan
+        window.location.href = this.getAttribute('href'); // Arahkan ke halaman login
+        });
+
     </script>
 
 

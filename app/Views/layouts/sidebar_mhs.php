@@ -21,6 +21,9 @@
             <a href="#panduan" class="menu-item" onclick="showTab('panduan')"><i class="bi bi-info-circle"></i> Panduan &amp; Kontak</a>
         </div>
         <div>
-            <a href="#" class="menu-item logout"><i class="bi bi-power"></i> Keluar</a>
+            <!-- <a href="#" class="menu-item logout"><i class="bi bi-power"></i> Keluar</a> -->
+            <a class="menu-item logout" href="../login.php">
+              <i class="bi bi-power"></i> Keluar
+            </a>
         </div>
     </div>
