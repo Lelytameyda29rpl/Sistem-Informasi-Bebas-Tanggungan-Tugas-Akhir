@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 class Database {
-    private $host = "LAPTOP-AO638EKA";  // Host database
+    private $host = "DESKTOP-4GTLV9D";  // Host database
     private $db = "BebasTanggunganTA2"; // Nama database
     private $user = "sa";              // Username database
     private $password = "123";         // Password database
