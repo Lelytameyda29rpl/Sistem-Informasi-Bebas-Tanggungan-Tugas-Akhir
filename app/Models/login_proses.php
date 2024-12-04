@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 // Instantiate the Database class and establish a connection
 $db = new Database();
@@ -35,13 +35,13 @@ try {
 
             // Redirect based on role
             switch ($user['role_user']) {
-                case 'super_admin':
-                    header("Location: ../Views/Superadmin/admin_dashboard.php");
+                case 'superadmin':
+                    header("Location: ../Controllers/SuperAdminController.php?action=dashboard");
                     exit();
-                case 'admin_pusat':
+                case 'admin pusat':
                     header("Location: ../views/Verifikator/dashboard_admin_pusat.php");
                     exit();
-                case 'admin_jurusan':
+                case 'admin jurusan':
                     header("Location: ../views/Verifikator/dashboard_admin_jurusan.php");
                     exit();
                 case 'mahasiswa':

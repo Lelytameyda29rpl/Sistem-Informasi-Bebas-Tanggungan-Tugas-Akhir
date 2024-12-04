@@ -9,7 +9,7 @@ class SuperAdminController {
     public function __construct() {
         try {
             // Inisialisasi model dengan koneksi database
-            $this->model = new SuperAdminModel("LAPTOP-AO638EKA", "BebasTanggunganTA2", "sa", "123");
+            $this->model = new SuperAdminModel("DESKTOP-4GTLV9D", "BebasTanggunganTA3", "sa", "123");
         } catch (Exception $e) {
             die("Database connection error: " . $e->getMessage());
         }
@@ -39,4 +39,10 @@ class SuperAdminController {
             die("Error loading dashboard: " . $e->getMessage());
         }
     }
+}
+
+// Routing
+if (isset($_GET['action']) && $_GET['action'] === 'dashboard') {
+    $controller = new SuperAdminController();
+    $controller->dashboard();
 }

@@ -2,7 +2,7 @@
 session_start();
 
 // Periksa apakah user sudah login
-if (!isset($_SESSION['username']) || $_SESSION['role_user'] !== 'super_admin') {
+if (!isset($_SESSION['username']) || $_SESSION['role_user'] !== 'superadmin') {
     header("Location: ../Views/login.php");
     exit();
 }
@@ -11,6 +11,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role_user'] !== 'super_admin') {
 $username = $_SESSION['username'] ?? 'Pengguna';
 $nama = $_SESSION['nama'] ?? 'Pengguna';
 $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
+
 
 ?>
 <html>
@@ -291,7 +292,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
     <i class="fas fa-folder"></i>
     Manajemen Dokumen
    </a>
-   <a class="menu-item logout" href="../logout.php">
+   <a class="menu-item logout" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Views/logout.php">
     <i class="bi bi-power"></i>
     Keluar
    </a>

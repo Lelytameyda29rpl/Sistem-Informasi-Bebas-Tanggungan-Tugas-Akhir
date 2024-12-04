@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 
 class SuperAdminModel {
@@ -21,13 +21,13 @@ class SuperAdminModel {
     }
 
     public function getVerifikatorCount() {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM [User] WHERE role_user IN ('admin_jurusan', 'admin_pusat')");
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM [User] WHERE role_user IN ('admin jurusan', 'admin pusat')");
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
     public function getAdminCount() {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM [User] WHERE role_user = 'super_admin'");
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM [User] WHERE role_user = 'superadmin'");
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
@@ -35,17 +35,19 @@ class SuperAdminModel {
     public function getDocuments() {
         $stmt = $this->conn->prepare("
         SELECT 
-        u.nama AS nama_mahasiswa, 
-        dbt.tgl_diterbitkan AS tgl_verifikasi, 
-        dbt.nama_file AS nama_dokumen, 
-        CASE 
-            WHEN v.status_verifikasi = 'Disetujui' THEN 'Disetujui' 
-            ELSE 'Ditolak' 
-        END AS status_verifikasi
-    FROM Dokumen_Bebas_Tanggungan dbt
-    JOIN Mahasiswa m ON dbt.id_mahasiswa = m.id_mahasiswa
-    JOIN [User] u ON m.id_user = u.id_user
-    LEFT JOIN Verifikasi v ON v.id_mahasiswa = m.id_mahasiswa
+    u.nama AS nama_mahasiswa,
+    v.tgl_verifikasi,
+    v.status_verifikasi,
+    d.nama_dokumen
+FROM 
+    [dbo].[Verifikasi] v
+JOIN 
+    [dbo].[Mahasiswa] m ON v.nim = m.nim
+JOIN 
+    [dbo].[User] u ON m.id_user = u.id_user
+JOIN 
+    [dbo].[Dokumen] d ON v.id_dokumen = d.id_dokumen;
+
         ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
