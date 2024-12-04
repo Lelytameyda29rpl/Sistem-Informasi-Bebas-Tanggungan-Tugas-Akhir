@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -27,9 +28,9 @@
                 width: 100%;
             }
         }
-
     </style>
 </head>
+
 <body>
     <?php
     include '../layouts/header.php';
@@ -38,8 +39,8 @@
     include '../layouts/content_ver.php';
     ?>
 
-<script>
-    function toggleFilterModal() {
+    <script>
+        function toggleFilterModal() {
             const filterModal = document.getElementById('filterModal');
             filterModal.style.display = filterModal.style.display === 'block' ? 'none' : 'block';
         }
@@ -101,8 +102,8 @@
                 });
             }
         }
-</script>
-<script>
+    </script>
+    <script>
         document.querySelector('.toggle-sidebar i').addEventListener('click', function () {
             var sidebar = document.querySelector('.sidebar');
             var content = document.querySelector('.content');
@@ -139,7 +140,6 @@
                 targetTab.classList.add('active');
             }
         }
-
         // Event Listener untuk menu item
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function (e) {
@@ -154,12 +154,34 @@
                 // Tampilkan tab yang sesuai
                 const tabId = this.getAttribute('href').substring(1); // Ambil ID dari href (#)
                 showTab(tabId);
+
+                // Simpan tab aktif ke localStorage
+                localStorage.setItem('activeTab', tabId);
             });
         });
 
-        // Tampilkan tab pertama kali
-        showTab('beranda');
+        // load halaman yang sama
+        window.addEventListener('load', () => {
+            const activeTab = localStorage.getItem('activeTab') || 'beranda'; // Default ke 'beranda'
+            showTab(activeTab);
 
+            // Tandai menu aktif
+            document.querySelectorAll('.menu-item').forEach(menu => {
+                if (menu.getAttribute('href') === `#${activeTab}`) {
+                    menu.classList.add('active');
+                } else {
+                    menu.classList.remove('active');
+                }
+            });
+        });
+
+        // logout
+        document.querySelector('.logout').addEventListener('click', function (e) {
+            e.preventDefault(); // Mencegah tindakan default
+            localStorage.clear(); // Hapus semua data yang tersimpan
+            sessionStorage.clear(); // Opsional: Hapus sessionStorage jika digunakan
+            window.location.href = this.getAttribute('href'); // Arahkan ke halaman login
+        });
 
         new Chart(document.getElementById("chartjs-bar"), {
             type: "bar",
@@ -244,4 +266,5 @@
         });
     </script>
 </body>
+
 </html>

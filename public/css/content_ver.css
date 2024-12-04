@@ -1,3 +1,10 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: #f5f5f5;
+    color: #1E1E1E;
+}
+
 .content {
     margin-left: 250px;
     padding: 90px 20px 20px;
@@ -98,6 +105,7 @@
 
 .filter-dropdown-container {
     position: relative;
+    margin-bottom: 5px;
 }
 
 .filter-btn {
@@ -117,9 +125,7 @@
     display: none;
     position: absolute;
     top: calc(100% + 5px);
-
     right: 0;
-
     width: 300px;
     background-color: white;
     border: 1px solid #ddd;
@@ -135,6 +141,11 @@
     background-color: #f8f9fa;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.p-3 {
+    width: calc(300px - 10px); /* 100% lebar dikurangi 5px untuk kiri dan kanan */
+    margin: 5px; /* Jarak 5px di sekitar elemen */
 }
 
 .filter-modal-close {
@@ -188,4 +199,55 @@
     border-radius: 5px;
     height: 40px;
     width: 80px;
+}
+
+/* Media Query untuk perangkat kecil */
+@media (max-width: 768px) {
+    .search-input {
+        width: 100%; /* Membuat input pencarian penuh */
+        margin-bottom: 10px; /* Jarak bawah */
+    }
+
+    .table-header {
+        flex-direction: column; /* Mengubah arah flex menjadi kolom */
+        align-items: flex-start; /* Mengatur alignment ke kiri */
+    }
+
+    .table-header h2 {
+        margin-bottom: 10px; /* Jarak bawah antara judul dan filter */
+    }
+
+    .filter-dropdown-container {
+        width: 100%; /* Membuat filter dropdown penuh */
+    }
+
+    .filter-btn {
+        width: 100%; /* Membuat tombol filter penuh */
+        margin-bottom: 10px; /* Jarak bawah */
+    }
+
+    .user-table {
+        font-size: 12px; /* Mengurangi ukuran font untuk tabel */
+    }
+
+    .user-table th,
+    .user-table td {
+        padding: 8px; /* Mengurangi padding untuk tabel */
+    }
+}
+
+/* Media Query untuk perangkat sangat kecil */
+@media (max-width: 480px) {
+    .search-input {
+        padding: 8px; /* Mengurangi padding input */
+    }
+
+    .user-table th,
+    .user-table td {
+        padding: 5px; /* Mengurangi padding untuk tabel */
+    }
+
+    .btn-edit {
+        width: 100%; /* Membuat tombol edit penuh */
+    }
 }
