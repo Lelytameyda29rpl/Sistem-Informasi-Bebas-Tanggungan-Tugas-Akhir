@@ -1,86 +1,70 @@
 <?php
 session_start();
-$use_driver = 'sqlsrv';
-$host = "LAPTOP-AO638EKA";
-$username = 'sa';
-$password = '123';
-$database = 'BebasTanggunganTA2';
-$db;
+require_once __DIR__ . '/../../config/Database.php';
 
-if ($use_driver == 'sqlsrv') {
-    $credential = [
-        'Database' => $database,
-        'UID' => $username,
-        'PWD' => $password
-    ];
+// Instantiate the Database class and establish a connection
+$db = new Database();
+$conn = $db->connect();
 
-    try {
-        $db = sqlsrv_connect($host, $credential);
-        
-        if (!$db) {
-            $errors = sqlsrv_errors();
-            die("Connection failed: " . htmlspecialchars($errors[0]['message']));
-            header("Location: ../views/login.php"); // Redirect to login page
-            exit();
-        }
+if (!$conn) {
+    $_SESSION['error'] = "Database connection failed.";
+    header("Location: ../views/login.php");
+    exit();
+}
 
-        // Get data from the form
-        $input_username = $_POST['username'];
-        $input_password = $_POST['password'];
+try {
+    // Get data from the form
+    $input_username = $_POST['username'];
+    $input_password = $_POST['password'];
 
-        // Query to check if the username exists
-        $sql = "SELECT * FROM [User] WHERE username = ?";
-        $params = array($input_username);
-        $stmt = sqlsrv_query($db, $sql, $params);
+    // Query to check if the username exists
+    $sql = "SELECT * FROM [User] WHERE username = :username";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':username', $input_username, PDO::PARAM_STR);
+    $stmt->execute();
 
-        if ($stmt === false) {
-            $_SESSION['error'] = print_r(sqlsrv_errors(), true);
-            header("Location: login.php");
-            exit();
-        }
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $user = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+    if ($user) {
+        // Compare passwords directly (plaintext comparison)
+        if ($input_password === $user['password']) { 
+            // Store user info in session
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role_user'] = $user['role_user']; // Assuming 'role_user' stores user role
+            $_SESSION['nama'] = $user['nama'];
 
-        if ($user) {
-            // Directly compare passwords without hashing
-            if ($input_password === $user['password']) {
-                // Store user info in session
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['role'] = $user['role_user']; // Assuming 'role' stores user role
-
-                // Redirect based on role
-                switch ($user['role_user']) {
-                    case 'admin':
-                        header("Location: ../views/Superadmin/admin_dashboard.php");
-                        exit();
-                    case 'Admin_pusat':
-                        header("Location: ../views/Verifikator/Admin-Pusat/admin_pusat_dashboard.php");
-                        exit();
-                    case 'admin_jurusan':
-                        header("Location: admin_jurusan_dashboard.php");
-                        exit();
-                    case 'mahasiswa':
-                        header("Location: ../views/mahasiswa/dashboard_Mahasiswa.php");
-                        exit();
-                    default:
+            // Redirect based on role
+            switch ($user['role_user']) {
+                case 'super_admin':
+                    header("Location: ../Views/Superadmin/admin_dashboard.php");
+                    exit();
+                case 'admin_pusat':
+                    header("Location: ../views/Verifikator/Admin-Pusat/admin_pusat_dashboard.php");
+                    exit();
+                case 'admin_jurusan':
+                    header("Location: admin_jurusan_dashboard.php");
+                    exit();
+                case 'mahasiswa':
+                    header("Location: ../views/mahasiswa/dashboard_Mahasiswa.php");
+                    exit();
+                default:
                     $_SESSION['error'] = "Invalid role assigned to user!";
                     header("Location: ../views/login.php");
                     exit();
-                }
-            } else {
-                $_SESSION['error'] = "Invalid username or password!";
-                header("Location: ../views/login.php");
-                exit();
             }
         } else {
-            $_SESSION['error'] = "User not found!";
+            $_SESSION['error'] = "Invalid username or password!";
             header("Location: ../views/login.php");
             exit();
         }
-
-    } catch (Exception $e) { $_SESSION['error'] = "Exception occurred: " . htmlspecialchars($e->getMessage());
-        header("Location: login.php");
-        exit();echo "<p style='color: red;'>Exception occurred: " . htmlspecialchars($e->getMessage()) . "</p>";
+    } else {
+        $_SESSION['error'] = "User not found!";
+        header("Location: ../views/login.php");
+        exit();
     }
+} catch (PDOException $e) {
+    $_SESSION['error'] = "Exception occurred: " . htmlspecialchars($e->getMessage());
+    header("Location: ../views/login.php");
+    exit();
 }
 ?>

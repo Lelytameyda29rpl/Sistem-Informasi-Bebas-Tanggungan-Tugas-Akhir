@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+// Periksa apakah user sudah login
+if (!isset($_SESSION['username']) || $_SESSION['role_user'] !== 'super_admin') {
+    header("Location: ../Views/login.php");
+    exit();
+}
+
+// Ambil username dari session
+$username = $_SESSION['username'] ?? 'Pengguna';
+$nama = $_SESSION['nama'] ?? 'Pengguna';
+$role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
+
+?>
 <html>
  <head>
   <title>
@@ -254,29 +269,29 @@
     <img alt="User profile picture" height="40" src="https://storage.googleapis.com/a1aa/image/AW0PXsLkpnZ8DNB4clVvuVaJnwXJMkA3KDoEGtUoITZtlc9E.jpg" width="40"/>
     <div class="name">
      <div>
-      Jiha Ramdhan
+     <?= htmlspecialchars($nama); ?> <!-- Nama diambil dari session -->
      </div>
      <div class="role">
-      Admin
+     <?= htmlspecialchars($role_user); ?> <!-- Role diambil dari session -->
      </div>
     </div>
    </div>
   </div>
   <div class="sidebar">
-   <a class="menu-item active" href="#">
+   <a class="menu-item active" href="admin_dashboard.php">
     <i class="bi bi-house"></i>
     Beranda
    </a>
-   <a class="menu-item" href="#">
+   <a class="menu-item" href="manajemen_mahasiswa.php">
     <i class="fas fa-users"></i>
     </i>
     Manajemen Pengguna
    </a>
-   <a class="menu-item" href="#">
+   <a class="menu-item" href="manajemen_dokumen.php">
     <i class="fas fa-folder"></i>
     Manajemen Dokumen
    </a>
-   <a class="menu-item logout" href="#">
+   <a class="menu-item logout" href="../logout.php">
     <i class="bi bi-power"></i>
     Keluar
    </a>
@@ -284,7 +299,7 @@
   <div class="content">
    <div class="welcome">
     <h1>
-    <h1>Selamat Datang, Jiha</h1>
+    <h1>Selamat Datang, <?= htmlspecialchars($username); ?></h1>
     </h1>
     <p>
      Anda berada di halaman admin
