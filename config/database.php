@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 class Database {
     private $host = "DESKTOP-4GTLV9D";  // Host database
-    private $db = "BebasTanggunganTA2"; // Nama database
+    private $db = "BebasTanggunganTA3"; // Nama database
     private $user = "sa";              // Username database
     private $password = "123";         // Password database
     public $conn;
