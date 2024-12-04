@@ -19,9 +19,10 @@
                             </button>
                         </div>
                         <div class="p-3">
-                            <select id="filterAngkatan" class="w-full mb-2 p-2 border border-gray-200 rounded-lg" style="width: calc(100% - 6px); margin: 3px; border-radius: 5px;>
-                                    <option value="">Pilih Angkatan</option>
-                                    <option value=" 2023">2023</option>
+                            <select id="filterAngkatan" class="w-full mb-2 p-2 border border-gray-200 rounded-lg"
+                                style="width: calc(100% - 6px); margin: 3px; border-radius: 5px;">
+                                <option value="">Pilih Angkatan</option>
+                                <option value=" 2023">2023</option>
                                 <option value="2022">2022</option>
                                 <option value="2021">2021</option>
                                 <option value="2020">2020</option>
@@ -110,5 +111,33 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <!-- Modal Edit -->
+    <div class="modal" id="modalEdit" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Mahasiswa</h2>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <label>NIM:</label>
+                <span id="nimDisplay"></span>
+                <label>Nama Mahasiswa:</label>
+                <span id="namaDisplay"></span>
+                <label>Prodi:</label>
+                <span id="prodiDisplay"></span>
+                <label>Jurusan:</label>
+                <span id="jurusanDisplay"></span>
+                <label>Angkatan:</label>
+                <span id="angkatanDisplay"></span>
+                <label>Kelas:</label>
+                <span id="kelasDisplay"></span>
+                <label>No. Telepon:</label>
+                <span id="noTeleponDisplay"></span>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal()">Tutup</button>
+            </div>
+        </div>
     </div>
 </div>

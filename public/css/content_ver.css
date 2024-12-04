@@ -74,6 +74,7 @@ body {
     width: 90%;
     margin: 20px auto;
     margin-bottom: 70px;
+    overflow-x: auto;
 }
 
 .table-header {
@@ -81,6 +82,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
 }
 
 .table-header h2 {
@@ -144,8 +147,10 @@ body {
 }
 
 .p-3 {
-    width: calc(300px - 10px); /* 100% lebar dikurangi 5px untuk kiri dan kanan */
-    margin: 5px; /* Jarak 5px di sekitar elemen */
+    width: calc(300px - 10px);
+    /* 100% lebar dikurangi 5px untuk kiri dan kanan */
+    margin: 5px;
+    /* Jarak 5px di sekitar elemen */
 }
 
 .filter-modal-close {
@@ -204,50 +209,63 @@ body {
 /* Media Query untuk perangkat kecil */
 @media (max-width: 768px) {
     .search-input {
-        width: 100%; /* Membuat input pencarian penuh */
-        margin-bottom: 10px; /* Jarak bawah */
+        width: 100%;
+        /* Membuat input pencarian penuh */
+        margin-bottom: 10px;
+        /* Jarak bawah */
     }
 
     .table-header {
-        flex-direction: column; /* Mengubah arah flex menjadi kolom */
-        align-items: flex-start; /* Mengatur alignment ke kiri */
+        flex-direction: column;
+        /* Mengubah arah flex menjadi kolom */
+        align-items: flex-start;
+        /* Mengatur alignment ke kiri */
     }
 
     .table-header h2 {
-        margin-bottom: 10px; /* Jarak bawah antara judul dan filter */
+        margin-bottom: 10px;
+        /* Jarak bawah antara judul dan filter */
     }
 
     .filter-dropdown-container {
-        width: 100%; /* Membuat filter dropdown penuh */
+        width: 100%;
+        /* Membuat filter dropdown penuh */
     }
 
     .filter-btn {
-        width: 100%; /* Membuat tombol filter penuh */
-        margin-bottom: 10px; /* Jarak bawah */
+        width: 100%;
+        /* Membuat tombol filter penuh */
+        margin-bottom: 10px;
+        /* Jarak bawah */
     }
 
     .user-table {
-        font-size: 12px; /* Mengurangi ukuran font untuk tabel */
+        font-size: 12px;
+        /* Mengurangi ukuran font untuk tabel */
     }
 
     .user-table th,
     .user-table td {
-        padding: 8px; /* Mengurangi padding untuk tabel */
+        padding: 8px;
+        /* Mengurangi padding untuk tabel */
     }
 }
 
 /* Media Query untuk perangkat sangat kecil */
 @media (max-width: 480px) {
     .search-input {
-        padding: 8px; /* Mengurangi padding input */
+        padding: 8px;
+        /* Mengurangi padding input */
     }
 
     .user-table th,
     .user-table td {
-        padding: 5px; /* Mengurangi padding untuk tabel */
+        padding: 5px;
+        /* Mengurangi padding untuk tabel */
     }
 
     .btn-edit {
-        width: 100%; /* Membuat tombol edit penuh */
+        width: 100%;
+        /* Membuat tombol edit penuh */
     }
 }

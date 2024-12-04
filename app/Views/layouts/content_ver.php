@@ -4,5 +4,6 @@
        <?php 
        include 'Admin-Jurusan/beranda.php';
        include 'Admin-Jurusan/riwayat_verifikasi.php';
+       include 'Admin-Jurusan/verifikasi_dokumen.php';
        ?>
 </div>

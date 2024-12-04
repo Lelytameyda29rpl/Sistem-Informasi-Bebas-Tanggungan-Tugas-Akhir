@@ -38,7 +38,7 @@
     include '../layouts/footer.php';
     include '../layouts/content_ver.php';
     ?>
-
+    <!-- filter -->
     <script>
         function toggleFilterModal() {
             const filterModal = document.getElementById('filterModal');
@@ -103,6 +103,7 @@
             }
         }
     </script>
+    <!-- Sidebar -->
     <script>
         document.querySelector('.toggle-sidebar i').addEventListener('click', function () {
             var sidebar = document.querySelector('.sidebar');
@@ -159,8 +160,9 @@
                 localStorage.setItem('activeTab', tabId);
             });
         });
-
-        // load halaman yang sama
+    </script>
+    <!-- Load Halaman -->
+    <script>
         window.addEventListener('load', () => {
             const activeTab = localStorage.getItem('activeTab') || 'beranda'; // Default ke 'beranda'
             showTab(activeTab);
@@ -174,15 +176,18 @@
                 }
             });
         });
-
-        // logout
+    </script>
+    <!-- logout -->
+    <script>
         document.querySelector('.logout').addEventListener('click', function (e) {
             e.preventDefault(); // Mencegah tindakan default
             localStorage.clear(); // Hapus semua data yang tersimpan
             sessionStorage.clear(); // Opsional: Hapus sessionStorage jika digunakan
             window.location.href = this.getAttribute('href'); // Arahkan ke halaman login
         });
-
+    </script>
+    <!-- chart dashboard -->
+    <script>
         new Chart(document.getElementById("chartjs-bar"), {
             type: "bar",
             data: {
@@ -263,6 +268,283 @@
                     }
                 }
             }
+        });
+    </script>
+    <!-- tabel verifikasi dokumen mahasiswa -->
+    <script>
+        // Data kelas untuk setiap prodi
+        const kelasByProdi = {
+            "D-IV Teknik Informatika": ["TI-4A", "TI-4B", "TI-4C", "TI-4D", "TI-4E", "TI-4F", "TI-4G", "TI-4H", "TI-4I"],
+            "D-IV Sistem Informasi Bisnis": ["SIB-4A", "SIB-4B", "SIB-4C", "SIB-4D", "SIB-4E", "SIB-4F", "SIB-4G"]
+        };
+
+        // Data mahasiswa
+        const dataMahasiswa = [
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720068", nama: "Jiha Ramdhan", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4B", telp: "085752897356", tanggal: "2024-02-20" },
+            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-3D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Baskara", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2024", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" }
+
+            // Tambahkan data lainnya di sini
+        ];
+
+        const rowsPerPage = 10; // Jumlah data per halaman
+        let currentPage = 1; // Halaman saat ini
+
+        // Fungsi untuk mengisi opsi kelas berdasarkan prodi
+        function populateKelasOptions() {
+            const prodi = document.getElementById("filter-prodi").value;
+            const kelasSelect = document.getElementById("filter-kelas");
+            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
+
+            if (kelasByProdi[prodi]) {
+                kelasByProdi[prodi].forEach((kelas) => {
+                    const option = document.createElement("option");
+                    option.value = kelas;
+                    option.textContent = kelas;
+                    kelasSelect.appendChild(option);
+                });
+                kelasSelect.disabled = false; // Aktifkan dropdown kelas
+            } else {
+                kelasSelect.disabled = true; // Nonaktifkan jika prodi tidak dipilih
+            }
+        }
+
+        // Fungsi untuk menampilkan data pada tabel
+        function displayTableData(page) {
+            const startIndex = (page - 1) * rowsPerPage;
+            const endIndex = page * rowsPerPage;
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = ""; // Reset tabel
+
+            const paginatedData = dataMahasiswa.slice(startIndex, endIndex);
+            paginatedData.forEach((data) => {
+                const row = `
+            <tr>
+                <td>${data.nim}</td>
+                <td>${data.nama}</td>
+                <td>${data.prodi}</td>
+                <td>${data.jurusan}</td>
+                <td>${data.angkatan}</td>
+                <td>${data.kelas}</td>
+                <td>${data.telp}</td>
+                <td>${data.tanggal}</td>
+                <td><button class="btn btn-success btn-sm">Verif</button></td>
+            </tr>
+        `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Fungsi untuk membuat pagination
+        function setupPagination() {
+            const totalPages = Math.ceil(dataMahasiswa.length / rowsPerPage);
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = ""; // Reset pagination
+
+            // Tampilkan tombol Previous jika bukan halaman pertama
+            if (currentPage > 1) {
+                pagination.innerHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">&lt;</a>
+            </li>
+        `;
+            }
+
+            // Menentukan halaman yang akan ditampilkan
+            const pagesToShow = [];
+            let startPage = currentPage - 1;
+            let endPage = currentPage + 1;
+
+            if (currentPage === 1) {
+                endPage = Math.min(3, totalPages);
+            } else if (currentPage === totalPages) {
+                startPage = Math.max(totalPages - 2, 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i > 0 && i <= totalPages) {
+                    pagesToShow.push(i);
+                }
+            }
+
+            // Tampilkan "..." jika ada halaman lebih banyak sebelum atau setelah range yang ditampilkan
+            if (pagesToShow[0] > 1) {
+                pagination.innerHTML += `
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        `;
+            }
+
+            // Tampilkan tombol halaman
+            pagesToShow.forEach((page) => {
+                pagination.innerHTML += `
+            <li class="page-item ${page === currentPage ? "active" : ""}">
+                <a class="page-link" href="#" onclick="changePage(${page})">${page}</a>
+            </li>
+        `;
+            });
+
+            if (pagesToShow[pagesToShow.length - 1] < totalPages) {
+                pagination.innerHTML += `
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        `;
+            }
+
+            // Tampilkan tombol Next jika bukan halaman terakhir
+            if (currentPage < totalPages) {
+                pagination.innerHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">&gt;</a>
+            </li>
+        `;
+            }
+        }
+
+        // Fungsi untuk mengubah halaman
+        function changePage(page) {
+            currentPage = page;
+            displayTableData(page);
+            setupPagination();
+        }
+
+        // Fungsi pencarian data berdasarkan Nama atau NIM
+        function searchTable() {
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = ""; // Reset tabel
+
+            // Filter data berdasarkan nama atau nim
+            const filteredData = dataMahasiswa.filter((data) => {
+                return (
+                    data.nama.toLowerCase().includes(searchInput) ||
+                    data.nim.toLowerCase().includes(searchInput)
+                );
+            });
+
+            // Menampilkan data yang sesuai hasil pencarian
+            filteredData.forEach((data) => {
+                const row = `
+                <tr>
+                    <td>${data.nim}</td>
+                    <td>${data.nama}</td>
+                    <td>${data.prodi}</td>
+                    <td>${data.jurusan}</td>
+                    <td>${data.angkatan}</td>
+                    <td>${data.kelas}</td>
+                    <td>${data.telp}</td>
+                    <td>${data.tanggal}</td>
+                    <td><button class="btn btn-success btn-sm">Verif</button></td>
+                </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+
+            // Jika tidak ada data yang cocok
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Data tidak ditemukan</td></tr>`;
+            }
+        }
+
+
+        // Fungsi filter data berdasarkan Nama, NIM, Angkatan, Prodi, dan Kelas
+        function filterTable() {
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+            const angkatan = document.getElementById("filter-angkatan").value;
+            const prodi = document.getElementById("filter-prodi").value;
+            const kelas = document.getElementById("filter-kelas").value;
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = ""; // Reset tabel
+
+            // Filter data mahasiswa berdasarkan semua kriteria
+            const filteredData = dataMahasiswa.filter((data) => {
+                const matchesSearch = data.nama.toLowerCase().includes(searchInput) || data.nim.toLowerCase().includes(searchInput);
+                const matchesAngkatan = angkatan === "" || data.angkatan === angkatan;
+                const matchesProdi = prodi === "" || data.prodi === prodi;
+                const matchesKelas = kelas === "" || data.kelas === kelas;
+                return matchesSearch && matchesAngkatan && matchesProdi && matchesKelas;
+            });
+
+            // Tampilkan data yang sesuai filter
+            filteredData.forEach((data) => {
+                const row = `
+            <tr>
+                <td>${data.nim}</td>
+                <td>${data.nama}</td>
+                <td>${data.prodi}</td>
+                <td>${data.jurusan}</td>
+                <td>${data.angkatan}</td>
+                <td>${data.kelas}</td>
+                <td>${data.telp}</td>
+                <td>${data.tanggal}</td>
+                <td><button class="btn btn-success btn-sm">Verif</button></td>
+            </tr>
+        `;
+                tableBody.innerHTML += row;
+            });
+
+            // Tampilkan pesan jika tidak ada data yang sesuai
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Data tidak ditemukan</td></tr>`;
+            }
+        }
+
+        // Inisialisasi pertama kali
+        document.addEventListener("DOMContentLoaded", () => {
+            displayTableData(currentPage);
+            setupPagination();
         });
     </script>
 </body>
