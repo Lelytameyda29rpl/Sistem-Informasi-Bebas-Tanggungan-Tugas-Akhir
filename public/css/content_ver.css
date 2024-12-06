@@ -247,7 +247,7 @@ body {
 }
 
 /* css dokumen-mahasiswa */
-.btn-check {
+.btn-success {
     background-color: green;
     color: white;
     border: none;
@@ -256,7 +256,7 @@ body {
     cursor: pointer;
 }
 
-.btn-x {
+.btn-danger {
     background-color: red;
     color: white;
     border: none;
