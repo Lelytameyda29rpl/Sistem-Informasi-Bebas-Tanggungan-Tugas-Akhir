@@ -1,7 +1,9 @@
-    <!-- Beranda -->
+
+
+<!-- Beranda -->
     <div class="tab-content" id="beranda">
         <div class="welcome">
-            <h1>Selamat Datang, Jiha</h1>
+            <h1>Selamat Datang,  <?php echo $_SESSION['nama']; ?></h1>
             <p>Anda berada di halaman pengajuan bebas tanggungan</p>
         </div>
         <div class="alert alert-warning mt-3">
