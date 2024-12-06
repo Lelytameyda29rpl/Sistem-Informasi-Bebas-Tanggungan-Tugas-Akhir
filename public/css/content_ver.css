@@ -66,6 +66,7 @@ body {
 }
 
 /* css content riwayat_verifikasi */
+.verif-container,
 .table-container {
     background-color: #fff;
     padding: 20px;
@@ -73,8 +74,35 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 90%;
     margin: 20px auto;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
     overflow-x: auto;
+}
+
+.notification {
+    background-color: #fff3cd;
+    color: #664d03;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.verif-container {
+    margin-bottom: 70px;
+}
+
+.verif-container h3 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
 }
 
 .table-header {
@@ -87,6 +115,7 @@ body {
 }
 
 .table-header h2 {
+    padding-bottom: 10px;
     margin: 0;
     font-size: 1.5rem;
     color: #333;
@@ -148,9 +177,7 @@ body {
 
 .p-3 {
     width: calc(300px - 10px);
-    /* 100% lebar dikurangi 5px untuk kiri dan kanan */
     margin: 5px;
-    /* Jarak 5px di sekitar elemen */
 }
 
 .filter-modal-close {
@@ -205,6 +232,65 @@ body {
     height: 40px;
     width: 80px;
 }
+
+/* css verif-container */
+.label {
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+    margin-right: 10px;
+}
+
+.student-info {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* css dokumen-mahasiswa */
+.btn-success {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.btn-open-file {
+    background-color: navy;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.btn.check svg {
+    fill: currentColor;
+}
+
+.btn.x svg {
+    fill: currentColor;
+}
+
+.btn.open-file svg {
+    fill: currentColor;
+    /* Memastikan ikon mengikuti warna tombol */
+}
+
+.btn.open-file:hover {
+    background-color: #1E1E1E;
+}
+
 
 /* Media Query untuk perangkat kecil */
 @media (max-width: 768px) {
