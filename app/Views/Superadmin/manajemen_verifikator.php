@@ -402,14 +402,14 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab active" onclick="changeTab('mahasiswa')">Mahasiswa</button>
-                <button class="tab" onclick="changeTab('verifikator')">Verifikator</button>
+                <button class="tab active" onclick="window.location.href='index.php?controller=superAdmin&action=manageUser'">Mahasiswa</button>
+                <button class="tab" onclick="window.location.href='index.php?controller=superAdmin&action=manageVerifikator'">Verifikator</button>
                 <button class="tab" onclick="changeTab('admin')">Admin</button>
             </div>
         </div>
 
         <!-- Konten Tab -->
-            <div class="tab-content verifikator-content">
+        <div class="tab-content verifikator-content">
                 <div class="table-header">
                     <h2>Data User Verifikator</h2>
                     <p>
@@ -473,7 +473,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                                         <select class="form-control" id="editRole_User" name="role_user" required>
                                                             <option value="" disabled selected>Pilih Role User</option>
                                                             <?php foreach ($roleVerifikator as $role_user): ?>
-                                                                <option value="<?= $role_user['id_user'] ?>" <?= $verifikator['id_user'] == $role_user['id_user'] ? 'selected' : '' ?>>
+                                                                <option value="<?= $role_user['role_user'] ?>" <?= $verifikator['role_user'] == $role_user['role_user'] ? 'selected' : '' ?>>
                                                                     <?= $role_user['role_user'] ?>
                                                                 </option>
                                                             <?php endforeach; ?>
@@ -555,10 +555,10 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                     <form action="index.php?controller=superAdmin&action=addVerifikator" method="POST">
                     <div class="form-group">
                             <label for="editRole_User">Role User</label>
-                            <select class="form-control" id="editRole_User" name="id_user" required>
+                            <select class="form-control" id="editRole_User" name="role_user" required>
                                 <option value="" disabled selected>Pilih Role User</option>
                                 <?php foreach ($roleVerifikator as $role_user): ?>
-                                    <option value="<?= $role_user['id_user'] ?>"><?= $role_user['role_user'] ?></option>
+                                    <option value="<?= $role_user['role_user'] ?>"><?= $role_user['role_user'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

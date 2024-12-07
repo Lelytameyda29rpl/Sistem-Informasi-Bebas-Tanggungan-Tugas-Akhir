@@ -293,24 +293,24 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
    </div>
   </div>
   <div class="sidebar">
-   <a class="menu-item" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=dashboard">
-    <i class="bi bi-house"></i>
-    Beranda
-   </a>
-   <a class="menu-item active" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=manageUsers">
-    <i class="fas fa-users"></i>
-    </i>
-    Manajemen Pengguna
-   </a>
-   <a class="menu-item" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=manageDocuments">
-    <i class="fas fa-folder"></i>
-    Manajemen Dokumen
-   </a>
-   <a class="menu-item logout" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Views/logout.php">
-    <i class="bi bi-power"></i>
-    Keluar
-   </a>
-  </div>
+        <a class="menu-item" href="index.php?controller=superAdmin&action=dashboard">
+            <i class="bi bi-house"></i>
+            Beranda
+        </a>
+        <a class="menu-item active" href="index.php?controller=superAdmin&action=manageUser">
+            <i class="fas fa-users"></i>
+            </i>
+            Manajemen Pengguna
+        </a>
+        <a class="menu-item" href="index.php?controller=superAdmin&action=manageDocument">
+            <i class="fas fa-folder"></i>
+            Manajemen Dokumen
+        </a>
+        <a class="menu-item logout" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Views/logout.php">
+            <i class="bi bi-power"></i>
+            Keluar
+        </a>
+    </div>
   <div class="content">
     <div class="welcome">
         <h1>Manajemen Pengguna</h1>

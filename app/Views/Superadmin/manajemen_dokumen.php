@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 // Periksa apakah user sudah login
 if (!isset($_SESSION['username']) || $_SESSION['role_user'] !== 'superadmin') {
@@ -194,12 +194,17 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
             color: #fff;
             display: inline-block;
             text-align: center;
+            min-width: 150px; 
+            white-space: nowrap; 
         }
         .user-table .status-approved {
             background-color: #28a745;
         }
         .user-table .status-rejected {
-            background-color: #dc3545;
+            background-color: #dc3545;    
+        }
+        .user-table .status-waited {
+            background-color: #FFAF01;
         }
         .modal-header {
             font-weight: bold;
@@ -266,16 +271,16 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
    </div>
   </div>
   <div class="sidebar">
-   <a class="menu-item" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=dashboard">
+   <a class="menu-item" href="index.php?controller=superAdmin&action=dashboard">
     <i class="bi bi-house"></i>
     Beranda
    </a>
-   <a class="menu-item" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=manageUsers">
+   <a class="menu-item" href="index.php?controller=superAdmin&action=manageUser">
     <i class="fas fa-users"></i>
     </i>
     Manajemen Pengguna
    </a>
-   <a class="menu-item active" href="http://localhost/Sistem-Informasi-Bebas-Tanggungan-Tugas-Akhir/app/Controllers/SuperAdminController.php?action=manageDocuments">
+   <a class="menu-item active" href="index.php?controller=superAdmin&action=manageDocument">
     <i class="fas fa-folder"></i>
     Manajemen Dokumen
    </a>
@@ -290,59 +295,85 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
     </div>
     <div class="table-container">
     <div class="table-header">
-        <h2>Data Riwayat Verifikasi</h2>
-    </div>
-    <table class="user-table">
-        <thead>
-            <tr>
-                <th>Nama Mahasiswa</th>
-                <th>Tanggal Unggah</th>
-                <th>Status</th>
-                <th>Nama Dokumen</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if (!empty($documents)): ?>
-                        <?php foreach ($documents as $doc): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
-                                <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
-                                <td>
-                                    <span class="status <?= $doc['status_verifikasi'] === 'Sudah Diunggah' ? 'status-approved' : 'status-rejected'; ?>"><?= htmlspecialchars($doc['status_verifikasi']); ?>
-                                    </span>
+                    <h2>Data Riwayat Verifikasi</h2>
+                    <p>
+                        <?php
+                        if (isset($_SESSION['status'])) {
+                            if ($_SESSION['status'] == 'success') {
+                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
+                            } elseif ($_SESSION['status'] == 'error') {
+                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
+                            }
+                            // Hapus pesan setelah ditampilkan untuk mencegah muncul kembali
+                            unset($_SESSION['status'], $_SESSION['message']);
+                        }
+                        ?>
+                    </p>
+                    </div>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Nama Mahasiswa</th>
+                            <th>Tanggal Upload</th>
+                            <th>Status Verifikasi</th>
+                            <th>Nama Dokumen</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($documents as $doc): ?>
+                        <tr>
+                            <td><?= $doc['nama_mahasiswa'] ?></td>
+                            <td><?= $doc['tgl_upload'] ?></td>
+                            <td>
+                                <span class="status 
+                                    <?php 
+                                        if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
+                                           echo 'status-rejected';
+                                        } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
+                                           echo 'status-approved';
+                                        } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi' || $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
+                                           echo 'status-waited';
+                                        }
+                                    ?>">
+                                    <?= htmlspecialchars($doc['status_verifikasi']); ?>
+                                </span>
                                 </td>
-                                <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
-                                <td>
-                                <button class="btn btn-delete" data-toggle="modal" data-target="#modalHapus">Hapus</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr><td colspan="4">Tidak ada data dokumen</td></tr>
-                    <?php endif; ?>
-        </tbody>
-    </table>
-</div>
-<!-- Modal Hapus -->
-<div class="modal fade modal-hapus" id="modalHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalHapusLabel">Hapus Data Riwayat Verifikasi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                            <td><?= $doc['nama_dokumen'] ?></td>
+                            <td>
+                                <button class="btn btn-delete"
+                                    data-toggle="modal"
+                                    data-target="#modalHapus<?= $doc['id_verifikasi'] ?>">
+                                    Hapus
+                                </button>
+                                <!-- Modal Hapus -->
+                                <div class="modal fade modal-hapus" id="modalHapus<?= $doc['id_verifikasi'] ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalHapusLabel">Hapus Data Riwayat Verifikasi</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Apakah Anda yakin ingin menghapus data riwayat verifikasi ini?</p>
+                                                <p><strong>Id Verifikasi:</strong> <span id="hapusId_Verifikasi"><?= $doc['id_verifikasi'] ?></span></p>
+                                                <p><strong>Nama:</strong> <span id="hapusNama"><?= $doc['nama_mahasiswa'] ?></span></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                <!-- Pastikan URL ini memuat parameter nim -->
+                                                <a href="index.php?controller=superAdmin&action=deleteVerifikasi&id_verifikasi=<?= urlencode($doc['id_verifikasi']) ?>" id="confirmHapus" class="btn btn-danger">Hapus</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
-            <div class="modal-body">
-                <p>Apakah Anda yakin ingin menghapus data riwayat mahasiswa ini?</p>
-                <p><strong>Nama:</strong> <span id="hapusNama"><?= htmlspecialchars($doc['nama_mahasiswa']); ?></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmHapus">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
+
   <div class="footer">
    ©2024 Jurusan Teknologi Informasi
   </div>

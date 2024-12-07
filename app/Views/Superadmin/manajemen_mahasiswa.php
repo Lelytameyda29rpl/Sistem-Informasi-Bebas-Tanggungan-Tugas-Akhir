@@ -981,7 +981,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input name="password" type="text" class="form-control" id="password" placeholder="Masukkan Password Superadmin" required>
+                            <input name="password" type="text" class="form-control" id="password" placeholder="Masukkan Password Superdmin" required>
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Verifikator</label>

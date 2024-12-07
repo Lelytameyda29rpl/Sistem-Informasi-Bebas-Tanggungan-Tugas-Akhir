@@ -37,20 +37,20 @@ class SuperAdminModel
     {
         $stmt = $this->conn->prepare("
         SELECT 
-    u.nama AS nama_mahasiswa,
-    v.tgl_upload,
-    v.status_verifikasi,
-    d.nama_dokumen
-FROM 
-    [dbo].[Verifikasi] v
-JOIN 
-    [dbo].[Mahasiswa] m ON v.nim = m.nim
-JOIN 
-    [dbo].[User] u ON m.id_user = u.id_user
-JOIN 
-    [dbo].[Dokumen] d ON v.id_dokumen = d.id_dokumen;
-
-        ");
+        v.id_verifikasi, 
+        u.nama AS nama_mahasiswa,
+        v.tgl_upload,
+        v.status_verifikasi,
+        d.nama_dokumen
+    FROM 
+        [dbo].[Verifikasi] v
+    JOIN 
+        [dbo].[Mahasiswa] m ON v.nim = m.nim
+    JOIN 
+        [dbo].[User] u ON m.id_user = u.id_user
+    JOIN 
+        [dbo].[Dokumen] d ON v.id_dokumen = d.id_dokumen;
+    ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -382,6 +382,14 @@ public function updateVerifikator($id_user, $role_user, $username, $password, $n
         $this->conn->rollBack();
         throw new Exception("Terjadi kesalahan: " . $e->getMessage());
     }
+}
+
+// Fungsi untuk menghapus berdasarkan id_verifikasi
+public function deleteVerifikasi($id_verifikasi)
+{
+    $stmt = $this->conn->prepare("DELETE FROM [Verifikasi] WHERE id_verifikasi = :id_verifikasi");
+    $stmt->bindParam(':id_verifikasi', $id_verifikasi);
+    return $stmt->execute();
 }
 
 }

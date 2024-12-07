@@ -327,6 +327,33 @@ public function editAdmin()
     }
 }
 
+// Fungsi untuk menghapus riwayat verifikasi
+public function deleteVerifikasi($id_verifikasi)
+{
+    try {
+
+        // Cek apakah id_user ditemukan
+        if ($id_verifikasi) {
+            // Menghapus data user
+            $this->model->deleteVerifikasi($id_verifikasi);
+            
+            // Set status sukses ke session
+            $_SESSION['status'] = 'success';
+            $_SESSION['message'] = 'Data Verifikasi berhasil dihapus!';
+        } else {
+            throw new Exception("Data Verifikasi dengan id_verifikasi $id_verifikasi tidak ditemukan.");
+        }
+    } catch (Exception $e) {
+        // Menangani jika ada kesalahan
+        $_SESSION['status'] = 'error';
+        $_SESSION['message'] = 'Terjadi kesalahan: ' . $e->getMessage();
+    }
+
+    // Redirect ke halaman manageUser setelah penghapusan
+    header("Location: index.php?controller=superAdmin&action=manageDocument");
+    exit;
+}
+
 }
 
 

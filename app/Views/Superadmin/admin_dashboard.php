@@ -221,12 +221,17 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
             color: #fff;
             display: inline-block;
             text-align: center;
+            min-width: 150px; 
+            white-space: nowrap; 
         }
         .summary-table .status-approved {
             background-color: #28a745;
         }
         .summary-table .status-rejected {
             background-color: #dc3545;
+        }
+        .summary-table .status-waited {
+            background-color: #FFAF01;
         }
         .footer {
             text-align: center;
@@ -341,9 +346,19 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                 <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
                                 <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
                                 <td>
-                                    <span class="status <?= $doc['status_verifikasi'] === 'Sudah Diunggah' ? 'status-approved' : 'status-rejected'; ?>">
-                                        <?= htmlspecialchars($doc['status_verifikasi']); ?>
-                                    </span>
+                                <span class="status 
+                                    <?php 
+                                        if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
+                                           echo 'status-rejected';
+                                        } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
+                                           echo 'status-approved';
+                                        } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi'|| $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
+                                           echo 'status-waited';
+                                        }
+                                    ?>">
+                                    <?= htmlspecialchars($doc['status_verifikasi']); ?>
+                                </span>
+                                </td>
                                 </td>
                                 <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
                             </tr>

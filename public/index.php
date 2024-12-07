@@ -38,9 +38,15 @@ switch ($controller) {
         } elseif ($action === 'editAdmin') {
             $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
             $superAdminController->editAdmin($id_user);
+        } elseif ($action === 'manageDocument') {
+            $superAdminController->manageDocuments();
+        } elseif ($action === 'deleteVerifikasi') {
+            $id_verifikasi = isset($_GET['id_verifikasi']) ? $_GET['id_verifikasi'] : null;
+            $superAdminController->deleteVerifikasi($id_verifikasi);
         } else {
             $superAdminController->dashboard(); // Default action
         }
+        break;
         break;
     case 'mahasiswa':
         include_once __DIR__ . '/../app/controllers/MahasiswaController.php';
