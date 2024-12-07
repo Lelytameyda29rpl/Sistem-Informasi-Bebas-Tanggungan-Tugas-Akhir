@@ -1,11 +1,12 @@
 <?php
 session_start(); // Pastikan session dimulai
-if (!isset($_SESSION['nim']) || !isset($_SESSION['id_user'])) {
-    echo json_encode(['status' => 'error', 'messages' => ['Session expired. Please login again.']]);
-    exit();
-}
-
 require_once __DIR__ . '/../../../config/database.php';
+
+// if (!isset($_SESSION['nim']) || !isset($_SESSION['id_user'])) {
+//     echo json_encode(['status' => 'error', 'messages' => ['Session expired. Please login again1.']]);
+//     exit();
+// }
+
 
 // Instantiate the Database class and establish a connection
 $db = new Database();
@@ -16,11 +17,11 @@ if (!$conn) {
     exit();
 }
 
-// Pastikan session untuk NIM dan ID User ada
-if (!isset($_SESSION['nim']) || !isset($_SESSION['id_user'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Session expired. Please login again.']);
-    exit();
-}
+// // Pastikan session untuk NIM dan ID User ada
+// if (!isset($_SESSION['nim']) || !isset($_SESSION['id_user'])) {
+//     echo json_encode(['status' => 'error', 'message' => 'Session expired. Please login again.']);
+//     exit();
+// }
 
 $nim = $_SESSION['nim']; // NIM mahasiswa
 

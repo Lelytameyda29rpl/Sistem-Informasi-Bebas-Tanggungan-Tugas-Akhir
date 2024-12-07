@@ -22,7 +22,7 @@
         </div>
         <div>
             <!-- <a href="#" class="menu-item logout"><i class="bi bi-power"></i> Keluar</a> -->
-            <a class="menu-item logout" href="../app/views/login.php">
+            <a class="menu-item logout" href="../app/views/logout.php">
               <i class="bi bi-power"></i> Keluar
             </a>
         </div>
