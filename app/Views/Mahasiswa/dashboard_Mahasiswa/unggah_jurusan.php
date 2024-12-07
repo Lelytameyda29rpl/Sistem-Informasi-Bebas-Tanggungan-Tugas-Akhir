@@ -126,12 +126,13 @@ $(document).ready(function() {
         var formData = new FormData(this); // Create a FormData object from the form
 
         $.ajax({
-            url: 'upload_dokumen.php', // The URL to your PHP script
+            url: '../app/views/Mahasiswa/upload_dokumen.php', // The URL to your PHP script
             type: 'POST',
             data: formData,
             contentType: false, // Tell jQuery not to set contentType
             processData: false, // Tell jQuery not to process the data
             success: function(response) {
+                console.log("Raw response from server:", response);
                 var result = JSON.parse(response); // Parse the JSON response
                 var messageArea = $('#messageArea');
                 messageArea.empty(); // Clear previous messages
@@ -148,6 +149,7 @@ $(document).ready(function() {
             },
             error: function() {
                 $('#messageArea').html('<div class="alert alert-danger">An error occurred while uploading the files.</div>');
+                console.log("Error details:", textStatus, errorThrown);
             }
         });
     });

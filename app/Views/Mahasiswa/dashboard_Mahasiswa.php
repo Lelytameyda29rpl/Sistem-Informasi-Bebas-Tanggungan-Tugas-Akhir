@@ -34,11 +34,13 @@
 </head>
 
 <body>
+    <?= htmlspecialchars($jurusan ); ?>
     <?php 
-    include '../layouts/header.php';
-    include '../layouts/sidebar_mhs.php'; 
-    include '../layouts/content_mhs.php';
-    include '../layouts/footer.php' ?>
+    include(__DIR__ . '/../layouts/header.php');
+    include(__DIR__ . '/../layouts/sidebar_mhs.php');
+    include(__DIR__ . '/../layouts/content_mhs.php');
+    include(__DIR__ . '/../layouts/footer.php');
+    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>

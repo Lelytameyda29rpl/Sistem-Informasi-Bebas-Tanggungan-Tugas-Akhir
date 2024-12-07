@@ -1,5 +1,4 @@
 <?php
-session_start(); // Memulai session
 if (!isset($_SESSION['username'])) {
     // Jika tidak ada session, redirect ke login
     header("Location: ../login.php");
@@ -10,7 +9,7 @@ $name = $_SESSION['nama'] ?? 'Guest'; // Nama dari session
 $role = $_SESSION['role_user'] ?? 'Unknown'; // Role dari session
 ?>
 
-<link rel="stylesheet" href="../../../public/css/header.css">
+<link rel="stylesheet" href="../public/css/header.css">
 
 <div class="header">
         <div class="toggle-sidebar ">

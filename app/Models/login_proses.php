@@ -32,7 +32,23 @@ try {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role_user'] = $user['role_user']; // Assuming 'role_user' stores user role
             $_SESSION['nama'] = $user['nama'];
-
+            
+            if ($user['role_user'] === 'mahasiswa') {
+                $sql_nim = "SELECT nim FROM Mahasiswa WHERE id_user = :id_user";
+                $stmt_nim = $conn->prepare($sql_nim);
+                $stmt_nim->bindParam(':id_user', $user['id_user'], PDO::PARAM_INT);
+                $stmt_nim->execute();
+                $mahasiswa = $stmt_nim->fetch(PDO::FETCH_ASSOC);
+    
+                if ($mahasiswa) {
+                    $_SESSION['nim'] = $mahasiswa['nim']; // Store NIM in session
+                } else {
+                    $_SESSION['error'] = "No associated NIM found!";
+                    header("Location: ../views/login.php");
+                    exit();
+                }
+            }
+            
             // Redirect based on role
             switch ($user['role_user']) {
                 case 'superadmin':
@@ -45,7 +61,7 @@ try {
                     header("Location: ../views/Verifikator/dashboard_admin_jurusan.php");
                     exit();
                 case 'mahasiswa':
-                    header("Location: ../views/mahasiswa/dashboard_Mahasiswa.php");
+                    header("Location: ../../public/index.php?controller=mahasiswa&action=dashboard");
                     exit();
                 default:
                     $_SESSION['error'] = "Invalid role assigned to user!";

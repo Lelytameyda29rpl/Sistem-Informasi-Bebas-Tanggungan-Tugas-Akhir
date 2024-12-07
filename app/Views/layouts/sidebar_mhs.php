@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../../public/css/sidebar.css">
+<link rel="stylesheet" href="../public/css/sidebar.css">
 
 <div class="sidebar" id="sidebar">
         <div>
@@ -22,7 +22,7 @@
         </div>
         <div>
             <!-- <a href="#" class="menu-item logout"><i class="bi bi-power"></i> Keluar</a> -->
-            <a class="menu-item logout" href="../login.php">
+            <a class="menu-item logout" href="../app/views/login.php">
               <i class="bi bi-power"></i> Keluar
             </a>
         </div>

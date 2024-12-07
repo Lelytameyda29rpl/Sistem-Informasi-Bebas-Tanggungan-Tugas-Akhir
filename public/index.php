@@ -42,6 +42,18 @@ switch ($controller) {
             $superAdminController->dashboard(); // Default action
         }
         break;
+    case 'mahasiswa':
+        include_once __DIR__ . '/../app/controllers/MahasiswaController.php';
+        $mahasiswaController = new MahasiswaController();
+    
+        if ($action === 'getdatajurusan') {
+            $nim = isset($_GET['nim']) ? $_GET['nim'] : null;
+            $mahasiswaController->getDashboardData($nim);
+        } else {
+            $mahasiswaController->dashboard(); // Default action
+        }
+        break;
+        
 
     default:
         // Default controller
