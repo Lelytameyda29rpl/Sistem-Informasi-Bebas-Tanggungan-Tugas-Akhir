@@ -47,7 +47,6 @@ switch ($controller) {
             $superAdminController->dashboard(); // Default action
         }
         break;
-        break;
     case 'mahasiswa':
         include_once __DIR__ . '/../app/controllers/MahasiswaController.php';
         $mahasiswaController = new MahasiswaController();
@@ -59,7 +58,17 @@ switch ($controller) {
             $mahasiswaController->dashboard(); // Default action
         }
         break;
+
+    case 'adminPusat':
+            include_once __DIR__ . '/../app/Controllers/AdminPusatController.php';
+            $adminPusatController = new AdminPusatController();
         
+            if ($action === 'verifikasi') {
+                $adminPusatController->verifikasi();
+            } else {
+                $adminPusatController->dashboard(); // Default action
+            }
+            break;
 
     default:
         // Default controller

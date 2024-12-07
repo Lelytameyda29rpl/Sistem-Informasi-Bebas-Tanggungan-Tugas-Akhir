@@ -1,80 +1,68 @@
 <?php
-require_once __DIR__ . '../Models/AdminPusatModel.php';
+require_once __DIR__ . '/../Models/VerifikatorModel.php';
 require_once __DIR__ . '/../../config/Database.php';
 session_start();
 
-class adminPusatController
+class adminJurusanController
 {
     private $model;
-    private $Tahun;
-    private $jenisDokumen;
-    private $nim;
 
     // Konstruktor untuk menerima parameter atau session
-    public function __construct()
-    {
-        $this->model = new AdminPusatModel(); // Inisialisasi model
-
-        // Ambil Tahun, jenisDokumen, dan nim dari parameter atau session
-        $this->Tahun = $_POST['tahun'] ?? $_SESSION['tahun'] ?? '';
-        $this->jenisDokumen = $_POST['jenisDokumen'] ?? $_SESSION['jenisDokumen'] ?? '';
-        $this->nim = $_POST['nim'] ?? $_SESSION['nim'] ?? '';
+    public function __construct() {
+        $dbConnection = Database::connect();
+        $this->model = new VerifikatorModel($dbConnection);
     }
 
     // Dashboard method
-    public function dashboard()
-    {
+    public function dashboard() {
         try {
-            // Validasi input jika diperlukan
-            if (empty($this->Tahun) || empty($this->jenisDokumen)) {
-                throw new Exception("Tahun atau jenis dokumen tidak tersedia.");
-            }
+            $jenisDokumen = 'Jurusan';
 
-            // Ambil data dari model AdminPusatModel
-            $TerverifikasiCount = $this->model->getTerverifikasiCount($this->Tahun, $this->jenisDokumen);
-            $BlmTerverifikasiCount = $this->model->getBelumDiverifikasiCount($this->Tahun, $this->jenisDokumen);
-            $jumlahMahasiswa = $this->model->getMahasiswaCountByAngkatan($this->Tahun);
+            $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
+            $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
+            $terverifikasiCount24 = $this->model->getTerverifikasiCount($jenisDokumen, '2024');
+            $belumDiverifikasiCount22 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2022');
+            $belumDiverifikasiCount23 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2023');
+            $belumDiverifikasiCount24 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2024');
+            $mahasiswaCount22 = $this->model->getMahasiswaCount('2022');
+            $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
+            $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
+
+
 
             // Kirim data ke view
-            $chartData = [
-                'labels' => $this->Tahun, // Asumsikan $this->Tahun adalah array tahun
-                'dataTerverifikasi' => $TerverifikasiCount,
-                'dataBlmTerverifikasi' => $BlmTerverifikasiCount,
-                'dataMahasiswa' => $jumlahMahasiswa,
-            ];
+            $viewPath = '../Views/Verifikator/dashboard_admin_pusat.php';
 
-            // Path view untuk dashboard
-            $viewPath = '/../Views/Verifikator/Admin-Jurusan/beranda.php';
             if (file_exists($viewPath)) {
-                require_once($viewPath);
+                require_once $viewPath;
             } else {
-                throw new Exception("File not found: $viewPath");
+                throw new Exception("View tidak ditemukan: $viewPath");
             }
         } catch (Exception $e) {
-            die("Error loading dashboard: " . $e->getMessage());
+            die("Error: " . $e->getMessage());
         }
     }
 
 
     // Verifikasi method
-    public function verifikasi()
-    {
-        try {
-            // Ambil data dokumen dan mahasiswa dengan dokumen lengkap
-            $documents = $this->model->getDocument($this->jenisDokumen, $this->nim);
-            $mahasiswaDokumenLengkap = $this->model->getMhsWithDocumentComplete($this->jenisDokumen);
-            $statusVerifikasi = !empty($this->nim) ? $this->model->getStatusVerifikasiByNIM($this->nim) : [];
+    // public function verifikasi()
+    // {
+    //     $jenisDokumen = 'Pusat';
+    //     try {
+    //         // Ambil data dokumen dan mahasiswa dengan dokumen lengkap
+    //         $documents = $this->model->getDocument($jenisDokumen, $nim);
+    //         $mhsDokumenLengkap = $this->model->getMhsWithDocumentComplete($jenisDokumen);
 
-            // Path view untuk verifikasi
-            $viewPath = '/../Views/Verifikator/Admin-Pusat/verifikasi.php';
-            if (file_exists($viewPath)) {
-                require_once($viewPath);
-            } else {
-                throw new Exception("File not found: $viewPath");
-            }
-        } catch (Exception $e) {
-            die("Error loading verifikasi: " . $e->getMessage());
-        }
-    }
+    //         // Path view untuk verifikasi
+    //         $viewPath = '/../Views/Verifikator/Admin-Pusat/verifikasi.php';
+    //         if (file_exists($viewPath)) {
+    //             require_once($viewPath);
+    //         } else {
+    //             throw new Exception("File not found: $viewPath");
+    //         }
+    //     } catch (Exception $e) {
+    //         die("Error loading verifikasi: " . $e->getMessage());
+    //     }
+    // }
 }
 ?>

@@ -55,7 +55,7 @@ try {
                     header("Location: ../../public/index.php");
                     exit();
                 case 'admin pusat':
-                    header("Location: ../views/Verifikator/dashboard_admin_pusat.php");
+                    header("Location: ../../public/index.php?controller=adminPusat");
                     exit();
                 case 'admin jurusan':
                     header("Location: ../views/Verifikator/dashboard_admin_jurusan.php");

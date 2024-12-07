@@ -1,5 +1,6 @@
 <?php 
-require_once __DIR__ . '/../Models/AdminPusatModel.php';
+require_once __DIR__ . '/../Models/VerifikatorModel.php';
+require_once __DIR__ . '/../../config/Database.php';
 session_start();
 
 class adminPusatController {
@@ -7,7 +8,7 @@ class adminPusatController {
 
     public function __construct() {
         $dbConnection = Database::connect();
-        $this->model = new AdminPusatModel($dbConnection);
+        $this->model = new VerifikatorModel($dbConnection);
     }
 
     public function dashboard() {
@@ -27,7 +28,7 @@ class adminPusatController {
 
 
             // Kirim data ke view
-            $viewPath = '../Views/Verifikator/dashboard_admin_pusat.php';
+            $viewPath = __DIR__ . '/../Views/Verifikator/dashboard_admin_pusat.php';
 
             if (file_exists($viewPath)) {
                 require_once $viewPath;
@@ -40,21 +41,37 @@ class adminPusatController {
     }
 
     // Verifikasi method
-    public function verifikasi() {
-        try {
-            // Ambil data dokumen dan mahasiswa dengan dokumen lengkap
+    public function verifikasi()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $idVerifikasi = $_POST['idVerifikasi'];
+            $statusVerifikasi = $_POST['statusVerifikasi'];
+            try {
+                $updateStatusVerifikasi = $this->model->updateStatusVerifikasi($idVerifikasi, $statusVerifikasi);
 
-            // Path view untuk verifikasi
-            $viewPath = '/../Views/Verifikator/Admin-Pusat/verifikasi.php';
-            if (file_exists($viewPath)) {
-                require_once($viewPath);
-            } else {
-                throw new Exception("File not found: $viewPath");
+                // Path view untuk verifikasi
+                $viewPath = '/../Views/Verifikator/Admin-Pusat/verifikasi.php';
+                if (file_exists($viewPath)) {
+                    require_once($viewPath);
+                } else {
+                    throw new Exception("File not found: $viewPath");
+                }
+            } catch (Exception $e) {
+                die("Error loading verifikasi: " . $e->getMessage());
             }
-            header("Location: index.php?controller=adminPusat&action=verifikasi");
-        } catch (Exception $e) {
-            die("Error loading verifikasi: " . $e->getMessage());
         }
     }
+
+
+    // public function getDocument() {
+    //     $jenisDokumen = 'Pusat';
+    //     try {
+    //         // Ambil data dokumen dan mahasiswa dengan dokumen lengkap
+    //         $documents = $this->model->getDocument($jenisDokumen, $nim);
+    //         $mhsDokumenLengkap = $this->model->getMhsWithDocumentComplete($jenisDokumen);
+    //     } catch (Exception $e) {
+    //         die("Error loading verifikasi: " . $e->getMessage());
+    //     }
+    // }
 }
 ?>
