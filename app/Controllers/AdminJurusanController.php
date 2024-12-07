@@ -31,7 +31,7 @@ class adminJurusanController
 
 
             // Kirim data ke view
-            $viewPath = '../Views/Verifikator/dashboard_admin_pusat.php';
+            $viewPath =  __DIR__ . '/../Views/Verifikator/dashboard_admin_jurusan.php';
 
             if (file_exists($viewPath)) {
                 require_once $viewPath;

@@ -33,10 +33,12 @@
 
 <body>
     <?php
-    include '../layouts/header.php';
-    include '../layouts/sidebar_ver.php';
-    include '../layouts/footer.php';
-    include '../layouts/content_ver.php';
+
+    include __DIR__ . '/../layouts/header.php';
+    include __DIR__ . '/../layouts/sidebar_ver.php';
+    include __DIR__ . '/../layouts/content_ver.php';
+    include __DIR__ . '/../layouts/footer.php';
+
     ?>
     <!-- filter -->
     <script>
@@ -188,18 +190,21 @@
     </script>
     <!-- chart beranda.php -->
     <script>
-
         new Chart(document.getElementById("chartjs-bar"), {
             type: "bar",
             data: {
-                labels: <?= htmlspecialchars($mahasiswaCount ?? 0); ?>, // Tahun dari PHP
+                labels: ["2022", "2023", "2024"],
                 datasets: [{
                     label: "Terverifikasi",
                     backgroundColor: "#007bff",
                     borderColor: "#007bff",
                     hoverBackgroundColor: "#007bff",
                     hoverBorderColor: "#007bff",
-                    data: chartData.dataTerverifikasi, // Data terverifikasi
+                    data: [
+                        <?= htmlspecialchars($terverifikasiCount22 ?? 0)?>, 
+                        <?= htmlspecialchars($terverifikasiCount23 ?? 0)?>, 
+                        <?= htmlspecialchars($terverifikasiCount24 ?? 0)?>
+                    ],
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -213,7 +218,11 @@
                     borderColor: "#dee2e6",
                     hoverBackgroundColor: "#dee2e6",
                     hoverBorderColor: "#dee2e6",
-                    data: chartData.dataBlmTerverifikasi, // Data belum terverifikasi
+                    data: [
+                        <?= htmlspecialchars($belumDiverifikasiCount22 ?? 0)?>, 
+                        <?= htmlspecialchars($belumDiverifikasiCount23 ?? 0)?>, 
+                        <?= htmlspecialchars($belumDiverifikasiCount24 ?? 0)?>
+                    ],
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -227,7 +236,11 @@
                     borderColor: "#ffcc00",
                     hoverBackgroundColor: "#ffcc00",
                     hoverBorderColor: "#ffcc00",
-                    data: chartData.dataMahasiswa, // Data total mahasiswa
+                    data: [
+                        <?= htmlspecialchars($mahasiswaCount22 ?? 0)?>, 
+                        <?= htmlspecialchars($mahasiswaCount23 ?? 0)?>, 
+                        <?= htmlspecialchars($mahasiswaCount24 ?? 0)?>
+                    ],
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -241,7 +254,7 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 3000,
+                        max: 30,
                         ticks: {
                             font: {
                                 size: 14

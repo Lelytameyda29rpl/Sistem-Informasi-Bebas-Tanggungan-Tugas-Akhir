@@ -69,6 +69,16 @@ switch ($controller) {
                 $adminPusatController->dashboard(); // Default action
             }
             break;
+    case 'adminJurusan':
+            include_once __DIR__ . '/../app/Controllers/AdminJurusanController.php';
+            $adminJurusanController = new AdminJurusanController();
+            
+            if ($action === 'verifikasi') {
+                $adminJurusanController->verifikasi();
+            } else {
+                $adminJurusanController->dashboard(); // Default action
+            }
+            break;
 
     default:
         // Default controller

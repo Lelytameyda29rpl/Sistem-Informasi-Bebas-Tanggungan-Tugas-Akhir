@@ -13,7 +13,7 @@ class adminPusatController {
 
     public function dashboard() {
         try {
-            $jenisDokumen = 'Jurusan';
+            $jenisDokumen = 'Pusat';
 
             $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
             $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
