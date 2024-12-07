@@ -265,7 +265,7 @@ body {
     cursor: pointer;
 }
 
-.btn-open-file {
+.btn-primary {
     background-color: navy;
     color: white;
     border: none;

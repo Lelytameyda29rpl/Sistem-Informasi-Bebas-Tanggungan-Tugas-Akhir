@@ -186,19 +186,20 @@
             window.location.href = this.getAttribute('href'); // Arahkan ke halaman login
         });
     </script>
-    <!-- chart dashboard -->
+    <!-- chart beranda.php -->
     <script>
+
         new Chart(document.getElementById("chartjs-bar"), {
             type: "bar",
             data: {
-                labels: ["2020", "2021", "2022", "2023", "2024"],
+                labels: <?= htmlspecialchars($mahasiswaCount ?? 0); ?>, // Tahun dari PHP
                 datasets: [{
                     label: "Terverifikasi",
                     backgroundColor: "#007bff",
                     borderColor: "#007bff",
                     hoverBackgroundColor: "#007bff",
                     hoverBorderColor: "#007bff",
-                    data: [1200, 1500, 1800, 2000, 2200],
+                    data: chartData.dataTerverifikasi, // Data terverifikasi
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -212,7 +213,7 @@
                     borderColor: "#dee2e6",
                     hoverBackgroundColor: "#dee2e6",
                     hoverBorderColor: "#dee2e6",
-                    data: [800, 700, 600, 500, 400],
+                    data: chartData.dataBlmTerverifikasi, // Data belum terverifikasi
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -226,7 +227,7 @@
                     borderColor: "#ffcc00",
                     hoverBackgroundColor: "#ffcc00",
                     hoverBorderColor: "#ffcc00",
-                    data: [2000, 2200, 2400, 2500, 2600],
+                    data: chartData.dataMahasiswa, // Data total mahasiswa
                     barPercentage: .75,
                     categoryPercentage: .5,
                     borderWidth: 1,
@@ -270,6 +271,7 @@
             }
         });
     </script>
+
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
         // Data kelas untuk setiap prodi
@@ -935,9 +937,8 @@
                         <td><button class="btn-danger" style="width: 100px; height: 45px">
                         <i class="bi bi-x-lg"></i>
                         </button></td>
-                        <td><button class="btn-open-file">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="32" viewBox="0 0 1024 1024">
-                            <path fill="currentColor" d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 0 0-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12c0-17.7-14.3-32-32-32M136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2zm635.3 512H159l103.3-256h612.4z" /></svg>
+                        <td><button class="btn-primary" style="width: 100px; height: 45px">
+                        <i class="bi bi-box-arrow-up-right"></i>
                         </button></td>
                     </tr>
                 `;
