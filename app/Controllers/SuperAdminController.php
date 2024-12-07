@@ -52,6 +52,7 @@ class SuperAdminController
             $angkatanList = $this->model->getAllAngkatan();
             $dataVerifikator = $this->model->getVerifikatorData();
             $roleVerifikator = $this->model->getAllRole_User();
+            $dataAdmin = $this->model->getAdminData();
 
             // Kirim data ke view
             $viewPath = __DIR__ . '/../Views/Superadmin/manajemen_mahasiswa.php';
@@ -247,4 +248,85 @@ public function editVerifikator()
         }
     }
 }
+
+public function addAdmin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $role_user = $_POST['role_user'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $nama = $_POST['nama'];
+            $no_telp = $_POST['no_telp'];
+            $email = $_POST['email'];
+
+            try {
+                $this->model->addAdmin($role_user, $username, $password, $nama, $no_telp, $email);
+                $_SESSION['status'] = 'success';
+                $_SESSION['message'] = 'Superadmin berhasil ditambahkan!';
+            } catch (Exception $e) {
+                $_SESSION['status'] = 'error';
+                $_SESSION['message'] = 'Terjadi kesalahan: ' . $e->getMessage();
+            }
+            header("Location: index.php?controller=superAdmin&action=manageUser");
+            exit;
+        } else {
+            include __DIR__ . '/../../app/views/superadmin/manageUser.php';
+        }
+    }
+
+// Fungsi untuk menghapus data superadmin
+public function deleteAdmin($id_user)
+{
+    try {
+
+        // Cek apakah id_user ditemukan
+        if ($id_user) {
+            // Menghapus data user
+            $this->model->deleteUser($id_user);
+            
+            // Set status sukses ke session
+            $_SESSION['status'] = 'success';
+            $_SESSION['message'] = 'Superadmin berhasil dihapus!';
+        } else {
+            throw new Exception("Superadmin dengan id_user $id_user tidak ditemukan.");
+        }
+    } catch (Exception $e) {
+        // Menangani jika ada kesalahan
+        $_SESSION['status'] = 'error';
+        $_SESSION['message'] = 'Terjadi kesalahan: ' . $e->getMessage();
+    }
+
+    // Redirect ke halaman manageUser setelah penghapusan
+    header("Location: index.php?controller=superAdmin&action=manageUser");
+    exit;
 }
+
+public function editAdmin()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_user = $_POST['id_user'];
+        $role_user = $_POST['role_user'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $nama = $_POST['nama'];
+        $no_telp = $_POST['no_telp'];
+        $email = $_POST['email'];
+
+        try {
+            // Memanggil model untuk memperbarui data admin
+            $this->model->updateAdmin($id_user, $role_user, $username, $password, $nama, $no_telp, $email);
+
+            $_SESSION['status'] = 'success';
+            $_SESSION['message'] = 'Superadmin berhasil diperbarui!';
+            header("Location: index.php?controller=superAdmin&action=manageUser");
+        } catch (Exception $e) {
+            $_SESSION['status'] = 'error';
+            $_SESSION['message'] = 'Terjadi kesalahan saat memperbarui superadmin: ' . $e->getMessage();
+            header("Location: index.php?controller=superAdmin&action=manageUser");
+        }
+    }
+}
+
+}
+
+

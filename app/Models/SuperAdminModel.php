@@ -299,13 +299,89 @@ public function updateVerifikator($id_user, $role_user, $username, $password, $n
     }
 }
 
-
     // Ambil semua data Role User
     public function getAllRole_User()
     {
-        $stmt = $this->conn->prepare("SELECT id_user, role_user FROM [User] WHERE role_user IN ('admin jurusan', 'admin pusat')");
+        $stmt = $this->conn->prepare("SELECT DISTINCT role_user FROM [User] WHERE role_user IN ('admin jurusan', 'admin pusat')");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Fungsi untuk mengambil data superadmin
+    public function getAdminData()
+    {
+        $stmt = $this->conn->prepare("SELECT DISTINCT id_user, role_user, username, password, nama, no_telp, email FROM [User] WHERE role_user = 'superadmin'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Fungsi untuk menambah data superadmin
+    public function addAdmin($role_user, $username, $password, $nama, $no_telp, $email)
+{
+    try {
+        // Mulai transaksi
+        $this->conn->beginTransaction();
+
+        // Tambah data ke tabel User
+        $stmtUser = $this->conn->prepare("
+            INSERT INTO [User] (role_user, username, password, nama, no_telp, email)
+            VALUES ('superadmin', :username, :password, :nama, :no_telp, :email)
+        ");
+        $stmtUser->execute([
+            ':username' => $username, 
+            ':password' => $password,
+            ':nama' => $nama,
+            ':no_telp' => $no_telp,
+            ':email' => $email
+        ]);
+
+        // Commit transaksi
+        $this->conn->commit();
+
+        // Return success
+        return true;
+    } catch (PDOException $e) {
+        // Rollback jika terjadi error
+        $this->conn->rollBack();
+        throw new Exception("Terjadi kesalahan: " . $e->getMessage());
+    }
+}
+
+     // Fungsi untuk mengedit data admin
+    public function updateAdmin($id_user, $role_user, $username, $password, $nama, $no_telp, $email)
+{
+    try {
+        // Mulai transaksi
+        $this->conn->beginTransaction();
+
+        // Update data user
+        $stmt = $this->conn->prepare("UPDATE [User] SET 
+                                        role_user = :role_user,
+                                        username = :username, 
+                                        password = :password, 
+                                        nama = :nama, 
+                                        no_telp = :no_telp, 
+                                        email = :email
+                                      WHERE id_user = :id_user");
+        $stmt->bindParam(':role_user', $role_user);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':nama', $nama);
+        $stmt->bindParam(':no_telp', $no_telp);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id_user', $id_user); 
+        $stmt->execute();
+
+        // Commit transaksi
+        $this->conn->commit();
+
+        // Return success
+        return true;
+    } catch (PDOException $e) {
+        // Rollback jika terjadi error
+        $this->conn->rollBack();
+        throw new Exception("Terjadi kesalahan: " . $e->getMessage());
+    }
+}
 
 }

@@ -30,6 +30,14 @@ switch ($controller) {
         } elseif ($action === 'editVerifikator') {
             $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
             $superAdminController->editVerifikator($id_user);
+        } elseif ($action == 'addAdmin') {
+            $superAdminController->addAdmin();
+        } elseif ($action === 'deleteAdmin') {
+            $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
+            $superAdminController->deleteAdmin($id_user);
+        } elseif ($action === 'editAdmin') {
+            $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
+            $superAdminController->editAdmin($id_user);
         } else {
             $superAdminController->dashboard(); // Default action
         }

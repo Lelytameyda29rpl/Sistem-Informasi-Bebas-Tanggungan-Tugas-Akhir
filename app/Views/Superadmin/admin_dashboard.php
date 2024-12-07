@@ -329,7 +329,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         <thead>
             <tr>
                 <th>Nama Mahasiswa</th>
-                <th>Tanggal Verifikasi</th>
+                <th>Tanggal Upload</th>
                 <th>Status</th>
                 <th>Nama Dokumen</th>
             </tr>

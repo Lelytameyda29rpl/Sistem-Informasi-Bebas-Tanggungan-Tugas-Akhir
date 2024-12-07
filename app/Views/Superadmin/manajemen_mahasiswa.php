@@ -730,10 +730,115 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                     </p>
 
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahAdmin">Tambah Data Admin</button>
-                </div>
+                    </div>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Role User</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Nama Mahasiswa</th>
+                            <th>No.Telepon</th>
+                            <th>Email</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($dataAdmin as $admin): ?>
+                        <tr>
+                            <td><?= $admin['role_user'] ?></td>
+                            <td><?= $admin['username'] ?></td>
+                            <td><?= $admin['password'] ?></td>
+                            <td><?= $admin['nama'] ?></td>
+                            <td><?= $admin['no_telp'] ?></td>
+                            <td><?= $admin['email'] ?></td>
+                            <td>
+                                <button class="btn btn-edit"
+                                    data-toggle="modal"
+                                    data-target="#modalEdit<?= $admin['id_user'] ?>">
+                                    Edit
+                                </button>
+                                <!-- Modal Edit -->
+                                <div class="modal fade modal-edit" id="modalEdit<?= $admin['id_user'] ?>" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalEditLabel">Edit Data Admin</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="index.php?controller=superAdmin&action=editAdmin" method="POST">
+                                                    <div class="form-group">
+                                                        <label for="editId_User">Id User</label>
+                                                        <input type="text" class="form-control" id="editId_User" name="id_user" value="<?= $admin['id_user'] ?>" required readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editRole_User">Role User</label>
+                                                        <input type="text" class="form-control" id="editRole_User" name="role_user" value="<?= $admin['role_user'] ?>" required readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editUsername">Username</label>
+                                                        <input name="username" type="text" class="form-control" id="editUsername" value="<?= $admin['username'] ?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editPassword">Password</label>
+                                                        <input name="password" type="text" class="form-control" id="editPassword" value="<?= $admin['password'] ?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editNama">Nama Admin</label>
+                                                        <input type="text" class="form-control" id="editNama" name="nama" value="<?= $admin['nama'] ?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editNo_Telp">No.Telepon</label>
+                                                        <input type="text" class="form-control" id="editNo_Telp" name="no_telp" value="<?= $admin['no_telp'] ?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input name="email" type="email" class="form-control" id="email" value="<?= $admin['email'] ?>" required>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-delete"
+                                    data-toggle="modal"
+                                    data-target="#modalHapus<?= $admin['id_user'] ?>">
+                                    Hapus
+                                </button>
+                                <!-- Modal Hapus -->
+                                <div class="modal fade modal-hapus" id="modalHapus<?= $admin['id_user'] ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalHapusLabel">Hapus Data Admin</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Apakah Anda yakin ingin menghapus data admin ini?</p>
+                                                <p><strong>Id User:</strong> <span id="hapusId_User"><?= $admin['id_user'] ?></span></p>
+                                                <p><strong>Nama:</strong> <span id="hapusNama"><?= $admin['nama'] ?></span></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                <!-- Pastikan URL ini memuat parameter nim -->
+                                                <a href="index.php?controller=superAdmin&action=deleteAdmin&id_user=<?= urlencode($admin['id_user']) ?>" id="confirmHapus" class="btn btn-danger">Hapus</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
+
     <!-- Modal Tambah Mahasiswa-->
     <div class="modal fade modal-tambah" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -823,10 +928,10 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                     <form action="index.php?controller=superAdmin&action=addVerifikator" method="POST">
                     <div class="form-group">
                             <label for="editRole_User">Role User</label>
-                            <select class="form-control" id="editRole_User" name="id_user" required>
+                            <select class="form-control" id="editRole_User" name="role_user" required>
                                 <option value="" disabled selected>Pilih Role User</option>
                                 <?php foreach ($roleVerifikator as $role_user): ?>
-                                    <option value="<?= $role_user['id_user'] ?>"><?= $role_user['role_user'] ?></option>
+                                    <option value="<?= $role_user['role_user'] ?>"><?= $role_user['role_user'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -849,6 +954,46 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input name="email" type="email" class="form-control" id="email" placeholder="Masukkan Email Verifikator" required>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Admin -->
+    <div class="modal fade modal-tambah" id="modalTambahAdmin" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTambahLabel">Tambah Data Admin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="index.php?controller=superAdmin&action=addAdmin" method="POST">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input name="username" type="text" class="form-control" id="username" placeholder="Masukkan Username Superadmin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input name="password" type="text" class="form-control" id="password" placeholder="Masukkan Password Superadmin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Nama Verifikator</label>
+                            <input name="nama" type="text" class="form-control" id="nama" placeholder="Masukkan Nama Superadmin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_telp">No Telepon</label>
+                            <input name="no_telp" type="text" class="form-control" id="no_telp" placeholder="Masukkan No.Telepon Superadmin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Masukkan Email Superadmin" required>
                         </div>
                 </div>
                 <div class="modal-footer">
