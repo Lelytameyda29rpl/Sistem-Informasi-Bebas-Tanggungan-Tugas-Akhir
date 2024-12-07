@@ -1,0 +1,44 @@
+<?php
+require_once __DIR__ . '/../config/database.php';
+
+// Mendapatkan controller dan action dari URL
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+// Routing
+switch ($controller) {
+    case 'superAdmin':
+        include_once __DIR__ . '/../app/controllers/SuperAdminController.php';
+        $superAdminController = new SuperAdminController();
+
+        if ($action === 'manageUser') {
+            $superAdminController->manageUsers();
+        } elseif ($action === 'addMahasiswa') {
+            $superAdminController->addMahasiswa();
+        } elseif ($action === 'deleteMahasiswa') {
+            // Pastikan parameter 'nim' ada di URL
+            $nim = isset($_GET['nim']) ? $_GET['nim'] : null;
+            $superAdminController->deleteMahasiswa($nim);
+        } elseif ($action === 'editMahasiswa') {
+            $id = isset($_GET['id']) ? $_GET['id'] : null;
+            $superAdminController->editMahasiswa($id);
+        } elseif ($action === 'addVerifikator') {
+            $superAdminController->addVerifikator();
+        } elseif ($action === 'deleteVerifikator') {
+            $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
+            $superAdminController->deleteVerifikator($id_user);
+        } elseif ($action === 'editVerifikator') {
+            $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
+            $superAdminController->editVerifikator($id_user);
+        } else {
+            $superAdminController->dashboard(); // Default action
+        }
+        break;
+
+    default:
+        // Default controller
+        include_once __DIR__ . '/../app/controllers/SuperAdminController.php';
+        $superAdminController = new SuperAdminController();
+        $superAdminController->dashboard(); // Default action
+        break;
+}

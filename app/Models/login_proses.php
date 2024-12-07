@@ -36,7 +36,7 @@ try {
             // Redirect based on role
             switch ($user['role_user']) {
                 case 'superadmin':
-                    header("Location: ../Controllers/SuperAdminController.php?action=dashboard");
+                    header("Location: ../../public/index.php");
                     exit();
                 case 'admin pusat':
                     header("Location: ../views/Verifikator/dashboard_admin_pusat.php");

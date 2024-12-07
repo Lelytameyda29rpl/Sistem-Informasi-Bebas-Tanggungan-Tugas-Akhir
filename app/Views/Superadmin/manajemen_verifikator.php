@@ -216,7 +216,6 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
             display: flex;
             gap: 10px;
             margin: 20px 50px;
-            
         }
 
         .tab {
@@ -320,7 +319,6 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         .btn-delete {
             background-color: #dc3545;
             color: white;
-            
         }
 
         .footer {
@@ -411,174 +409,6 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         </div>
 
         <!-- Konten Tab -->
-        <div class="table-container">
-            <div class="tab-content mahasiswa-content active-content">
-                <div class="table-header">
-                    <h2>Data User Mahasiswa</h2>
-                    <p>
-                        <?php
-                        if (isset($_SESSION['status'])) {
-                            if ($_SESSION['status'] == 'success') {
-                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
-                            } elseif ($_SESSION['status'] == 'error') {
-                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
-                            }
-                            // Hapus pesan setelah ditampilkan untuk mencegah muncul kembali
-                            unset($_SESSION['status'], $_SESSION['message']);
-                        }
-                        ?>
-                    </p>
-
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Data Mahasiswa</button>
-                </div>
-                <table class="user-table">
-                    <thead>
-                        <tr>
-                            <th>NIM</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Prodi</th>
-                            <th>Jurusan</th>
-                            <th>Angkatan</th>
-                            <th>Kelas</th>
-                            <th>No.Telepon</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <?php foreach ($dataMahasiswa as $mahasiswa): ?>
-                        <tr>
-                            <td><?= $mahasiswa['nim'] ?></td>
-                            <td><?= $mahasiswa['nama_mahasiswa'] ?></td>
-                            <td><?= $mahasiswa['username'] ?></td>
-                            <td><?= $mahasiswa['password'] ?></td>
-                            <td><?= $mahasiswa['prodi'] ?></td>
-                            <td><?= $mahasiswa['jurusan'] ?></td>
-                            <td><?= $mahasiswa['angkatan'] ?></td>
-                            <td><?= $mahasiswa['kelas'] ?></td>
-                            <td><?= $mahasiswa['no_telp'] ?></td>
-                            <td>
-                                <button class="btn btn-edit"
-                                    data-toggle="modal"
-                                    data-target="#modalEdit<?= $mahasiswa['nim'] ?>">
-                                    Edit
-                                </button>
-                                <!-- Modal Edit -->
-                                <div class="modal fade modal-edit" id="modalEdit<?= $mahasiswa['nim'] ?>" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalEditLabel">Edit Data Mahasiswa</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="index.php?controller=superAdmin&action=editMahasiswa" method="POST">
-                                                    <div class="form-group">
-                                                        <label for="editNim">NIM</label>
-                                                        <input type="text" class="form-control" id="editNim" name="nim" value="<?= $mahasiswa['nim'] ?>" required readonly>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editNama">Nama Mahasiswa</label>
-                                                        <input type="text" class="form-control" id="editNama" name="nama" value="<?= $mahasiswa['nama_mahasiswa'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editUsername">Username</label>
-                                                        <input name="username" type="text" class="form-control" id="editUsername" value="<?= $mahasiswa['username'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editPassword">Password</label>
-                                                        <input name="password" type="text" class="form-control" id="editPassword" value="<?= $mahasiswa['password'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="email">Email</label>
-                                                        <input name="email" type="email" class="form-control" id="email" value="<?= $mahasiswa['email'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editKelas">Kelas</label>
-                                                        <input type="text" class="form-control" id="editKelas" name="kelas" value="<?= $mahasiswa['kelas'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editNo_Telp">No.Telepon</label>
-                                                        <input type="text" class="form-control" id="editNo_Telp" name="no_telp" value="<?= $mahasiswa['no_telp'] ?>" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="editProdi">Prodi</label>
-                                                        <select class="form-control" id="editProdi" name="id_prodi" required>
-                                                            <option value="" disabled selected>Pilih Prodi</option>
-                                                            <?php foreach ($prodiList as $prodi): ?>
-                                                                <option value="<?= $prodi['id_prodi'] ?>" <?= $mahasiswa['id_prodi'] == $prodi['id_prodi'] ? 'selected' : '' ?>>
-                                                                    <?= $prodi['role_prodi'] ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="editJurusan">Jurusan</label>
-                                                        <select class="form-control" id="editJurusan" name="id_jurusan" required>
-                                                            <option value="" disabled selected>Pilih Jurusan</option>
-                                                            <?php foreach ($jurusanList as $jurusan): ?>
-                                                                <option value="<?= $jurusan['id_jurusan'] ?>" <?= $mahasiswa['id_jurusan'] == $jurusan['id_jurusan'] ? 'selected' : '' ?>>
-                                                                    <?= $jurusan['role_jurusan'] ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="editAngkatan">Angkatan</label>
-                                                        <select class="form-control" id="editAngkatan" name="id_angkatan" required>
-                                                            <option value="" disabled selected>Pilih Angkatan</option>
-                                                            <?php foreach ($angkatanList as $angkatan): ?>
-                                                                <option value="<?= $angkatan['id_angkatan'] ?>" <?= $mahasiswa['id_angkatan'] == $angkatan['id_angkatan'] ? 'selected' : '' ?>>
-                                                                    <?= $angkatan['role_angkatan'] ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-delete"
-                                    data-toggle="modal"
-                                    data-target="#modalHapus<?= $mahasiswa['nim'] ?>">
-                                    Hapus
-                                </button>
-                                <!-- Modal Hapus -->
-                                <div class="modal fade modal-hapus" id="modalHapus<?= $mahasiswa['nim'] ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalHapusLabel">Hapus Data Mahasiswa</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Apakah Anda yakin ingin menghapus data mahasiswa ini?</p>
-                                                <p><strong>NIM:</strong> <span id="hapusNim"><?= $mahasiswa['nim'] ?></span></p>
-                                                <p><strong>Nama:</strong> <span id="hapusNama"><?= $mahasiswa['nama_mahasiswa'] ?></span></p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                <!-- Pastikan URL ini memuat parameter nim -->
-                                                <a href="index.php?controller=superAdmin&action=deleteMahasiswa&nim=<?= urlencode($mahasiswa['nim']) ?>" id="confirmHapus" class="btn btn-danger">Hapus</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
             <div class="tab-content verifikator-content">
                 <div class="table-header">
                     <h2>Data User Verifikator</h2>
@@ -643,7 +473,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                                         <select class="form-control" id="editRole_User" name="role_user" required>
                                                             <option value="" disabled selected>Pilih Role User</option>
                                                             <?php foreach ($roleVerifikator as $role_user): ?>
-                                                                <option value="<?= $role_user['role_user'] ?>" <?= $verifikator['role_user'] == $role_user['role_user'] ? 'selected' : '' ?>>
+                                                                <option value="<?= $role_user['id_user'] ?>" <?= $verifikator['id_user'] == $role_user['id_user'] ? 'selected' : '' ?>>
                                                                     <?= $role_user['role_user'] ?>
                                                                 </option>
                                                             <?php endforeach; ?>
@@ -712,105 +542,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                     </tbody>
                 </table>
             </div>
-            <div class="tab-content admin-content">
-                <div class="table-header">
-                    <h2>Data User Admin</h2>
-                    <p>
-                        <?php
-                        if (isset($_SESSION['status'])) {
-                            if ($_SESSION['status'] == 'success') {
-                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
-                            } elseif ($_SESSION['status'] == 'error') {
-                                echo htmlspecialchars($_SESSION['message'], ENT_QUOTES, 'UTF-8');
-                            }
-                            // Hapus pesan setelah ditampilkan untuk mencegah muncul kembali
-                            unset($_SESSION['status'], $_SESSION['message']);
-                        }
-                        ?>
-                    </p>
-
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahAdmin">Tambah Data Admin</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Tambah Mahasiswa-->
-    <div class="modal fade modal-tambah" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTambahLabel">Tambah Data Mahasiswa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form action="index.php?controller=superAdmin&action=addMahasiswa" method="POST">
-                        <div class="form-group">
-                            <label for="nim">NIM</label>
-                            <input name="nim" type="text" class="form-control" id="nim" placeholder="Masukkan NIM Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama">Nama Mahasiswa</label>
-                            <input name="nama" type="text" class="form-control" id="nama" placeholder="Masukkan Nama Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input name="username" type="text" class="form-control" id="username" placeholder="Masukkan Username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input name="password" type="text" class="form-control" id="password" placeholder="Masukkan Password Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Masukkan Email Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelas">Kelas</label>
-                            <input name="kelas" type="text" class="form-control" id="kelas" placeholder="Masukkan Kelas Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="no_telp">No Telepon</label>
-                            <input name="no_telp" type="text" class="form-control" id="no_telp" placeholder="Masukkan No.Telepon Mahasiswa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editProdi">Prodi</label>
-                            <select class="form-control" id="editProdi" name="id_prodi" required>
-                                <option value="" disabled selected>Pilih Prodi</option>
-                                <?php foreach ($prodiList as $prodi): ?>
-                                    <option value="<?= $prodi['id_prodi'] ?>"><?= $prodi['role_prodi'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="editJurusan">Jurusan</label>
-                            <select class="form-control" id="editJurusan" name="id_jurusan" required>
-                                <option value="" disabled selected>Pilih Jurusan</option>
-                                <?php foreach ($jurusanList as $jurusan): ?>
-                                    <option value="<?= $jurusan['id_jurusan'] ?>"><?= $jurusan['role_jurusan'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="editAngkatan">Angkatan</label>
-                            <select class="form-control" id="editAngkatan" name="id_angkatan" required>
-                                <option value="" disabled selected>Pilih Angkatan</option>
-                                <?php foreach ($angkatanList as $angkatan): ?>
-                                    <option value="<?= $angkatan['id_angkatan'] ?>"><?= $angkatan['role_angkatan'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+    
     <!-- Modal Tambah Verifikator -->
     <div class="modal fade modal-tambah" id="modalTambahVerifikator" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog">
