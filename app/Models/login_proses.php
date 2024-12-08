@@ -55,10 +55,10 @@ try {
                     header("Location: ../../public/index.php");
                     exit();
                 case 'admin pusat':
-                    header("Location: ../../public/index.php?controller=adminPusat");
+                    header("Location: ../../public/index.php?controller=adminPusat&action=dashboard");
                     exit();
                 case 'admin jurusan':
-                    header("Location: ../../public/index.php?controller=adminJurusan");
+                    header("Location: ../../public/index.php?controller=adminJurusan&action=dashboard");
                     exit();
                 case 'mahasiswa':
                     header("Location: ../../public/index.php?controller=mahasiswa&action=dashboard");

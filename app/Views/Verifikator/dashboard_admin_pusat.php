@@ -105,6 +105,7 @@
                 });
             }
         }
+        
     </script>
 
     <!-- Sidebar -->
@@ -367,142 +368,142 @@
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
         // Data kelas untuk setiap prodi
-        const kelasByProdi = {
-            "D-IV Teknik Informatika": ["TI-4A", "TI-4B", "TI-4C", "TI-4D", "TI-4E", "TI-4F", "TI-4G", "TI-4H", "TI-4I"],
-            "D-IV Sistem Informasi Bisnis": ["SIB-4A", "SIB-4B", "SIB-4C", "SIB-4D", "SIB-4E", "SIB-4F", "SIB-4G"]
-        };
+        // const kelasByProdi = {
+        //     "D-IV Teknik Informatika": ["TI-4A", "TI-4B", "TI-4C", "TI-4D", "TI-4E", "TI-4F", "TI-4G", "TI-4H", "TI-4I"],
+        //     "D-IV Sistem Informasi Bisnis": ["SIB-4A", "SIB-4B", "SIB-4C", "SIB-4D", "SIB-4E", "SIB-4F", "SIB-4G"]
+        // };
 
-        // Data mahasiswa
-        const dataMahasiswa = [
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720068", nama: "Jiha Ramdhan", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4B", telp: "085752897356", tanggal: "2024-02-20" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-3D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Baskara", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2024", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
-            { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        // // Data mahasiswa
+        // const dataMahasiswa = [
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720068", nama: "Jiha Ramdhan", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4B", telp: "085752897356", tanggal: "2024-02-20" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-3D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720078", nama: "Octrian Adiluhung Tito Putra", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4D", telp: "085771220364", tanggal: "2024-04-05" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Baskara", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2024", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720124", nama: "Lelyta Meyda", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2023", kelas: "TI-4A", telp: "081252295353", tanggal: "2024-01-15" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
+        //     { nim: "2341720113", nama: "M. Fatih Al Ghifary", prodi: "D-IV Teknik Informatika", jurusan: "Teknologi Informasi", angkatan: "2022", kelas: "TI-4C", telp: "085847139712", tanggal: "2024-03-10" },
 
-            // Tambahkan data lainnya di sini
-        ];
+        //     // Tambahkan data lainnya di sini
+        // ];
 
-        const rowsPerPage = 10; // Jumlah data per halaman
-        let currentPage = 1; // Halaman saat ini
+        // const rowsPerPage = 10; // Jumlah data per halaman
+        // let currentPage = 1; // Halaman saat ini
 
-        // Fungsi untuk mengisi opsi kelas berdasarkan prodi
-        function populateKelasOptions() {
-            const prodi = document.getElementById("filter-prodi").value;
-            const kelasSelect = document.getElementById("filter-kelas");
-            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
+        // // Fungsi untuk mengisi opsi kelas berdasarkan prodi
+        // function populateKelasOptions() {
+        //     const prodi = document.getElementById("filter-prodi").value;
+        //     const kelasSelect = document.getElementById("filter-kelas");
+        //     kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
 
-            if (kelasByProdi[prodi]) {
-                kelasByProdi[prodi].forEach((kelas) => {
-                    const option = document.createElement("option");
-                    option.value = kelas;
-                    option.textContent = kelas;
-                    kelasSelect.appendChild(option);
-                });
-                kelasSelect.disabled = false; // Aktifkan dropdown kelas
-            } else {
-                kelasSelect.disabled = true; // Nonaktifkan jika prodi tidak dipilih
-            }
-        }
+        //     if (kelasByProdi[prodi]) {
+        //         kelasByProdi[prodi].forEach((kelas) => {
+        //             const option = document.createElement("option");
+        //             option.value = kelas;
+        //             option.textContent = kelas;
+        //             kelasSelect.appendChild(option);
+        //         });
+        //         kelasSelect.disabled = false; // Aktifkan dropdown kelas
+        //     } else {
+        //         kelasSelect.disabled = true; // Nonaktifkan jika prodi tidak dipilih
+        //     }
+        // }
 
-        // Fungsi untuk menampilkan data pada tabel
-        function displayTableData(page) {
-            const startIndex = (page - 1) * rowsPerPage;
-            const endIndex = page * rowsPerPage;
-            const tableBody = document.getElementById("table-body");
-            tableBody.innerHTML = ""; // Reset tabel
+        // // Fungsi untuk menampilkan data pada tabel
+        // function displayTableData(page) {
+        //     const startIndex = (page - 1) * rowsPerPage;
+        //     const endIndex = page * rowsPerPage;
+        //     const tableBody = document.getElementById("table-body");
+        //     tableBody.innerHTML = ""; // Reset tabel
 
-            const paginatedData = dataMahasiswa.slice(startIndex, endIndex);
-            paginatedData.forEach((data) => {
-                const row = `
-            <tr>
-                <td>${data.nim}</td>
-                <td>${data.nama}</td>
-                <td>${data.prodi}</td>
-                <td>${data.jurusan}</td>
-                <td>${data.angkatan}</td>
-                <td>${data.kelas}</td>
-                <td>${data.telp}</td>
-                <td>${data.tanggal}</td>
-                <td><button class="btn btn-success btn-sm">Verif</button></td>
-            </tr>
-        `;
-                tableBody.innerHTML += row;
-            });
-        }
+        //     const paginatedData = dataMahasiswa.slice(startIndex, endIndex);
+        //     paginatedData.forEach((data) => {
+        //         const row = `
+        //     <tr>
+        //         <td>${data.nim}</td>
+        //         <td>${data.nama}</td>
+        //         <td>${data.prodi}</td>
+        //         <td>${data.jurusan}</td>
+        //         <td>${data.angkatan}</td>
+        //         <td>${data.kelas}</td>
+        //         <td>${data.telp}</td>
+        //         <td>${data.tanggal}</td>
+        //         <td><button class="btn btn-success btn-sm">Verif</button></td>
+        //     </tr>
+        // `;
+        //         tableBody.innerHTML += row;
+        //     });
+        // }
 
         // Fungsi untuk membuat pagination
         function setupPagination() {

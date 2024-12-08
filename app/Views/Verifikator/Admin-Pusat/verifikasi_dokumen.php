@@ -1,4 +1,4 @@
-  <div class="tab-content" id="verifikasi">
+<div class="tab-content" id="verifikasi">
     <div class="welcome">
       <h1>Verifikasi Dokumen Tanggungan TA Mahasiswa</h1>
     </div>
