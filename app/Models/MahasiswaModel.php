@@ -61,5 +61,37 @@ class MahasiswaModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getStatusJurusan($nim) {
+        $stmt = $this->conn->prepare("
+        SELECT 
+            d.nama_dokumen,
+            v.tgl_upload,
+            v.status_verifikasi
+        FROM Dokumen d
+        LEFT JOIN Verifikasi v ON d.id_dokumen = v.id_dokumen AND v.nim = :nim
+        WHERE d.jenis_dokumen = 'Jurusan'
+        ORDER BY d.id_dokumen
+        ");
+        $stmt->execute([':nim' => $nim]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getStatusPusat($nim) {
+        $stmt = $this->conn->prepare("
+        SELECT 
+            d.nama_dokumen,
+            v.tgl_upload,
+            v.status_verifikasi
+        FROM Dokumen d
+        LEFT JOIN Verifikasi v ON d.id_dokumen = v.id_dokumen AND v.nim = :nim
+        WHERE d.jenis_dokumen = 'Pusat'
+        ORDER BY d.id_dokumen
+        ");
+        $stmt->execute([':nim' => $nim]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     
 }

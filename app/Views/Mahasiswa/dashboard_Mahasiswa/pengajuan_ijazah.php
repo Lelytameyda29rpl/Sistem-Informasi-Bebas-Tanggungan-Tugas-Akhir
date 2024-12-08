@@ -1,4 +1,15 @@
-    <!-- Pengajuan Ijazah -->
+<?php
+// Cek apakah semua dokumen sudah diverifikasi
+$allVerified = true;
+foreach ($statusPusat as $row) {
+    if ($row['status_verifikasi'] !== 'Sudah Diverifikasi') {
+        $allVerified = false;
+        break;
+    }
+}
+?> 
+  
+  <!-- Pengajuan Ijazah -->
     <div class="tab-content mb-5" id="ijazah">
         <div class="welcome">
             <h1>Pengajuan Ijazah</h1>
@@ -16,41 +27,26 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($statusPusat as $row): ?>
                         <tr>
-                            <th scope="row">Surat Bebas Tanggungan Jurusan</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
+                            <th scope="row"><?= htmlspecialchars($row['nama_dokumen']) ?></th>
+                            <td><?= $row['tgl_upload'] ? date('d-m-Y', strtotime($row['tgl_upload'])) : '-' ?></td>
+                            <td>
+                                <?php if ($row['status_verifikasi'] === 'Sudah Diverifikasi'): ?>
+                                    <button class="btn btn-success" disabled>Sudah Diverifikasi</button>
+                                <?php elseif ($row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
+                                    <button class="btn btn-warning" disabled>Menunggu</button>
+                                <?php elseif ($row['status_verifikasi'] === 'Gagal Diverifikasi'): ?>
+                                    <button class="btn btn-danger" disabled>Gagal</button>
+                                    <p class="text-danger mt-2">
+                                        <?= htmlspecialchars($row['catatan'] ?? 'Tidak ada catatan.') ?>
+                                    </p>
+                                <?php else: ?>
+                                    <button class="btn btn-secondary" disabled>Belum Diunggah</button>
+                                <?php endif; ?>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row">Surat Bebas Tanggungan Akademik Pusat</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Surat Bebas Pustaka Perpustakaan Polinema</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Surat Kebenaran Data Diri</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Bukti Pengisian Kuisioner</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Bukti Pengisian SKPI</th>
-                            <td>-</td>
-                            <td><button class="btn btn-primary" disabled>Status</button></td>
-                        </tr>
-                        <!-- <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                          </tr> -->
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
                 <button class="btn btn-success mt-3" style="width: 250px;" disabled>Ajukan Bebas Tanggungan</button>

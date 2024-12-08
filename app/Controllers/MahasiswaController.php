@@ -20,6 +20,8 @@ class MahasiswaController{
             $jurusan = $this->model->getCountDokumenByNIMJurusan($nim);
             $pusat = $this->model->getCountDokumenByNIMPusat($nim);
             $data = $this->model->getDataFile($nim);
+            $statusJurusan = $this->model->getStatusJurusan($nim);
+            $statusPusat = $this->model->getStatusPusat($nim);
 
             // Kirim data ke view
             $viewPath = __DIR__ . '/../Views/Mahasiswa/dashboard_Mahasiswa.php';
