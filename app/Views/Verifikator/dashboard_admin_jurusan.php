@@ -201,9 +201,9 @@
                     hoverBackgroundColor: "#007bff",
                     hoverBorderColor: "#007bff",
                     data: [
-                        <?= htmlspecialchars($terverifikasiCount22 ?? 0)?>, 
-                        <?= htmlspecialchars($terverifikasiCount23 ?? 0)?>, 
-                        <?= htmlspecialchars($terverifikasiCount24 ?? 0)?>
+                        <?= htmlspecialchars($terverifikasiCount22 ?? 0) ?>,
+                        <?= htmlspecialchars($terverifikasiCount23 ?? 0) ?>,
+                        <?= htmlspecialchars($terverifikasiCount24 ?? 0) ?>
                     ],
                     barPercentage: .75,
                     categoryPercentage: .5,
@@ -219,9 +219,9 @@
                     hoverBackgroundColor: "#dee2e6",
                     hoverBorderColor: "#dee2e6",
                     data: [
-                        <?= htmlspecialchars($belumDiverifikasiCount22 ?? 0)?>, 
-                        <?= htmlspecialchars($belumDiverifikasiCount23 ?? 0)?>, 
-                        <?= htmlspecialchars($belumDiverifikasiCount24 ?? 0)?>
+                        <?= htmlspecialchars($belumDiverifikasiCount22 ?? 0) ?>,
+                        <?= htmlspecialchars($belumDiverifikasiCount23 ?? 0) ?>,
+                        <?= htmlspecialchars($belumDiverifikasiCount24 ?? 0) ?>
                     ],
                     barPercentage: .75,
                     categoryPercentage: .5,
@@ -237,9 +237,9 @@
                     hoverBackgroundColor: "#ffcc00",
                     hoverBorderColor: "#ffcc00",
                     data: [
-                        <?= htmlspecialchars($mahasiswaCount22 ?? 0)?>, 
-                        <?= htmlspecialchars($mahasiswaCount23 ?? 0)?>, 
-                        <?= htmlspecialchars($mahasiswaCount24 ?? 0)?>
+                        <?= htmlspecialchars($mahasiswaCount22 ?? 0) ?>,
+                        <?= htmlspecialchars($mahasiswaCount23 ?? 0) ?>,
+                        <?= htmlspecialchars($mahasiswaCount24 ?? 0) ?>
                     ],
                     barPercentage: .75,
                     categoryPercentage: .5,
@@ -288,138 +288,109 @@
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
         const rowsPerPage = 10; // Jumlah data per halaman
-let currentPage = 1; // Halaman saat ini
-let filteredResults = dataMahasiswa; // Data yang difilter (default semua data)
+        let currentPage = 1; // Halaman saat ini
+        let filteredResults = dataMahasiswa; // Data yang difilter (default semua data)
 
-// Fungsi untuk menampilkan data pada tabel
-function displayTableData(page) {
-    const startIndex = (page - 1) * rowsPerPage;
-    const endIndex = page * rowsPerPage;
-    const tableBody = document.getElementById("table-body");
-    tableBody.innerHTML = ""; // Reset tabel
 
-    const paginatedData = filteredResults.slice(startIndex, endIndex);
-    paginatedData.forEach((data) => {
-        const row = `
-            <tr>
-                <td>${data.nim}</td>
-                <td>${data.nama}</td>
-                <td>${data.role_prodi}</td>
-                <td>${data.role_jurusan}</td>
-                <td>${data.role_angkatan}</td>
-                <td>${data.kelas}</td>
-                <td>${data.no_telp}</td>
-                <td>${data.tgl_upload}</td>
-                <td><button class="btn btn-success btn-sm">Verif</button></td>
-            </tr>
-        `;
-        tableBody.innerHTML += row;
-    });
+        // Fungsi untuk membuat pagination
+        function setupPagination() {
+            const totalPages = Math.ceil(filteredResults.length / rowsPerPage);
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = ""; // Reset pagination
 
-    if (paginatedData.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Tidak ada data mahasiswa.</td></tr>`;
-    }
-}
-
-// Fungsi untuk membuat pagination
-function setupPagination() {
-    const totalPages = Math.ceil(filteredResults.length / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = ""; // Reset pagination
-
-    if (currentPage > 1) {
-        pagination.innerHTML += `
+            if (currentPage > 1) {
+                pagination.innerHTML += `
             <li class="page-item">
                 <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">&lt;</a>
             </li>
         `;
-    }
+            }
 
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `
             <li class="page-item ${i === currentPage ? "active" : ""}">
                 <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
             </li>
         `;
-    }
+            }
 
-    if (currentPage < totalPages) {
-        pagination.innerHTML += `
+            if (currentPage < totalPages) {
+                pagination.innerHTML += `
             <li class="page-item">
                 <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">&gt;</a>
             </li>
         `;
-    }
-}
+            }
+        }
 
-// Fungsi untuk mengubah halaman
-function changePage(page) {
-    currentPage = page;
-    displayTableData(page);
-    setupPagination();
-}
+        // Fungsi untuk mengubah halaman
+        function changePage(page) {
+            currentPage = page;
+            displayTableData(page);
+            setupPagination();
+        }
 
-// Fungsi pencarian data
-function searchTable() {
-    const searchInput = document.getElementById("search-input").value.toLowerCase();
-    filteredResults = dataMahasiswa.filter((data) => {
-        return (
-            data.nama.toLowerCase().includes(searchInput) ||
-            data.nim.toLowerCase().includes(searchInput)
-        );
-    });
-    currentPage = 1;
-    displayTableData(currentPage);
-    setupPagination();
-}
+        // Fungsi pencarian data
+        function searchTable() {
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+            filteredResults = dataMahasiswa.filter((data) => {
+                return (
+                    data.nama.toLowerCase().includes(searchInput) ||
+                    data.nim.toLowerCase().includes(searchInput)
+                );
+            });
+            currentPage = 1;
+            displayTableData(currentPage);
+            setupPagination();
+        }
 
-// Fungsi filter data
-function filterTable() {
-    const angkatan = document.getElementById("filter-angkatan").value;
-    const prodi = document.getElementById("filter-prodi").value;
-    const kelas = document.getElementById("filter-kelas").value;
+        // Fungsi filter data
+        function filterTable() {
+            const angkatan = document.getElementById("filter-angkatan").value;
+            const prodi = document.getElementById("filter-prodi").value;
+            const kelas = document.getElementById("filter-kelas").value;
 
-    filteredResults = dataMahasiswa.filter((data) => {
-        const matchesAngkatan = angkatan === "" || data.role_angkatan === angkatan;
-        const matchesProdi = prodi === "" || data.role_prodi === prodi;
-        const matchesKelas = kelas === "" || data.kelas === kelas;
-        return matchesAngkatan && matchesProdi && matchesKelas;
-    });
+            filteredResults = dataMahasiswa.filter((data) => {
+                const matchesAngkatan = angkatan === "" || data.role_angkatan === angkatan;
+                const matchesProdi = prodi === "" || data.role_prodi === prodi;
+                const matchesKelas = kelas === "" || data.kelas === kelas;
+                return matchesAngkatan && matchesProdi && matchesKelas;
+            });
 
-    currentPage = 1;
-    displayTableData(currentPage);
-    setupPagination();
-}
+            currentPage = 1;
+            displayTableData(currentPage);
+            setupPagination();
+        }
 
-// Fungsi untuk mengisi opsi kelas berdasarkan prodi
-function populateKelasOptions() {
-    const prodi = document.getElementById("filter-prodi").value;
-    const kelasSelect = document.getElementById("filter-kelas");
-    kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
+        // Fungsi untuk mengisi opsi kelas berdasarkan prodi
+        function populateKelasOptions() {
+            const prodi = document.getElementById("filter-prodi").value;
+            const kelasSelect = document.getElementById("filter-kelas");
+            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
 
-    const kelasByProdi = {
-        "D-IV Teknik Informatika": ["TI-1A", "TI-1B", "TI-1C"],
-        "D-IV Sistem Informasi Bisnis": ["SIB-1A", "SIB-1B"]
-    };
+            const kelasByProdi = {
+                "D-IV Teknik Informatika": ["TI-1A", "TI-1B", "TI-1C"],
+                "D-IV Sistem Informasi Bisnis": ["SIB-1A", "SIB-1B"]
+            };
 
-    if (kelasByProdi[prodi]) {
-        kelasByProdi[prodi].forEach((kelas) => {
-            const option = document.createElement("option");
-            option.value = kelas;
-            option.textContent = kelas;
-            kelasSelect.appendChild(option);
+            if (kelasByProdi[prodi]) {
+                kelasByProdi[prodi].forEach((kelas) => {
+                    const option = document.createElement("option");
+                    option.value = kelas;
+                    option.textContent = kelas;
+                    kelasSelect.appendChild(option);
+                });
+                kelasSelect.disabled = false;
+            } else {
+                kelasSelect.disabled = true;
+            }
+        }
+
+        // Inisialisasi pertama kali
+        document.addEventListener("DOMContentLoaded", () => {
+            displayTableData(currentPage);
+            setupPagination();
         });
-        kelasSelect.disabled = false;
-    } else {
-        kelasSelect.disabled = true;
-    }
-}
-
-// Inisialisasi pertama kali
-document.addEventListener("DOMContentLoaded", () => {
-    displayTableData(currentPage);
-    setupPagination();
-});
     </script>
     <!-- container verifikasi dokumen mahasiswa -->
     <script>
@@ -557,35 +528,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    // Event listener untuk tombol "Verif"
-    document.querySelectorAll(".verif-button").forEach(button => {
-        button.addEventListener("click", function () {
-            const modalId = this.getAttribute("data-modal"); // Ambil ID modal dari data-modal
-            const modal = document.getElementById(modalId); // Cari modal berdasarkan ID
+            // Event listener untuk tombol Verif
+            const buttons = document.querySelectorAll("button[data-target]");
 
-            if (modal) {
-                modal.style.display = "block"; // Tampilkan modal
-            }
+            buttons.forEach(button => {
+                button.addEventListener("click", event => {
+                    event.preventDefault();
+
+                    // Ambil target dari tombol
+                    const targetId = button.getAttribute("data-target");
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // Sembunyikan semua verif-container lainnya
+                        document.querySelectorAll(".verif-container").forEach(el => {
+                            el.style.display = "none";
+                        });
+
+                        // Tampilkan elemen target
+                        targetElement.style.display = "block";
+
+                        // Scroll ke elemen
+                        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                });
+            });
         });
-    });
 
-    // Event listener untuk tombol "Tutup" pada modal
-    document.querySelectorAll(".close-modal").forEach(button => {
-        button.addEventListener("click", function () {
-            const modal = this.closest(".modal"); // Cari modal terdekat
-            if (modal) {
-                modal.style.display = "none"; // Sembunyikan modal
-            }
-        });
-    });
-
-    // Event listener untuk menutup modal ketika klik di luar modal
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("modal")) {
-            event.target.style.display = "none"; // Sembunyikan modal
-        }
-    });
-});
 
     </script>
 </body>
