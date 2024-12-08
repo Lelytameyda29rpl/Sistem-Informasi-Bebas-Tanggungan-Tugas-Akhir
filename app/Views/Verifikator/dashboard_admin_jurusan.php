@@ -395,37 +395,26 @@
     <!-- container verifikasi dokumen mahasiswa -->
     <script>
         // Fungsi untuk menampilkan informasi mahasiswa
-        function showStudentInfo(nim, nama, prodi, jurusan, angkatan, kelas) {
-            document.getElementById('info-nim').innerText = nim;
-            document.getElementById('info-nama').innerText = nama;
-            document.getElementById('info-prodi').innerText = prodi;
-            document.getElementById('info-jurusan').innerText = jurusan;
-            document.getElementById('info-angkatan').innerText = angkatan;
-            document.getElementById('info-kelas').innerText = kelas;
+        function showStudentInfo(nim) {
+            // Ambil data mahasiswa berdasarkan NIM (misalnya menggunakan AJAX)
+            const studentData = <?= json_encode($mhsDokumenLengkap) ?>.find(student => student.nim === nim);
 
-            // Tampilkan informasi mahasiswa
-            document.getElementById('student-info').style.display = 'block';
+            if (studentData) {
+                // Tampilkan verifikasi container
+                document.getElementById('verif-container').style.display = 'block';
+
+                // Isi informasi mahasiswa
+                document.getElementById('student-info').innerHTML = `
+                    <p><span class="label">NIM</span>: ${studentData.nim}</p>
+                    <p><span class="label">Nama Mahasiswa</span>: ${studentData.nama}</p>
+                    <p><span class="label">Prodi</span>: ${studentData.role_prodi}</p>
+                    <p><span class="label">Jurusan</span>: ${studentData.role_jurusan}</p>
+                    <p><span class="label">Angkatan</span>: ${studentData.role_angkatan}</p>
+                    <p><span class="label">Kelas</span>: ${studentData.kelas}</p>
+                    `;
+            }
         }
 
-        // Tambahkan event listener pada setiap baris tabel
-        document.addEventListener('DOMContentLoaded', function () {
-            const tableBody = document.getElementById('table-body');
-
-            tableBody.addEventListener('click', function (event) {
-                const row = event.target.closest('tr');
-                if (row) {
-                    const cells = row.getElementsByTagName('td');
-                    const nim = cells[0].innerText;
-                    const nama = cells[1].innerText;
-                    const prodi = cells[2].innerText;
-                    const jurusan = cells[3].innerText;
-                    const angkatan = cells[4].innerText;
-                    const kelas = cells[5].innerText;
-
-                    showStudentInfo(nim, nama, prodi, jurusan, angkatan, kelas);
-                }
-            });
-        });
 
         // function untuk tombol verif
         function displayVerifContent() {
@@ -527,34 +516,38 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Event listener untuk tombol Verif
-            const buttons = document.querySelectorAll("button[data-target]");
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil semua tombol dengan data-target
+            const buttons = document.querySelectorAll('button[data-target]');
 
-            buttons.forEach(button => {
-                button.addEventListener("click", event => {
+            // Loop melalui tombol-tombol tersebut
+            buttons.forEach(function (button) {
+                // Setiap tombol mendapatkan event listener click
+                button.addEventListener('click', function (event) {
                     event.preventDefault();
 
-                    // Ambil target dari tombol
-                    const targetId = button.getAttribute("data-target");
+                    // Ambil ID target yang sesuai dengan data-target dari tombol
+                    const targetId = button.getAttribute('data-target');
                     const targetElement = document.querySelector(targetId);
 
                     if (targetElement) {
-                        // Sembunyikan semua verif-container lainnya
-                        document.querySelectorAll(".verif-container").forEach(el => {
-                            el.style.display = "none";
+                        // Sembunyikan semua kontainer verifikasi lainnya
+                        document.querySelectorAll('.verif-container').forEach(function (el) {
+                            el.style.display = 'none'; // Menyembunyikan kontainer lainnya
                         });
 
-                        // Tampilkan elemen target
-                        targetElement.style.display = "block";
+                        // Tampilkan kontainer verifikasi yang sesuai
+                        targetElement.style.display = 'block';
 
-                        // Scroll ke elemen
-                        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+                        // Scroll otomatis ke kontainer yang baru ditampilkan
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 });
             });
         });
-
 
     </script>
 </body>
