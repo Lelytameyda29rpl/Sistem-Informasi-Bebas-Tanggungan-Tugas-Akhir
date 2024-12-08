@@ -65,9 +65,11 @@ class MahasiswaModel {
     public function getStatusJurusan($nim) {
         $stmt = $this->conn->prepare("
         SELECT 
+            d.id_dokumen,
             d.nama_dokumen,
             v.tgl_upload,
-            v.status_verifikasi
+            v.status_verifikasi,
+            v.catatan
         FROM Dokumen d
         LEFT JOIN Verifikasi v ON d.id_dokumen = v.id_dokumen AND v.nim = :nim
         WHERE d.jenis_dokumen = 'Jurusan'

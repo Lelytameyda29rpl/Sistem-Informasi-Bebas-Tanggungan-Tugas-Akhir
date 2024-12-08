@@ -24,6 +24,7 @@ foreach ($statusJurusan as $row) {
                         <th scope="col">Nama Berkas</th>
                         <th scope="col">Tanggal Unggah</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,15 @@ foreach ($statusJurusan as $row) {
                                     <button class="btn btn-secondary" disabled>Belum Diunggah</button>
                                 <?php endif; ?>
                             </td>
+                            <td>
+                                <!-- Tombol Lihat Catatan -->
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#catatanModal-<?= $row['catatan'] ?>"><i class="bi bi-pencil"></i></button>
+                                
+                                <!-- Tombol Upload Ulang -->
+                                <?php if ($row['status_verifikasi'] === 'Tidak Disetujui' || $row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal-<?= $row['id_dokumen'] ?>"><i class="bi bi-upload"></i></button>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -55,3 +65,79 @@ foreach ($statusJurusan as $row) {
     </div>
     <p class="mt-3">Pastikan semua berkas Anda telah diverifikasi sebelum mengajukan Surat Bebas Tanggungan.</p>
 </div>
+
+<!-- Modal Catatan -->
+<?php foreach ($statusJurusan as $row): ?>
+    <!-- Modal Catatan -->
+    <div class="modal fade" id="catatanModal-<?= $row['catatan'] ?>" tabindex="-1" aria-labelledby="catatanModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="catatanModalLabel">Catatan Verifikator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><?= htmlspecialchars($row['catatan'] ?? 'Tidak ada catatan.') ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<?php foreach ($statusJurusan as $row): ?>
+    <!-- Modal Upload Ulang -->
+    <div class="modal fade" id="uploadModal-<?= $row['id_dokumen'] ?>" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="uploadForm-<?= $row['id_dokumen'] ?>" method="POST" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">Upload Ulang Dokumen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Silakan unggah ulang dokumen untuk: <strong><?= htmlspecialchars($row['nama_dokumen']) ?></strong></p>
+                        <input type="file" name="dokumen_file" class="form-control" required>
+                        <input type="hidden" name="id_dokumen" value="<?= $row['id_dokumen'] ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary" onclick="uploadFile(<?= $row['id_dokumen'] ?>)">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function uploadFile(id_dokumen) {
+        var formData = new FormData($('#uploadForm-' + id_dokumen)[0]);
+
+        $.ajax({
+            url: '../app/views/mahasiswa/upload_ulang.php',  
+            type: 'POST',
+            data: formData,
+            processData: false,  // Jangan memproses data form menjadi query string
+            contentType: false,  // Jangan set contentType karena FormData sudah menangani itu
+            success: function(response) {
+                // Jika upload berhasil
+                var result = JSON.parse(response);  // Mengambil hasil response JSON
+                if (result.success) {
+                    alert('Upload berhasil!');
+                    $('#uploadModal-' + id_dokumen).modal('hide'); // Menutup modal
+                    location.reload(); // Reload halaman untuk update status (optional)
+                } else {
+                    alert('Gagal mengunggah file: ' + result.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Terjadi kesalahan: ' + error);
+            }
+        });
+    }
+</script>
+
