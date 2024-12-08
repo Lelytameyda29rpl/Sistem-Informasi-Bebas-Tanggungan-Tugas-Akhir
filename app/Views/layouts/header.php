@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
 
 $name = $_SESSION['nama'] ?? 'Guest'; // Nama dari session
 $role = $_SESSION['role_user'] ?? 'Unknown'; // Role dari session
+$nim = $_SESSION['nim'] ?? 'Unknown';   // NIM dari session
 ?>
 
 <link rel="stylesheet" href="../public/css/header.css">
@@ -21,7 +22,11 @@ $role = $_SESSION['role_user'] ?? 'Unknown'; // Role dari session
                 src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"/>
             <div class="name">
                 <div class="fw-bold" style="font-size: 14px;"><?= htmlspecialchars($name) ?></div>
-                <div class="role fw-normal" style="font-size: 12px;"><?= htmlspecialchars($role) ?></div>
+                <?php if ($role === 'mahasiswa' && !empty($nim)): ?>
+                    <div class="role fw-normal" style="font-size: 12px;"><?= htmlspecialchars($role) ?> / <?= htmlspecialchars($nim) ?></div>
+                <?php else: ?>
+                    <div class="role fw-normal" style="font-size: 12px;"><?= htmlspecialchars($role) ?></div>
+            <?php endif; ?>
             </div>
         </div>
 </div>

@@ -1,3 +1,11 @@
+<?php
+// Array untuk menyimpan data file yang sudah diunggah
+$filePaths = [];
+foreach ($data as $file) {
+    $filePaths[$file['id_dokumen']] = $file['path'];
+}
+?>
+
     <!-- Unggah Berkas Jurusan -->
     <div class="tab-content" id="unggah-jurusan">
         <div class="welcome">
@@ -13,13 +21,20 @@
                     <div class="form-group mb-3">
                         <label for="file1">Laporan Tugas Akhir Skripsi:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file1" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                                <?php if (!empty($filePaths[1])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[1]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[1]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file1" class="form-control">
+                                    <a href="" class="btn btn-light ms-2" download><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file1" class="form-control">
+                                    <a href="" class="btn btn-light ms-2" download><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="1">
@@ -27,11 +42,18 @@
                     <div class="form-group mb-3">
                         <label for="file2">Program/Aplikasi Tugas Akhir/Skripsi:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]"id="file2" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
+                                <?php if (!empty($filePaths[2])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[2]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[2]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file2" class="form-control">
+                                    
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file2" class="form-control">
+                                   
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="2">
@@ -39,13 +61,20 @@
                     <div class="form-group mb-3">
                         <label for="file3">Surat Pernyataan Pubikasi Jurnal/Paper/Conference/Seminar/HAKI:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file3" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                                <?php if (!empty($filePaths[3])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[3]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[3]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file3" class="form-control">
+                                    <a href="https://docs.google.com/document/d/1rI1ICHfW5Jn5N0olvofHHEx-jH2C51rb/edit" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file3" class="form-control">
+                                    <a href="https://docs.google.com/document/d/1rI1ICHfW5Jn5N0olvofHHEx-jH2C51rb/edit" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="3">
@@ -58,13 +87,20 @@
                     <div class="form-group mb-3">
                         <label for="file4">Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file4" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                                <?php if (!empty($filePaths[4])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[4]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[3]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file4" class="form-control">
+                                    <a href="../templates/template_file1.pdf" class="btn btn-light ms-2" download><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file4" class="form-control">
+                                    <a href="../templates/template_file1.pdf" class="btn btn-light ms-2" download><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="4">
@@ -72,13 +108,21 @@
                     <div class="form-group mb-3">
                         <label for="file5">Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file5" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                                <?php if (!empty($filePaths[5])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[5]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[3]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file5" class="form-control">
+                                    
+                                    <a href="https://docs.google.com/document/d/1UueR3U1PcB6NkbHRKQBPpYwm0QgcLgKR/edit#heading=h.gjdgxs" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file5" class="form-control">
+                                    <a href="https://docs.google.com/document/d/1UueR3U1PcB6NkbHRKQBPpYwm0QgcLgKR/edit#heading=h.gjdgxs" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="5">
@@ -86,13 +130,20 @@
                     <div class="form-group mb-3">
                         <label for="file6">Surat Bebas Kompen:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file6" class="form-control" onchange="handleFileChange(event)" required> 
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                                <?php if (!empty($filePaths[6])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[6]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[3]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file6" class="form-control">
+                                    <a href="https://docs.google.com/document/d/1jywW6IWBx-Lt57shmVRP_b9HOGz5uJst/edit" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file6" class="form-control">
+                                    <a href="https://docs.google.com/document/d/1jywW6IWBx-Lt57shmVRP_b9HOGz5uJst/edit" class="btn btn-light ms-2" download target="_blank"><i
+                                    class="bi bi-box-arrow-up-right"></i></a>
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="6">
@@ -100,13 +151,16 @@
                     <div class="form-group mb-3">
                         <label for="file7">Scan Toeic dengan Skor minimal 450:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" name="dokumen_file[]" id="file7" class="form-control" onchange="handleFileChange(event)" required>
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i
-                                    class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i
-                                    class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i
-                                    class="bi bi-download"></i></button>
+                            <?php if (!empty($filePaths[7])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[7]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[3]) ?>" target="_blank" class="btn btn-info me-2">Lihat File</a>
+
+                                    <input type="file" name="dokumen_file[]" id="file7" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file7" class="form-control">
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="7">

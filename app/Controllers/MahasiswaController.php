@@ -18,6 +18,8 @@ class MahasiswaController{
             // Ambil data dari model
             $nim = $_SESSION['nim'];
             $jurusan = $this->model->getCountDokumenByNIMJurusan($nim);
+            $pusat = $this->model->getCountDokumenByNIMPusat($nim);
+            $data = $this->model->getDataFile($nim);
 
             // Kirim data ke view
             $viewPath = __DIR__ . '/../Views/Mahasiswa/dashboard_Mahasiswa.php';
@@ -31,12 +33,12 @@ class MahasiswaController{
         }
     }
 
-    public function getDashboardData($nim) {
-        $jumlahDokumen = $this->model->getCountDokumenByNIMJurusan($nim);
-        return [
-            'jumlahDokumen' => $jumlahDokumen,
-        ];
-    }
+    // public function getDashboardData($nim) {
+    //     $jumlahDokumen = $this->model->getCountDokumenByNIMJurusan($nim);
+    //     return [
+    //         'jumlahDokumen' => $jumlahDokumen,
+    //     ];
+    // }
 }
 
 // // Routing

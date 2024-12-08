@@ -37,5 +37,29 @@ class MahasiswaModel {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total_hasil']; // Mengembalikan jumlah dokumen
     }
+
+    public function getCountDokumenByNIMPusat($nim) {
+        $stmt = $this->conn->prepare("
+            SELECT COUNT(*) AS total_hasil
+            FROM Verifikasi v
+            JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+            WHERE v.nim = :nim AND d.jenis_dokumen = 'pusat'
+        ");
+        $stmt->bindParam(':nim', $nim);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_hasil']; // Mengembalikan jumlah dokumen
+    }
+
+    public function getDataFile($nim) {
+        $stmt = $this->conn->prepare("
+            SELECT id_dokumen, path
+            FROM Verifikasi
+            WHERE nim = :nim AND id_dokumen BETWEEN 1 AND 7
+        ");
+        $stmt->bindParam(':nim', $nim);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }
