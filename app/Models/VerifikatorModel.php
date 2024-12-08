@@ -66,8 +66,8 @@ class VerifikatorModel extends Model {
         return $result['jumlah_mahasiswa'];
     }
     
-    public function getMhsWithDocumentComplete($jenisDokumen) {
-        $stmt = $this->conn->prepare ("
+    public function getMhsWithDocumentComplete($jenisDokumen, $jumlahDokumen) {
+        $stmt = $this->conn->prepare("
             SELECT
                 vm.nim,
                 vm.nama,
@@ -75,26 +75,40 @@ class VerifikatorModel extends Model {
                 vm.role_prodi,
                 vm.role_jurusan,
                 vm.role_angkatan,
-                vm.kelas
+                vm.kelas,
+                vm.tgl_upload,
+                COUNT(v.id_verifikasi) AS verifikasi_count
             FROM Tabel_Verif_Mhs vm
             JOIN Verifikasi v ON vm.nim = v.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
-            WHERE d.jenis_dokumen = :jenisDokumen  -- Filter berdasarkan jenis_dokumen (jenis dokumen Pusat/Jurusan)
-            GROUP BY 
-                vm.nim
-            HAVING COUNT(v.id_verifikasi) = 6;  -- Filter berdasarkan jumlah verifikasi = 6 (Jumlah dokumen yang di upload untuk ijazah)
+            WHERE d.jenis_dokumen = :jenisDokumen
+            GROUP BY
+                vm.nim,
+                vm.nama,
+                vm.no_telp,
+                vm.role_prodi,
+                vm.role_jurusan,
+                vm.role_angkatan,
+                vm.kelas,
+                vm.tgl_upload
+            HAVING COUNT(v.id_verifikasi) = :jumlahDokumen
             ORDER BY
-            v.tgl_verifikasi ASC -- berdasarkan yang paling lama
+                vm.tgl_upload ASC;
         ");
     
-        // Bind parameter jenis_dokumen
-        $stmt->bindParam(':jenisDokumen', $jenisDokumen);
+        // Bind parameters
+        $stmt->bindParam(':jenisDokumen', $jenisDokumen, PDO::PARAM_STR);
+        $stmt->bindParam(':jumlahDokumen', $jumlahDokumen, PDO::PARAM_INT);
+    
         // Execute the query
         $stmt->execute();
+    
+        // Fetch results
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        return $result['Mhs_Dokumen_Lengkap'];
+        return $result; // Return all results
     }
+    
 
     public function getDocument($jenisDokumen, $nim) {
         $stmt = $this->conn->prepare ("
@@ -105,6 +119,7 @@ class VerifikatorModel extends Model {
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
             WHERE d.jenis_dokumen = :jenisDokumen
             AND m.nim = :nim
+			ORDER BY d.id_dokumen ASC;
         ");
     
         $stmt->bindParam(':jenisDokumen', $jenisDokumen);
@@ -117,7 +132,7 @@ class VerifikatorModel extends Model {
 
     }
     
-    public function updateStatusVerifikasi($idVerifikasi, $statusVerifikasi) {
+    public function updateStatusVerifikasi($id_dokumen, $statusVerifikasi) {
         // Query SQL untuk update status_verifikasi
         $stmt = $this->conn->prepare ("
             UPDATE Verifikasi
@@ -127,9 +142,8 @@ class VerifikatorModel extends Model {
         
         // Parameter untuk bind data
         $stmt->bindParam(':statusVerifikasi', $statusVerifikasi);
-        $stmt->bindParam(':idVerifikasi', $idVerifikasi);
+        $stmt->bindParam(':idVerifikasi', $id_dokumen);
 
-        
         $allowedStatuses = ['Gagal Disetujui', 'Disetujui'];
         if (!in_array($statusVerifikasi, $allowedStatuses)) {
             throw new Exception("Status tidak valid.");
@@ -141,7 +155,7 @@ class VerifikatorModel extends Model {
         return $result['Mhs_Dokumen_Lengkap'];
     }
 
-    public function updateCatatanVerifikasi($idVerifikasi, $catatan) {
+    public function updateCatatanVerifikasi($id_dokumen, $catatan) {
         $query = "
             UPDATE Verifikasi
             SET catatan = :catatan
@@ -150,7 +164,7 @@ class VerifikatorModel extends Model {
         
         $params = [
             ':catatan' => $catatan,
-            ':idVerifikasi' => $idVerifikasi
+            ':idVerifikasi' => $id_dokumen
         ];
         
         $result = $this->executeUpdateQuery($query, $params);
