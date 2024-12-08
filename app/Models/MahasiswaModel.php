@@ -62,6 +62,17 @@ class MahasiswaModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getDataFileIjazah($nim) {
+        $stmt = $this->conn->prepare("
+            SELECT id_dokumen, path
+            FROM Verifikasi
+            WHERE nim = :nim AND id_dokumen BETWEEN 8 AND 13
+        ");
+        $stmt->bindParam(':nim', $nim);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getStatusJurusan($nim) {
         $stmt = $this->conn->prepare("
         SELECT 
@@ -82,9 +93,11 @@ class MahasiswaModel {
     public function getStatusPusat($nim) {
         $stmt = $this->conn->prepare("
         SELECT 
+            d.id_dokumen,
             d.nama_dokumen,
             v.tgl_upload,
-            v.status_verifikasi
+            v.status_verifikasi,
+            v.catatan
         FROM Dokumen d
         LEFT JOIN Verifikasi v ON d.id_dokumen = v.id_dokumen AND v.nim = :nim
         WHERE d.jenis_dokumen = 'Pusat'

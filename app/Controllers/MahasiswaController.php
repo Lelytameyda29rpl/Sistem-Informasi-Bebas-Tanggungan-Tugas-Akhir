@@ -20,6 +20,7 @@ class MahasiswaController{
             $jurusan = $this->model->getCountDokumenByNIMJurusan($nim);
             $pusat = $this->model->getCountDokumenByNIMPusat($nim);
             $data = $this->model->getDataFile($nim);
+            $dataIjazah = $this->model->getDataFileIjazah($nim);
             $statusJurusan = $this->model->getStatusJurusan($nim);
             $statusPusat = $this->model->getStatusPusat($nim);
 

@@ -1,4 +1,12 @@
-    <!-- Unggah Berkas Ijazah -->
+<?php
+// Array untuk menyimpan data file yang sudah diunggah
+$filePaths = [];
+foreach ($dataIjazah as $file) {
+    $filePaths[$file['id_dokumen']] = $file['path'];
+}
+?> 
+ 
+ <!-- Unggah Berkas Ijazah -->
     <div class="tab-content" id="unggah-ijazah">
         <div class="welcome">
             <h1>Unggah Berkas Ijazah</h1>
@@ -6,67 +14,120 @@
 
         <div class="cards mx-1 d-flex flex-column mb-5">
             <div class="card text-start ">
-                <form>
+                <form id="uploadForm2" action="upload_ijazah.php" method="POST" enctype="multipart/form-data">
+                <div id="messageArea"></div>
                     <p class="fw-bold">Berkas Pengajuan Ijazah</p>
                     <hr>
                     <div class="form-group mb-3">
                         <label for="berkas2">Surat Bebas Tanggungan Jurusan:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
+                        <?php if (!empty($filePaths[8])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[8]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[8]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file8" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file8" class="form-control">
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="8">
                     </div>
                     <div class="form-group mb-3">
                         <label for="berkas2">Surat Bebas Tanggungan Akademik Pusat:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
+                        <?php if (!empty($filePaths[9])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[9]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[9]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file9" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file9" class="form-control">
+                                <?php endif; ?>
                             <a href="" class="btn btn-warning" target="_blank">Ajukan</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="9">
+
                     </div>
                     <div class="form-group mb-3">
                         <label for="berkas2">Surat Bebas Pustaka Perpustakaan Polinema:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
+                        <?php if (!empty($filePaths[10])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[10]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[10]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file10" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file10" class="form-control">
+                                <?php endif; ?>
                             <a href="" class="btn btn-warning" target="_blank">Ajukan</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="10">
                     </div>
                     <div class="form-group mb-3">
                         <label for="berkas2">Surat Kebenaran Data Diri:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
-                            <a href="https://siakad.polinema.ac.id/" class="btn btn-warning" target="_blank">SIAKAD</a>
+                        <?php if (!empty($filePaths[11])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[11]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[11]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file11" class="form-control">
+
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file11" class="form-control">
+
+                                <?php endif; ?>
+                            <a href="https://siakad.polinema.ac.id/" class="btn btn-primary" target="_blank">SIAKAD</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="11">
+
                     </div>
                     <div class="form-group mb-3">
                         <label for="berkas2">Bukti Pengisian Kuisioner Kantor Jaminan Mutu:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
-                            <a href="https://wa.link/ujcmlw" class="btn btn-warning" target="_blank">Kontak</a>
+                        <?php if (!empty($filePaths[12])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[12]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[8]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file12" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file12" class="form-control">
+                                <?php endif; ?>
+                            <a href="https://wa.link/ujcmlw" class="btn btn-primary" target="_blank">Kontak</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="12">
+
                     </div>
                     <div class="form-group mb-3">
                         <label for="berkas2">Bukti Pengisian SKPI:</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" id="berkas1" class="form-control" onchange="handleFileChange(event)">
-                            <button class="btn btn-danger" style="border-radius: 0;" onclick="removeFile()"><i class="bi bi-trash"></i></button>
-                            <button class="btn btn-info me-2" style="border-radius: 0;" onclick="previewFile()"><i class="bi bi-box-arrow-up-right"></i></button>
-                            <button class="btn btn-light" style="border-radius: 0;" onclick="downloadTemplate()"><i class="bi bi-download"></i></button>
+                        <?php if (!empty($filePaths[13])): ?>
+                                    <!-- Tampilkan nama file dan tombol untuk melihat -->
+                                    <span class="me-2"><?= basename($filePaths[13]) ?></span>
+                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[13]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+
+                                    <input type="file" name="dokumen_file[]" id="file13" class="form-control">
+                                <?php else: ?>
+                                    <!-- Input file jika belum diunggah -->
+                                    <input type="file" name="dokumen_file[]" id="file13" class="form-control">
+                                <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
+                        <input type="hidden" name="id_dokumen[]" value="13">
                     </div>
                     <br>
 
@@ -77,3 +138,42 @@
         </div>
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#uploadForm2'). submit(function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this); 
+
+        $.ajax({
+            url: '../app/views/Mahasiswa/upload_ijazah.php', 
+            type: 'POST',
+            data: formData,
+            contentType: false, 
+            processData: false, 
+            success: function(response) {
+                console.log("Raw response from server:", response);
+                var result = JSON.parse(response);
+                var messageArea = $('#messageArea');
+                messageArea.empty();
+
+                if (result.status === 'success') {
+                    result.messages.forEach(function(message) {
+                        messageArea.append('<div class="alert alert-success">' + message + '</div>');
+                    });
+                } else {
+                    result.messages.forEach(function(message) {
+                        messageArea.append('<div class="alert alert-danger">' + message + '</div>');
+                    });
+                }
+            },
+            error: function() {
+                $('#messageArea').html('<div class="alert alert-danger">An error occurred while uploading the files.</div>');
+                console.log("Error details:", textStatus, errorThrown);
+            }
+        });
+    });
+});
+</script>

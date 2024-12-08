@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $file = $_FILES['dokumen_file'];
 
     if ($file['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = "../uploads/$nim/";
+        $uploadDir = "uploads/$nim/";
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

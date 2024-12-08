@@ -2,7 +2,7 @@
 // Cek apakah semua dokumen sudah diverifikasi
 $allVerified = true;
 foreach ($statusJurusan as $row) {
-    if ($row['status_verifikasi'] !== 'Sudah Diverifikasi') {
+    if ($row['status_verifikasi'] !== 'Disetujui') {
         $allVerified = false;
         break;
     }
@@ -18,6 +18,10 @@ foreach ($statusJurusan as $row) {
         <div class="card">
             <div class="h3 text-start">Tabel Riwayat Tanggungan</div>
             <hr>
+            <!-- Alert Status -->
+            <div id="alertStatus" class="alert mt-3 fw-bold" style="display: none;" role="alert">
+    <!-- Pesan alert akan diatur menggunakan JavaScript -->
+            </div>
             <table class="table mt-2 text-start table-borderless table-striped table-hover">
                 <thead>
                     <tr class="table-secondary">
@@ -59,12 +63,34 @@ foreach ($statusJurusan as $row) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <button class="btn btn-success mt-3" style="width: 250px;"
-                <?= $allVerified ? '' : 'disabled' ?>>Ajukan Bebas Tanggungan</button>
+
         </div>
     </div>
     <p class="mt-3">Pastikan semua berkas Anda telah diverifikasi sebelum mengajukan Surat Bebas Tanggungan.</p>
 </div>
+
+<script>
+    function checkDocuments() {
+        var allVerified = <?= json_encode($allVerified) ?>; // Mengambil status dokumen dari PHP
+
+        var alertDiv = document.getElementById('alertStatus'); // Elemen alert
+        if (allVerified) {
+            // Jika semua dokumen sudah diverifikasi
+            alertDiv.className = "alert alert-success"; // Set kelas alert sukses
+            alertDiv.innerHTML = "Anda dapat mengambil Surat Bebas Tanggungan Jurusan di admin LT6."; // Set pesan
+        } else {
+            // Jika dokumen belum lengkap atau belum diverifikasi
+            alertDiv.className = "alert alert-warning"; // Set kelas alert peringatan
+            alertDiv.innerHTML = "Tunggu Berkas anda disetujui untuk mengambil Surat Bebas Tanggungan Jurusan."; // Set pesan
+        }
+        alertDiv.style.display = "block"; // Tampilkan alert
+    }
+
+    // Panggil fungsi checkDocuments saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", function() {
+        checkDocuments();
+    });
+</script>
 
 <!-- Modal Catatan -->
 <?php foreach ($statusJurusan as $row): ?>

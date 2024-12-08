@@ -23,10 +23,10 @@
             </div>
             <div class="card">
                 <h2>
-                <?php if ( $pusat < 7): ?>
-                    <i class="bi bi-exclamation-circle-fill text-danger me-2"></i> <?= htmlspecialchars($pusat ?? 0); ?> / 7 dokumen
+                <?php if ( $pusat < 6): ?>
+                    <i class="bi bi-exclamation-circle-fill text-danger me-2"></i> <?= htmlspecialchars($pusat ?? 0); ?> / 6 dokumen
                     <?php else: ?>
-                        <i class="bi bi-check-circle-fill text-success me-2"></i> <?= htmlspecialchars($pusat ?? 0); ?> / 7 dokumen
+                        <i class="bi bi-check-circle-fill text-success me-2"></i> <?= htmlspecialchars($pusat ?? 0); ?> / 6 dokumen
                 <?php endif; ?>
                 </h2>
                 <p>Berkas Persyaratan Ijazah</p>
