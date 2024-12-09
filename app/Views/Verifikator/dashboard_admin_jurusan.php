@@ -477,43 +477,9 @@
         });
     </script>
     <!-- dokumen-mahasiswa -->
-    <script>
-        const dokumenMahasiswa = [
-            { dokumen: "Laporan Tugas Akhir/Skripsi" },
-            { dokumen: "Program/Aplikasi TA/Skripsi" },
-            { dokumen: "Surat Pertanyaan Publikasi" },
-            { dokumen: "Tanda Terima Laporan PKL" },
-            { dokumen: "Surat Bebas Kompen" },
-            { dokumen: "Scan TOEIC" },
+    
 
-        ];
 
-        function displayDokumenData() {
-            const tableBodyDok = document.getElementById("table-body-dok");
-            tableBodyDok.innerHTML = ""; // Reset tabel
-
-            dokumenMahasiswa.forEach((data) => {
-                const row = `
-                    <tr>
-                        <td>${data.dokumen}</td>
-                        <td><button class="btn-success" style="width: 100px; height: 45px">
-                        <i class="bi bi-check-lg"></i>
-                        </button></td>
-                        <td><button class="btn-danger" style="width: 100px; height: 45px">
-                        <i class="bi bi-x-lg"></i>
-                        </button></td>
-                        <td><button class="btn-primary" style="width: 100px; height: 45px">
-                        <i class="bi bi-box-arrow-up-right"></i>
-                        </button></td>
-                    </tr>
-                `;
-                tableBodyDok.innerHTML += row;
-            });
-        }
-
-        // Panggil fungsi ini setelah data mahasiswa ditampilkan
-        displayDokumenData();
-    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
