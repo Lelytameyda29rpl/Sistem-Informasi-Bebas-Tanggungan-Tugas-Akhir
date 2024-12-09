@@ -28,15 +28,13 @@ class adminJurusanController
             $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
             $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
             $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompleteJurusan();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $nim = $_POST['nim'];
+                $nim = 2341720105;
                 $jenisDokumen = 'Jurusan';
                 try {
                     $documents = $this->model->getDocument($jenisDokumen, $nim);
                 } catch (Exception $e) {
                     die("Error loading documents: " . $e->getMessage());
                 }
-            }
             // Kirim data ke view
             $viewPath =  __DIR__ . '/../Views/Verifikator/dashboard_admin_jurusan.php';
 
