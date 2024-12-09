@@ -29,15 +29,14 @@ class adminPusatController
             $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
             $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
             $mhsDokumenLengkap = $this->model->getMhsWithDocumentComplete($jenisDokumen, $jumlahDokumen);
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $nim = $_POST['nim'];
-                $jenisDokumen = 'Pusat';
+                
+            $nim = 2441720124;
+            $jenisDokumen = 'Pusat';
                 try {
                     $documents = $this->model->getDocument($jenisDokumen, $nim);
                 } catch (Exception $e) {
                     die("Error loading documents: " . $e->getMessage());
                 }
-            }
             // Kirim data ke view
             $viewPath =  __DIR__ . '/../Views/Verifikator/dashboard_admin_pusat.php';
 
