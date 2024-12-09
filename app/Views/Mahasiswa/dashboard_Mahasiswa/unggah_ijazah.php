@@ -19,12 +19,16 @@ foreach ($dataIjazah as $file) {
                     <p class="fw-bold">Berkas Pengajuan Ijazah</p>
                     <hr>
                     <div class="form-group mb-3">
-                        <label for="berkas2">Surat Bebas Tanggungan Jurusan:</label>
+                        <label for="berkas2" class="fw-bold">Surat Bebas Tanggungan Jurusan:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[8])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[8]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[8]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[8]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file8" class="form-control">
                                 <?php else: ?>
@@ -36,12 +40,16 @@ foreach ($dataIjazah as $file) {
                         <input type="hidden" name="id_dokumen[]" value="8">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="berkas2">Surat Bebas Tanggungan Akademik Pusat:</label>
+                        <label for="berkas2" class="fw-bold">Surat Bebas Tanggungan Akademik Pusat:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[9])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[9]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[9]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[9]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file9" class="form-control">
                                 <?php else: ?>
@@ -55,12 +63,16 @@ foreach ($dataIjazah as $file) {
 
                     </div>
                     <div class="form-group mb-3">
-                        <label for="berkas2">Surat Bebas Pustaka Perpustakaan Polinema:</label>
+                        <label for="berkas2" class="fw-bold">Surat Bebas Pustaka Perpustakaan Polinema:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[10])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[10]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[10]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[10]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file10" class="form-control">
                                 <?php else: ?>
@@ -72,13 +84,17 @@ foreach ($dataIjazah as $file) {
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="10">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-3" class="fw-bold">
                         <label for="berkas2">Surat Kebenaran Data Diri:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[11])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[11]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[11]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[11]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file11" class="form-control">
 
@@ -94,12 +110,16 @@ foreach ($dataIjazah as $file) {
 
                     </div>
                     <div class="form-group mb-3">
-                        <label for="berkas2">Bukti Pengisian Kuisioner Kantor Jaminan Mutu:</label>
+                        <label for="berkas2" class="fw-bold">Bukti Pengisian Kuisioner Kantor Jaminan Mutu:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[12])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[12]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[8]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[12]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file12" class="form-control">
                                 <?php else: ?>
@@ -113,12 +133,16 @@ foreach ($dataIjazah as $file) {
 
                     </div>
                     <div class="form-group mb-3">
-                        <label for="berkas2">Bukti Pengisian SKPI:</label>
+                        <label for="berkas2" class="fw-bold">Bukti Pengisian SKPI:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[13])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->
                                     <span class="me-2"><?= basename($filePaths[13]) ?></span>
-                                    <a href="../app/views/mahasiswa/<?= htmlspecialchars($filePaths[13]) ?>" target="_blank" class="btn btn-info me-2"><i class="bi bi-eye"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-info me-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#filePreviewModal" 
+                                        onclick="showPreview('../app/views/mahasiswa/serve_file.php?file=<?= urlencode($filePaths[13]) ?>')">
+                                    <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file13" class="form-control">
                                 <?php else: ?>
@@ -177,3 +201,27 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<!-- Modal untuk Preview File -->
+<div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filePreviewModalLabel">Preview Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Iframe untuk menampilkan file -->
+                <iframe id="filePreviewFrame" src="" frameborder="0" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showPreview(fileUrl) {
+        var filePreviewFrame = document.getElementById('filePreviewFrame');
+        filePreviewFrame.src = fileUrl; // Set URL file ke iframe
+    }
+</script>
+

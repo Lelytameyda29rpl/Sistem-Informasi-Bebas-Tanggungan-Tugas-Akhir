@@ -6,9 +6,13 @@
             <h1>Selamat Datang,  <?php echo $_SESSION['nama']; ?></h1>
             <p>Anda berada di halaman pengajuan bebas tanggungan</p>
         </div>
-        <div class="alert alert-warning mt-3">
-            <i class="fas fa-exclamation-triangle"></i> Lengkapi Berkas!
-        </div>
+    <!-- Alert -->
+    <div class="alert <?= ($jurusan == 7 && $pusat == 6) ? 'alert-success' : 'alert-warning'; ?> alert-dismissible fade show mt-3" role="alert">
+        <i class="fas <?= ($jurusan == 7 && $pusat == 6) ? 'fa-check-circle' : 'fa-exclamation-triangle'; ?>"></i> 
+        <?= ($jurusan == 7 && $pusat == 6) ? 'Berkas Lengkap!' : 'Lengkapi Berkas!'; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
         <div class="cards">
             <div class="card">
                 <h2>
