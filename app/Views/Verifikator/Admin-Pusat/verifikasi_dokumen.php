@@ -115,7 +115,7 @@
                     <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument()">Tolak</button>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-info btn-sm"><a href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat Berkas</a></button>
+                    <a class="btn btn-primary btn-sm" href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat Dokumen</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
