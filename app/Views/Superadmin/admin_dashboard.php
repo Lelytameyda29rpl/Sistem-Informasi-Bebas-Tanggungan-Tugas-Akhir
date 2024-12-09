@@ -264,25 +264,24 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
  </head>
  <body>
   <div class="header">
-   <div class="toggle-sidebar">
-    <i class="fas fa-list">
-    </i>
-    <div class="title">
-     SISTEM BEBAS TANGGUNGAN TA
-    </div>
-   </div>
-   <div class="user-info">
-    <img alt="User profile picture" height="40" src="https://storage.googleapis.com/a1aa/image/AW0PXsLkpnZ8DNB4clVvuVaJnwXJMkA3KDoEGtUoITZtlc9E.jpg" width="40"/>
-    <div class="name">
-     <div>
-     <?= htmlspecialchars($nama); ?> <!-- Nama diambil dari session -->
-     </div>
-     <div class="role">
-     <?= htmlspecialchars($role_user); ?> <!-- Role diambil dari session -->
-     </div>
-    </div>
-   </div>
+        <div class="toggle-sidebar ">
+            <i class="fas fa-bars pe-auto" style="font-size: 16px;"></i>
+            <div class="title fw-bold " style="font-size: 14px; margin-left: 15px;">SISTEM BEBAS TANGGUNGAN TA</div>
+        </div>
+        <div class="user-info">
+                <img alt="User profile picture" height="40" src="https://storage.googleapis.com/a1aa/image/AW0PXsLkpnZ8DNB4clVvuVaJnwXJMkA3KDoEGtUoITZtlc9E.jpg" width="40"/>
+                <div class="name">
+                    <div>
+                    <?= htmlspecialchars($nama); ?> <!-- Nama diambil dari session -->
+                    </div>
+                    <div class="role">
+                    <?= htmlspecialchars($role_user); ?> <!-- Role diambil dari session -->
+                    </div>
+                </div>
+        </div>
   </div>
+
+  
   <div class="sidebar">
    <a class="menu-item active" href="index.php?controller=superAdmin&action=dashboard">
     <i class="bi bi-house"></i>
@@ -302,91 +301,96 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
     Keluar
    </a>
   </div>
-  <div class="content">
-   <div class="welcome">
-    <h1>
-    <h1>Selamat Datang, <?= htmlspecialchars($username); ?></h1>
-    </h1>
-    <p>
-     Anda berada di halaman admin
-    </p>
-   </div>
-   <div class="cards">
-    <div class="card">
-        <h3>Data Mahasiswa</h3>
-        <h2><?= htmlspecialchars($mahasiswaCount ?? 0); ?></h2>
-        <p>Data Mahasiswa Saat Ini</p>
+    <div class="content">
+        <div class="welcome">
+            <h1>
+            <h1>Selamat Datang, <?= htmlspecialchars($username); ?></h1>
+            </h1>
+            <p>
+            Anda berada di halaman admin
+            </p>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h3>Data Mahasiswa</h3>
+                <h2><?= htmlspecialchars($mahasiswaCount ?? 0); ?></h2>
+                <p>Data Mahasiswa Saat Ini</p>
+            </div>
+            <div class="card">
+                <h3>Data Verifikator</h3>
+                <h2><?= htmlspecialchars($verifikatorCount ?? 0); ?></h2>
+                <p>Data Verifikator Saat Ini</p>
+            </div>
+            <div class="card">
+                <h3>Data Admin</h3>
+                <h2><?= htmlspecialchars($adminCount ?? 0); ?></h2>
+                <p>Data Admin Saat Ini</p>
+            </div>
+        </div>
+        <div class="summary">
+            <h3>Ringkasan Manajemen Dokumen</h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Nama Mahasiswa</th>
+                        <th>Tanggal Upload</th>
+                        <th>Status</th>
+                        <th>Nama Dokumen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                            <?php if (!empty($documents)): ?>
+                                <?php foreach ($documents as $doc): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
+                                        <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
+                                        <td>
+                                        <span class="status 
+                                            <?php 
+                                                if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
+                                                echo 'status-rejected';
+                                                } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
+                                                echo 'status-approved';
+                                                } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi'|| $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
+                                                echo 'status-waited';
+                                                }
+                                            ?>">
+                                            <?= htmlspecialchars($doc['status_verifikasi']); ?>
+                                        </span>
+                                        </td>
+                                        </td>
+                                        <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="4">Tidak ada data dokumen</td></tr>
+                            <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="card">
-        <h3>Data Verifikator</h3>
-        <h2><?= htmlspecialchars($verifikatorCount ?? 0); ?></h2>
-        <p>Data Verifikator Saat Ini</p>
-    </div>
-    <div class="card">
-        <h3>Data Admin</h3>
-        <h2><?= htmlspecialchars($adminCount ?? 0); ?></h2>
-        <p>Data Admin Saat Ini</p>
-    </div>
-</div>
-<div class="summary">
-    <h3>Ringkasan Manajemen Dokumen</h3>
-    <table class="summary-table">
-        <thead>
-            <tr>
-                <th>Nama Mahasiswa</th>
-                <th>Tanggal Upload</th>
-                <th>Status</th>
-                <th>Nama Dokumen</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if (!empty($documents)): ?>
-                        <?php foreach ($documents as $doc): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
-                                <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
-                                <td>
-                                <span class="status 
-                                    <?php 
-                                        if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
-                                           echo 'status-rejected';
-                                        } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
-                                           echo 'status-approved';
-                                        } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi'|| $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
-                                           echo 'status-waited';
-                                        }
-                                    ?>">
-                                    <?= htmlspecialchars($doc['status_verifikasi']); ?>
-                                </span>
-                                </td>
-                                </td>
-                                <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr><td colspan="4">Tidak ada data dokumen</td></tr>
-                    <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+
   <div class="footer">
    ©2024 Jurusan Teknologi Informasi
   </div>
   <script>
-   document.querySelector('.toggle-sidebar i').addEventListener('click', function() {
+document.querySelector('.toggle-sidebar i').addEventListener('click', function() {
             var sidebar = document.querySelector('.sidebar');
             var content = document.querySelector('.content');
             var footer = document.querySelector('.footer');
-            if (sidebar.style.display === 'none' || sidebar.style.display === '') {
-                sidebar.style.display = 'block';
-                content.style.marginLeft = '250px';
-                footer.style.width = 'calc(100% - 250px)';
-                footer.style.left = '250px';
-            } else {
-                sidebar.style.display = 'none';
+
+            // Toggle a class to handle the sidebar visibility
+            sidebar.classList.toggle('hidden');
+
+            if (sidebar.classList.contains('hidden')) {
                 content.style.marginLeft = '0';
                 footer.style.width = '100%';
                 footer.style.left = '0';
+            } else {
+                content.style.marginLeft = sidebar.offsetWidth + 'px';
+                // content.style.marginLeft = '250px';
+                footer.style.width = 'calc(100% - 250px)';
+                footer.style.left = '250px';
             }
         });
   </script>
