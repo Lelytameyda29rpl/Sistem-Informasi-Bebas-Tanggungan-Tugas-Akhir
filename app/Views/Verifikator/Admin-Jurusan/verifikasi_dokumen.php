@@ -96,7 +96,7 @@
               <th>Nama Dokumen</th>
               <th>Setujui</th>
               <th>Tolak</th>
-              <th>Lihat Berkas</th>
+              <th>Lihat Dokumen</th>
             </tr>
           </thead>
           <tbody id="table-body-dok">
@@ -115,7 +115,7 @@
                     <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument()">Tolak</button>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-info btn-sm" onclick="<?= htmlspecialchars($dokumen['path']) ?>">Lihat Berkas</button>
+                    <a class="btn btn-primary btn-sm" href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat Dokumen</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
