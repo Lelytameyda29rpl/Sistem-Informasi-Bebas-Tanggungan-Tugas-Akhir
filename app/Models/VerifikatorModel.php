@@ -69,31 +69,35 @@ class VerifikatorModel extends Model {
     public function getMhsWithDocumentComplete($jenisDokumen, $jumlahDokumen) {
         $stmt = $this->conn->prepare("
             SELECT
-                vm.nim,
-                vm.nama,
-                vm.no_telp,
-                vm.role_prodi,
-                vm.role_jurusan,
-                vm.role_angkatan,
-                vm.kelas,
-                vm.tgl_upload,
-                COUNT(v.id_verifikasi) AS verifikasi_count
-            FROM Tabel_Verif_Mhs vm
-            JOIN Verifikasi v ON vm.nim = v.nim
+            v.nim,
+            u.nama,
+            u.no_telp,
+            p.role_prodi,
+            j.role_jurusan,
+            a.role_angkatan,
+            m.kelas, 
+            v.tgl_upload,
+            COUNT(v.id_verifikasi) AS verifikasi_count
+            FROM Verifikasi v
+            JOIN Mahasiswa m ON v.nim = m.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+            JOIN [User] u ON m.id_user = u.id_user
+            JOIN Prodi p ON m.id_prodi = p.id_prodi
+            JOIN Jurusan j ON m.id_jurusan = j.id_jurusan
+            JOIN Angkatan a ON m.id_angkatan = a.id_angkatan
             WHERE d.jenis_dokumen = :jenisDokumen
             GROUP BY
-                vm.nim,
-                vm.nama,
-                vm.no_telp,
-                vm.role_prodi,
-                vm.role_jurusan,
-                vm.role_angkatan,
-                vm.kelas,
-                vm.tgl_upload
+                v.nim, 
+                u.nama, 
+                u.no_telp, 
+                p.role_prodi, 
+                j.role_jurusan, 
+                a.role_angkatan, 
+                m.kelas, 
+                v.tgl_upload
             HAVING COUNT(v.id_verifikasi) = :jumlahDokumen
             ORDER BY
-                vm.tgl_upload ASC;
+                v.tgl_upload ASC;
         ");
     
         // Bind parameters
@@ -111,26 +115,24 @@ class VerifikatorModel extends Model {
     
 
     public function getDocument($jenisDokumen, $nim) {
-        $stmt = $this->conn->prepare ("
-            SELECT
-                v.path
+        $stmt = $this->conn->prepare("
+            SELECT v.path
             FROM Verifikasi v
             JOIN Mahasiswa m ON v.nim = m.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
             WHERE d.jenis_dokumen = :jenisDokumen
             AND m.nim = :nim
-			ORDER BY d.id_dokumen ASC;
+            ORDER BY d.id_dokumen ASC;
         ");
     
         $stmt->bindParam(':jenisDokumen', $jenisDokumen);
         $stmt->bindParam(':nim', $nim);
-        // Execute the query
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $result['Mhs_Dokumen_Lengkap'];
-
+    
+        return $result;  // Mengembalikan array asosiatif dari hasil query
     }
+    
     
     public function updateStatusVerifikasi($id_dokumen, $statusVerifikasi) {
         // Query SQL untuk update status_verifikasi

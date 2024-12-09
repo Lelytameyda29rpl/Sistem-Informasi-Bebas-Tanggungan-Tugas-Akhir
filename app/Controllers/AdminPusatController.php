@@ -3,7 +3,7 @@ require_once __DIR__ . '/../Models/VerifikatorModel.php';
 require_once __DIR__ . '/../../config/Database.php';
 session_start();
 
-class adminJurusanController
+class adminPusatController
 {
     private $model;
 
