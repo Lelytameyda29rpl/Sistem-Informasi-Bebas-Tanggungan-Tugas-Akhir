@@ -38,8 +38,7 @@
                 <td><?= htmlspecialchars($mhs['no_telp']) ?></td>
                 <td><?= htmlspecialchars($mhs['tgl_upload']) ?></td>
                 <td>
-                  <button type="button" class="btn btn-success btn-sm"
-                    onclick="showStudentInfo(<?= htmlspecialchars($mhs['nim']) ?>)">Verif</button>
+                  <button type="button" class="btn btn-success btn-sm">Lihat Berkas</button>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -101,7 +100,30 @@
             </tr>
           </thead>
           <tbody id="table-body-dok">
-            <!-- Dokumen mahasiswa akan diisi oleh JavaScript -->
+            <?php
+            // List of documents to display
+
+            if (!empty($documents)):
+              foreach ($documents as $dokumen):
+                ?>
+                <tr>
+                  <td><?= htmlspecialchars($dokumen['nama_dokumen']) ?></td>
+                  <td>
+                    <button type="button" class="btn btn-success btn-sm" onclick="approveDocument()">Setujui</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument()">Tolak</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" onclick="<?= htmlspecialchars($dokumen['path']) ?>">Lihat Berkas</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="4" class="text-center">Tidak ada dokumen.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
