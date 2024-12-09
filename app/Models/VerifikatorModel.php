@@ -66,43 +66,76 @@ class VerifikatorModel extends Model {
         return $result['jumlah_mahasiswa'];
     }
     
-    public function getMhsWithDocumentComplete($jenisDokumen, $jumlahDokumen) {
+    public function getMhsWithDocumentCompleteJurusan() {
         $stmt = $this->conn->prepare("
             SELECT
-            v.nim,
-            u.nama,
-            u.no_telp,
-            p.role_prodi,
-            j.role_jurusan,
-            a.role_angkatan,
-            m.kelas, 
-            v.tgl_upload,
+            vm.nim,
+            vm.nama,
+            vm.no_telp,
+            vm.role_prodi,
+            vm.role_jurusan,
+            vm.role_angkatan,
+            vm.kelas, 
+            vm.tgl_upload,
             COUNT(v.id_verifikasi) AS verifikasi_count
-            FROM Verifikasi v
-            JOIN Mahasiswa m ON v.nim = m.nim
+            FROM Verif_Mhs_Jurusan vm
+            JOIN Verifikasi v ON vm.nim = v.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
-            JOIN [User] u ON m.id_user = u.id_user
-            JOIN Prodi p ON m.id_prodi = p.id_prodi
-            JOIN Jurusan j ON m.id_jurusan = j.id_jurusan
-            JOIN Angkatan a ON m.id_angkatan = a.id_angkatan
-            WHERE d.jenis_dokumen = :jenisDokumen
+            WHERE d.jenis_dokumen = 'Jurusan'
             GROUP BY
-                v.nim, 
-                u.nama, 
-                u.no_telp, 
-                p.role_prodi, 
-                j.role_jurusan, 
-                a.role_angkatan, 
-                m.kelas, 
-                v.tgl_upload
-            HAVING COUNT(v.id_verifikasi) = :jumlahDokumen
+                vm.nim, 
+                vm.nama, 
+                vm.no_telp, 
+                vm.role_prodi, 
+                vm.role_jurusan, 
+                vm.role_angkatan, 
+                vm.kelas, 
+                vm.tgl_upload
+            HAVING COUNT(v.id_verifikasi) = 7
             ORDER BY
-                v.tgl_upload ASC;
+                vm.tgl_upload ASC;
         ");
     
-        // Bind parameters
-        $stmt->bindParam(':jenisDokumen', $jenisDokumen, PDO::PARAM_STR);
-        $stmt->bindParam(':jumlahDokumen', $jumlahDokumen, PDO::PARAM_INT);
+
+    
+        // Execute the query
+        $stmt->execute();
+    
+        // Fetch results
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $result; // Return all results
+    }
+
+    public function getMhsWithDocumentCompletePusat() {
+        $stmt = $this->conn->prepare("
+            SELECT
+            vm.nim,
+            vm.nama,
+            vm.no_telp,
+            vm.role_prodi,
+            vm.role_jurusan,
+            vm.role_angkatan,
+            vm.kelas, 
+            vm.tgl_upload,
+            COUNT(v.id_verifikasi) AS verifikasi_count
+            FROM Verif_Mhs_Pusat vm
+            JOIN Verifikasi v ON vm.nim = v.nim
+            JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+            WHERE d.jenis_dokumen = 'Pusat'
+            GROUP BY
+                vm.nim, 
+                vm.nama, 
+                vm.no_telp, 
+                vm.role_prodi, 
+                vm.role_jurusan, 
+                vm.role_angkatan, 
+                vm.kelas, 
+                vm.tgl_upload
+            HAVING COUNT(v.id_verifikasi) = 6
+            ORDER BY
+                vm.tgl_upload ASC;
+        ");
     
         // Execute the query
         $stmt->execute();

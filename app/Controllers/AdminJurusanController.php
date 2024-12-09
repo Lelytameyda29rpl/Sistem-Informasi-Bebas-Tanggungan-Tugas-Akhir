@@ -17,7 +17,6 @@ class adminJurusanController
     public function dashboard() {
         try {
             $jenisDokumen = 'Jurusan';
-            $jumlahDokumen = 7;
 
             $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
             $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
@@ -28,7 +27,7 @@ class adminJurusanController
             $mahasiswaCount22 = $this->model->getMahasiswaCount('2022');
             $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
             $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
-            $mhsDokumenLengkap = $this->model->getMhsWithDocumentComplete($jenisDokumen, $jumlahDokumen);
+            $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompleteJurusan();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $nim = $_POST['nim'];
                 $jenisDokumen = 'Jurusan';
