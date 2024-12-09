@@ -415,6 +415,26 @@
             }
         }
 
+        // Function to handle "Setujui" action
+        function approveDocument(button) {
+            // Find the parent row of the button clicked
+            var row = button.closest('tr');
+            // Add the 'table-success' class to the row
+            row.classList.add('table-success');
+            // Remove 'table-danger' class if it's present (in case the user previously clicked 'Tolak')
+            row.classList.remove('table-danger');
+        }
+
+        // Function to handle "Tolak" action
+        function rejectDocument(button) {
+            // Find the parent row of the button clicked
+            var row = button.closest('tr');
+            // Add the 'table-danger' class to the row
+            row.classList.add('table-danger');
+            // Remove 'table-success' class if it's present (in case the user previously clicked 'Setujui')
+            row.classList.remove('table-success');
+        }
+
 
         // function untuk tombol verif
         function displayVerifContent() {
@@ -477,7 +497,7 @@
         });
     </script>
     <!-- dokumen-mahasiswa -->
-    
+
 
 
 

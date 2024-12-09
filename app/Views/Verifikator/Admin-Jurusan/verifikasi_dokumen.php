@@ -109,10 +109,10 @@
                 <tr>
                   <td><?= htmlspecialchars($dokumen['nama_dokumen']) ?></td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" onclick="approveDocument()">Setujui</button>
+                    <button type="button" class="btn btn-success btn-sm" onclick="approveDocument(this)">Setujui</button>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument()">Tolak</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
                   </td>
                   <td>
                     <a class="btn btn-primary btn-sm" href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat Dokumen</a>

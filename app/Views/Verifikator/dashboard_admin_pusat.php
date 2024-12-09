@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -27,9 +28,9 @@
                 width: 100%;
             }
         }
-
     </style>
 </head>
+
 <body>
     <?php
 
@@ -40,8 +41,8 @@
 
     ?>
 
-<!-- filter -->
-<script>
+    <!-- filter -->
+    <script>
         function toggleFilterModal() {
             const filterModal = document.getElementById('filterModal');
             filterModal.style.display = filterModal.style.display === 'block' ? 'none' : 'block';
@@ -415,6 +416,24 @@
             }
         }
 
+        function approveDocument(button) {
+            // Find the parent row of the button clicked
+            var row = button.closest('tr');
+            // Add the 'table-success' class to the row
+            row.classList.add('table-success');
+            // Remove 'table-danger' class if it's present (in case the user previously clicked 'Tolak')
+            row.classList.remove('table-danger');
+        }
+
+        // Function to handle "Tolak" action
+        function rejectDocument(button) {
+            // Find the parent row of the button clicked
+            var row = button.closest('tr');
+            // Add the 'table-danger' class to the row
+            row.classList.add('table-danger');
+            // Remove 'table-success' class if it's present (in case the user previously clicked 'Setujui')
+            row.classList.remove('table-success');
+        }
 
         // function untuk tombol verif
         function displayVerifContent() {
@@ -477,7 +496,7 @@
         });
     </script>
     <!-- dokumen-mahasiswa -->
-    
+
 
 
 
@@ -517,4 +536,5 @@
 
     </script>
 </body>
+
 </html>
