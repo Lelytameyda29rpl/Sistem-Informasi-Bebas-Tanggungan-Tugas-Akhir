@@ -31,13 +31,9 @@ foreach ($data as $file) {
                                     <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file1" class="form-control">
-                                    <a href="" class="btn btn-light ms-2" download><i
-                                    class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
                                     <input type="file" name="dokumen_file[]" id="file1" class="form-control">
-                                    <a href="" class="btn btn-light ms-2" download><i
-                                    class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
@@ -110,12 +106,12 @@ foreach ($data as $file) {
                                     <i class="bi bi-eye"></i></a>
 
                                     <input type="file" name="dokumen_file[]" id="file4" class="form-control">
-                                    <a href="../templates/template_file1.pdf" class="btn btn-light ms-2" download><i
+                                    <a href="https://docs.google.com/document/d/149WJdBs6jeizIWATmjHllAoP889mHWXo/edit?usp=drive_link&ouid=111369195763391192735&rtpof=true&sd=true" class="btn btn-light ms-2" target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
                                     <input type="file" name="dokumen_file[]" id="file4" class="form-control">
-                                    <a href="../templates/template_file1.pdf" class="btn btn-light ms-2" download><i
+                                    <a href="https://docs.google.com/document/d/149WJdBs6jeizIWATmjHllAoP889mHWXo/edit?usp=drive_link&ouid=111369195763391192735&rtpof=true&sd=true" class="btn btn-light ms-2" target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
                         </div>

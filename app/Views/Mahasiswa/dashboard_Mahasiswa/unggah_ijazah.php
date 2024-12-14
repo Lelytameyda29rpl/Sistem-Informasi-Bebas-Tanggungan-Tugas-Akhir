@@ -56,7 +56,7 @@ foreach ($dataIjazah as $file) {
                                     <!-- Input file jika belum diunggah -->
                                     <input type="file" name="dokumen_file[]" id="file9" class="form-control">
                                 <?php endif; ?>
-                            <a href="" class="btn btn-warning" target="_blank">Ajukan</a>
+                            <a href="https://drive.google.com/file/d/1G6yal9YBha4vDtP61sndFhKiErkzNBTo/view?usp=sharing" class="btn btn-primary" target="_blank">Panduan</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="9">
@@ -79,13 +79,13 @@ foreach ($dataIjazah as $file) {
                                     <!-- Input file jika belum diunggah -->
                                     <input type="file" name="dokumen_file[]" id="file10" class="form-control">
                                 <?php endif; ?>
-                            <a href="" class="btn btn-warning" target="_blank">Ajukan</a>
+                            <a href=" https://drive.google.com/file/d/1IjdvqKnPWmolQPGs5ltfMXM7jj02uhuV/view?usp=sharing" class="btn btn-primary" target="_blank">Panduan</a>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
                         <input type="hidden" name="id_dokumen[]" value="10">
                     </div>
-                    <div class="form-group mb-3" class="fw-bold">
-                        <label for="berkas2">Surat Kebenaran Data Diri:</label>
+                    <div class="form-group mb-3">
+                        <label for="berkas2" class="fw-bold">Surat Kebenaran Data Diri:</label>
                         <div class="d-flex align-items-center">
                         <?php if (!empty($filePaths[11])): ?>
                                     <!-- Tampilkan nama file dan tombol untuk melihat -->

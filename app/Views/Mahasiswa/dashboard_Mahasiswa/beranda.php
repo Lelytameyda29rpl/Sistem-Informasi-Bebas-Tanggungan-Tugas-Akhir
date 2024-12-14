@@ -34,16 +34,17 @@
                 <?php endif; ?>
                 </h2>
                 <p>Berkas Persyaratan Ijazah</p>
-                <a href="#" class="btn btn-success">Lengkapi Berkas</a>
+                <a href="#unggah-ijazah" onclick="showTab('unggah-ijazah')" class="btn btn-success">Lengkapi Berkas</a>
             </div>
         </div>
         <div class="steps mb-5">
             <h3>Langkah-langkah Pengajuan Bebas Tanggungan:</h3>
             <ol>
                 <li>Unggah semua berkas yang diperlukan di bagian "Unggah Berkas".</li>
-                <li>Pantau status tanggungan secara berkala di bagian "Status Tanggungan".</li>
-                <li>Jika status sudah terverifikasi semua, ajukan Surat Bebas Tanggungan.</li>
-                <li>Cetak secara berkala pada bagian "Status Pengajuan", untuk Cetak Surat Bebas Tanggungan.</li>
+                <li>Pantau status tanggungan Jurusan secara berkala di bagian "Status Tanggungan".</li>
+                <li>Pantau status tanggungan Pusat secara berkala di bagian "Pengajuan Ijazah".</li>
+                <li>Jika status sudah terverifikasi semua, Maka akan muncul peringatan untuk mengambil Surat Bebas Tanggungan. begitu juga untuk Ijazah</li>
+                <li>Cetak secara berkala pada bagian "Status Tanggungan" dan "Pengajuan Ijazah", untuk mendapatkan Surat Bebas Tanggungan dan Ijazah.</li>
                 <li>Hubungi verifikator jika ada kendala.</li>
             </ol>
         </div>

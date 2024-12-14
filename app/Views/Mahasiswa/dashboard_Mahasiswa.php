@@ -34,7 +34,6 @@
 </head>
 
 <body>
-    <?= htmlspecialchars($jurusan ); ?>
     <?php 
     include(__DIR__ . '/../layouts/header.php');
     include(__DIR__ . '/../layouts/sidebar_mhs.php');
@@ -44,67 +43,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- <script>
-        // Fungsi untuk mengunduh template
-        function downloadTemplate() {
-            const link = document.createElement("a");
-            link.href = "template.pdf"; // Path file template
-            link.download = "Template_Jurusan.pdf";
-            link.click();
-        }
-
-        // Fungsi untuk menghapus file
-        function removeFile() {
-            const fileInput = document.getElementById("berkas1");
-            const previewContainer = document.getElementById("file-preview");
-            fileInput.value = ""; // Reset input file
-            previewContainer.innerHTML = ""; // Kosongkan preview
-            previewContainer.style.display = "none"; // Sembunyikan preview
-            alert("File berhasil dihapus.");
-        }
-
-        // Fungsi untuk preview file
-        function previewFile() {
-            const fileInput = document.getElementById("berkas1");
-            const previewContainer = document.getElementById("file-preview");
-            const file = fileInput.files[0];
-
-            if (!file) {
-                alert("Silakan unggah file terlebih dahulu!");
-                return;
-            }
-
-            const fileURL = URL.createObjectURL(file);
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-
-            previewContainer.innerHTML = ""; // Kosongkan preview sebelumnya
-            if (fileExtension === "pdf") {
-                const iframe = document.createElement("iframe");
-                iframe.src = fileURL;
-                iframe.width = "100%";
-                iframe.height = "400px";
-                previewContainer.appendChild(iframe);
-            } else if (["jpg", "jpeg", "png", "gif"].includes(fileExtension)) {
-                const img = document.createElement("img");
-                img.src = fileURL;
-                previewContainer.appendChild(img);
-            } else {
-                alert("Preview tidak tersedia untuk file ini.");
-            }
-
-            previewContainer.style.display = "block";
-        }
-
-        // Fungsi tambahan untuk menampilkan nama file (opsional)
-        function handleFileChange(event) {
-            const fileInput = event.target;
-            const file = fileInput.files[0];
-            if (file) {
-                console.log("File dipilih:", file.name);
-            }
-        }
-    </script> -->
     
 
     <script>
