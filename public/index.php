@@ -64,7 +64,7 @@ switch ($controller) {
             $adminPusatController = new AdminPusatController();
         
             if ($action === 'verifikasi') {
-                $adminPusatController->verifikasi();
+                $adminPusatController->dashboard();
             } else {
                 $adminPusatController->dashboard(); // Default action
             }
@@ -74,7 +74,7 @@ switch ($controller) {
             $adminJurusanController = new AdminJurusanController();
             
             if ($action === 'verifikasi') {
-                $adminJurusanController->verifikasi();
+                $adminJurusanController->dashboard();
             } else {
                 $adminJurusanController->dashboard(); // Default action
             }

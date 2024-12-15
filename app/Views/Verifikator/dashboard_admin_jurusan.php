@@ -497,44 +497,78 @@
         });
     </script>
     <!-- dokumen-mahasiswa -->
-
-
-
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Ambil semua tombol dengan data-target
-            const buttons = document.querySelectorAll('button[data-target]');
+            // Ambil semua tombol "Lihat Berkas"
+            const buttons = document.querySelectorAll(".lihat-berkas");
 
-            // Loop melalui tombol-tombol tersebut
-            buttons.forEach(function (button) {
-                // Setiap tombol mendapatkan event listener click
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const nim = this.getAttribute("data-nim");
+                    console.log("NIM yang dikirim:", nim); // Cetak ke console
+                    
+                    // Kirim NIM melalui POST menggunakan Fetch API
+                    fetch("index.php?controller=adminJurusan&action=dashboard", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ nim: nim }) // Kirim NIM sebagai JSON
+                    })
+                    .then(response => response.json()) // Parse respons JSON
+                    .then(data => {
+                        console.log("Data Dokumen:", data);
 
-                    // Ambil ID target yang sesuai dengan data-target dari tombol
-                    const targetId = button.getAttribute('data-target');
-                    const targetElement = document.querySelector(targetId);
+                        // Tampilkan div dokumen-mahasiswa
+                        const dokumenContainer = document.querySelector(".dokumen-mahasiswa");
+                        dokumenContainer.style.display = "block";
 
-                    if (targetElement) {
-                        // Sembunyikan semua kontainer verifikasi lainnya
-                        document.querySelectorAll('.verif-container').forEach(function (el) {
-                            el.style.display = 'none'; // Menyembunyikan kontainer lainnya
-                        });
+                        // Isi tabel dokumen dengan data dari server
+                        const tableBodyDok = document.getElementById("table-body-dok");
+                        tableBodyDok.innerHTML = ""; // Reset isi tabel
 
-                        // Tampilkan kontainer verifikasi yang sesuai
-                        targetElement.style.display = 'block';
-
-                        // Scroll otomatis ke kontainer yang baru ditampilkan
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                        if (data.length > 0) {
+                            data.forEach(dokumen => {
+                                tableBodyDok.innerHTML += `
+                                    <tr>
+                                        <td>${dokumen.nama_dokumen}</td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)">Setujui</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
+                                        </td>
+                                        <td>
+                                            <a href="../app/Views/Mahasiswa/${dokumen.path}" 
+                                            class="btn btn-primary btn-sm" target="_blank">Lihat Dokumen</a>
+                                        </td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tableBodyDok.innerHTML = `
+                                <tr>
+                                    <td colspan="4" class="text-center">Tidak ada dokumen.</td>
+                                </tr>
+                            `;
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
                 });
             });
         });
 
+        // Function untuk "Setujui"
+        function approveDocument(button) {
+            const row = button.closest('tr');
+            row.classList.add('table-success');
+            row.classList.remove('table-danger');
+        }
+
+        // Function untuk "Tolak"
+        function rejectDocument(button) {
+            const row = button.closest('tr');
+            row.classList.add('table-danger');
+            row.classList.remove('table-success');
+        }
     </script>
 </body>
 

@@ -38,8 +38,13 @@
                 <td><?= htmlspecialchars($mhs['no_telp']) ?></td>
                 <td><?= htmlspecialchars($mhs['tgl_upload']) ?></td>
                 <td>
-                  <button type="button" class="btn btn-success btn-sm">Lihat Berkas</button>
+                    <button type="button" class="btn btn-success btn-sm lihat-berkas" 
+                            data-nim="<?= htmlspecialchars($mhs['nim']) ?>">
+                        Lihat Berkas
+                    </button>
                 </td>
+
+
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
