@@ -316,7 +316,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                             <!-- Judul dan tombol Tambah -->
                             <h2 class="mb-2 col-md-9">Data Riwayat Verifikasi</h2>
                             <div class="col-md-3 d-flex justify-content-end">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Data Mahasiswa</button>
+                                
                             </div>
                         </div>
 

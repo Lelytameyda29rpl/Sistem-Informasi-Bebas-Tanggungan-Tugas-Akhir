@@ -559,7 +559,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                                            <button type="submit" class="btn btn-edit">Simpan Perubahan</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -693,7 +693,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                                            <button type="submit" class="btn btn-edit">Simpan Perubahan</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -817,7 +817,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                                            <button type="submit" class="btn btn-edit">Simpan Perubahan</button>
                                                         </div>
                                                     </form>
                                                 </div>
