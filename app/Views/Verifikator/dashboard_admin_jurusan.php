@@ -287,111 +287,149 @@
 
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
-        const rowsPerPage = 10; // Jumlah data per halaman
-        let currentPage = 1; // Halaman saat ini
-        let filteredResults = dataMahasiswa; // Data yang difilter (default semua data)
+  document.addEventListener('DOMContentLoaded', function() {
+    const rows = Array.from(document.querySelectorAll('#table-body tr'));
+    const paginationContainer = document.getElementById('pagination');
+    const searchInput = document.getElementById('search-input');
+    const filterAngkatan = document.getElementById('filter-angkatan');
+    const filterProdi = document.getElementById('filter-prodi');
+    const filterKelas = document.getElementById('filter-kelas');
 
+    let currentPage = 1;
+    const rowsPerPage = 10;
 
-        // Fungsi untuk membuat pagination
-        function setupPagination() {
-            const totalPages = Math.ceil(filteredResults.length / rowsPerPage);
-            const pagination = document.getElementById("pagination");
-            pagination.innerHTML = ""; // Reset pagination
+    function displayRows(filteredRows) {
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      rows.forEach(row => row.style.display = 'none');
+      filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
 
-            if (currentPage > 1) {
-                pagination.innerHTML += `
-            <li class="page-item">
-                <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">&lt;</a>
-            </li>
-        `;
-            }
+      if (filteredRows.length === 0) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = '<td colspan="9" class="text-center table-secondary">Data tidak ditemukan.</td>';
+        document.getElementById('table-body').appendChild(noDataRow);
+      }
+    }
 
-            for (let i = 1; i <= totalPages; i++) {
-                pagination.innerHTML += `
-            <li class="page-item ${i === currentPage ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-            }
+    function updatePagination(filteredRows) {
+      const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+      paginationContainer.innerHTML = '';
 
-            if (currentPage < totalPages) {
-                pagination.innerHTML += `
-            <li class="page-item">
-                <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">&gt;</a>
-            </li>
-        `;
-            }
+      if (totalPages > 1) {
+        if (currentPage > 1) {
+          const prev = document.createElement('li');
+          prev.className = 'page-item';
+          prev.innerHTML = '<a class="page-link" href="#">&laquo;</a>';
+          prev.addEventListener('click', () => {
+            currentPage -= 1;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(prev);
         }
 
-        // Fungsi untuk mengubah halaman
-        function changePage(page) {
-            currentPage = page;
-            displayTableData(page);
-            setupPagination();
+        for (let i = 1; i <= totalPages; i++) {
+          const pageItem = document.createElement('li');
+          pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+          pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          pageItem.addEventListener('click', () => {
+            currentPage = i;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(pageItem);
         }
 
-        // Fungsi pencarian data
-        function searchTable() {
-            const searchInput = document.getElementById("search-input").value.toLowerCase();
-            filteredResults = dataMahasiswa.filter((data) => {
-                return (
-                    data.nama.toLowerCase().includes(searchInput) ||
-                    data.nim.toLowerCase().includes(searchInput)
-                );
-            });
-            currentPage = 1;
-            displayTableData(currentPage);
-            setupPagination();
+        if (currentPage < totalPages) {
+          const next = document.createElement('li');
+          next.className = 'page-item';
+          next.innerHTML = '<a class="page-link" href="#">&raquo;</a>';
+          next.addEventListener('click', () => {
+            currentPage += 1;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(next);
         }
+      }
+    }
 
-        // Fungsi filter data
-        function filterTable() {
-            const angkatan = document.getElementById("filter-angkatan").value;
-            const prodi = document.getElementById("filter-prodi").value;
-            const kelas = document.getElementById("filter-kelas").value;
+    function searchTable() {
+      const query = searchInput.value.toLowerCase();
+      const filteredRows = rows.filter(row => {
+        const nim = row.cells[0].textContent.toLowerCase();
+        const nama = row.cells[1].textContent.toLowerCase();
+        return nim.includes(query) || nama.includes(query);
+      });
+      clearNoDataMessage();
+      currentPage = 1;
+      displayRows(filteredRows);
+      updatePagination(filteredRows);
+    }
 
-            filteredResults = dataMahasiswa.filter((data) => {
-                const matchesAngkatan = angkatan === "" || data.role_angkatan === angkatan;
-                const matchesProdi = prodi === "" || data.role_prodi === prodi;
-                const matchesKelas = kelas === "" || data.kelas === kelas;
-                return matchesAngkatan && matchesProdi && matchesKelas;
-            });
+    function filterTable() {
+      const angkatanValue = filterAngkatan.value;
+      const prodiValue = filterProdi.value;
+      const kelasValue = filterKelas.value;
 
-            currentPage = 1;
-            displayTableData(currentPage);
-            setupPagination();
+      const filteredRows = rows.filter(row => {
+        const angkatan = row.cells[4].textContent;
+        const prodi = row.cells[2].textContent;
+        const kelas = row.cells[5].textContent;
+
+        return (
+          (angkatanValue === '' || angkatan === angkatanValue) &&
+          (prodiValue === '' || prodi === prodiValue) &&
+          (kelasValue === '' || kelas === kelasValue)
+        );
+      });
+      clearNoDataMessage();
+      currentPage = 1;
+      displayRows(filteredRows);
+      updatePagination(filteredRows);
+    }
+
+    function populateKelasOptions() {
+      const prodiValue = filterProdi.value;
+      const kelasOptions = new Set();
+
+      rows.forEach(row => {
+        if (row.cells[2].textContent === prodiValue || prodiValue === '') {
+          kelasOptions.add(row.cells[5].textContent);
         }
+      });
 
-        // Fungsi untuk mengisi opsi kelas berdasarkan prodi
-        function populateKelasOptions() {
-            const prodi = document.getElementById("filter-prodi").value;
-            const kelasSelect = document.getElementById("filter-kelas");
-            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>'; // Reset opsi kelas
+      filterKelas.innerHTML = '<option value="">Pilih Kelas</option>';
+      kelasOptions.forEach(kelas => {
+        const option = document.createElement('option');
+        option.value = kelas;
+        option.textContent = kelas;
+        filterKelas.appendChild(option);
+      });
 
-            const kelasByProdi = {
-                "D-IV Teknik Informatika": ["TI-1A", "TI-1B", "TI-1C"],
-                "D-IV Sistem Informasi Bisnis": ["SIB-1A", "SIB-1B"]
-            };
+      filterKelas.disabled = kelasOptions.size === 0;
+    }
 
-            if (kelasByProdi[prodi]) {
-                kelasByProdi[prodi].forEach((kelas) => {
-                    const option = document.createElement("option");
-                    option.value = kelas;
-                    option.textContent = kelas;
-                    kelasSelect.appendChild(option);
-                });
-                kelasSelect.disabled = false;
-            } else {
-                kelasSelect.disabled = true;
-            }
-        }
+    function clearNoDataMessage() {
+      const noDataRow = document.querySelector('#table-body tr td.text-center');
+      if (noDataRow && noDataRow.textContent === 'Data tidak ditemukan.') {
+        noDataRow.parentElement.remove();
+      }
+    }
 
-        // Inisialisasi pertama kali
-        document.addEventListener("DOMContentLoaded", () => {
-            displayTableData(currentPage);
-            setupPagination();
-        });
-    </script>
+    searchInput.addEventListener('input', searchTable);
+    filterAngkatan.addEventListener('change', filterTable);
+    filterProdi.addEventListener('change', () => {
+      populateKelasOptions();
+      filterTable();
+    });
+    filterKelas.addEventListener('change', filterTable);
+
+    // Initial display
+    displayRows(rows);
+    updatePagination(rows);
+  });
+</script>
     <!-- container verifikasi dokumen mahasiswa -->
     <script>
         // Fungsi untuk menampilkan informasi mahasiswa
