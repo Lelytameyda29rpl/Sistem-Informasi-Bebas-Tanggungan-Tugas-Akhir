@@ -18,8 +18,20 @@ class adminJurusanController
         try {
             $jenisDokumen = 'Jurusan';
     
-            // Tangani AJAX POST
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Jika bukan AJAX, kirim data default
+            $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
+            $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
+            $terverifikasiCount24 = $this->model->getTerverifikasiCount($jenisDokumen, '2024');
+            $belumDiverifikasiCount22 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2022');
+            $belumDiverifikasiCount23 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2023');
+            $belumDiverifikasiCount24 = $this->model->getBelumDiverifikasiCount($jenisDokumen, '2024');
+            $mahasiswaCount22 = $this->model->getMahasiswaCount('2022');
+            $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
+            $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
+            $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompleteJurusan();
+
+             // Tangani AJAX POST
+             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = json_decode(file_get_contents("php://input"), true);
                 if (isset($input['nim'])) {
                     $nim = $input['nim'];
@@ -30,12 +42,6 @@ class adminJurusanController
                     exit;
                 }
             }
-    
-            // Jika bukan AJAX, kirim data default
-            $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
-            $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
-            $terverifikasiCount24 = $this->model->getTerverifikasiCount($jenisDokumen, '2024');
-            $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompleteJurusan();
     
             $viewPath = __DIR__ . '/../Views/Verifikator/dashboard_admin_jurusan.php';
             if (file_exists($viewPath)) {
