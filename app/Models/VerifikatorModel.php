@@ -77,23 +77,26 @@ class VerifikatorModel extends Model {
             vm.role_angkatan,
             vm.kelas, 
             vm.tgl_upload,
-            COUNT(v.id_verifikasi) AS verifikasi_count
-            FROM Verif_Mhs_Jurusan vm
-            JOIN Verifikasi v ON vm.nim = v.nim
-            JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
-            WHERE d.jenis_dokumen = 'Jurusan'
-            GROUP BY
-                vm.nim, 
-                vm.nama, 
-                vm.no_telp, 
-                vm.role_prodi, 
-                vm.role_jurusan, 
-                vm.role_angkatan, 
-                vm.kelas, 
-                vm.tgl_upload
-            HAVING COUNT(v.id_verifikasi) = 7
-            ORDER BY
-                vm.tgl_upload ASC;
+            COUNT(v.id_verifikasi) AS verifikasi_count,
+            SUM(CASE WHEN v.status_verifikasi = 'Disetujui' THEN 1 ELSE 0 END) AS disetujui_count
+        FROM Verif_Mhs_Jurusan vm
+        JOIN Verifikasi v ON vm.nim = v.nim
+        JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+        WHERE d.jenis_dokumen = 'Jurusan'
+        AND v.status_verifikasi IN ('Menunggu Diverifikasi', ' Tidak Disetujui', 'Disetujui')
+        GROUP BY
+            vm.nim, 
+            vm.nama, 
+            vm.no_telp, 
+            vm.role_prodi, 
+            vm.role_jurusan, 
+            vm.role_angkatan, 
+            vm.kelas, 
+            vm.tgl_upload
+        HAVING 
+            SUM(CASE WHEN v.status_verifikasi = 'Disetujui' THEN 1 ELSE 0 END) < 7  -- Tampilkan data jika Disetujui < 7
+        ORDER BY
+            vm.tgl_upload ASC;
         ");
     
 
@@ -118,23 +121,26 @@ class VerifikatorModel extends Model {
             vm.role_angkatan,
             vm.kelas, 
             vm.tgl_upload,
-            COUNT(v.id_verifikasi) AS verifikasi_count
-            FROM Verif_Mhs_Pusat vm
-            JOIN Verifikasi v ON vm.nim = v.nim
-            JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
-            WHERE d.jenis_dokumen = 'Pusat'
-            GROUP BY
-                vm.nim, 
-                vm.nama, 
-                vm.no_telp, 
-                vm.role_prodi, 
-                vm.role_jurusan, 
-                vm.role_angkatan, 
-                vm.kelas, 
-                vm.tgl_upload
-            HAVING COUNT(v.id_verifikasi) = 6
-            ORDER BY
-                vm.tgl_upload ASC;
+            COUNT(v.id_verifikasi) AS verifikasi_count,
+            SUM(CASE WHEN v.status_verifikasi = 'Disetujui' THEN 1 ELSE 0 END) AS disetujui_count
+        FROM Verif_Mhs_Jurusan vm
+        JOIN Verifikasi v ON vm.nim = v.nim
+        JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+        WHERE d.jenis_dokumen = 'Pusat'
+        AND v.status_verifikasi IN ('Menunggu Diverifikasi', ' Tidak Disetujui', 'Disetujui')
+        GROUP BY
+            vm.nim, 
+            vm.nama, 
+            vm.no_telp, 
+            vm.role_prodi, 
+            vm.role_jurusan, 
+            vm.role_angkatan, 
+            vm.kelas, 
+            vm.tgl_upload
+        HAVING 
+            SUM(CASE WHEN v.status_verifikasi = 'Disetujui' THEN 1 ELSE 0 END) < 6  -- Tampilkan data jika Disetujui < 7
+        ORDER BY
+            vm.tgl_upload ASC;
         ");
     
         // Execute the query
@@ -179,7 +185,7 @@ class VerifikatorModel extends Model {
         $stmt->bindParam(':statusVerifikasi', $statusVerifikasi);
         $stmt->bindParam(':idVerifikasi', $id_dokumen);
 
-        $allowedStatuses = ['Gagal Disetujui', 'Disetujui'];
+        $allowedStatuses = [' Tidak Disetujui', 'Disetujui'];
         if (!in_array($statusVerifikasi, $allowedStatuses)) {
             throw new Exception("Status tidak valid.");
         }
