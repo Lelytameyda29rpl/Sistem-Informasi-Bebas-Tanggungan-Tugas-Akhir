@@ -33,7 +33,7 @@ foreach ($data as $file) {
                                     <input type="file" name="dokumen_file[]" id="file1" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file1" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file1" class="form-control" required>
                                 <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
@@ -56,7 +56,7 @@ foreach ($data as $file) {
                                     
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file2" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file2" class="form-control" required>
                                    
                                 <?php endif; ?>
                         </div>
@@ -80,7 +80,7 @@ foreach ($data as $file) {
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file3" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file3" class="form-control" required>
                                     <a href="https://docs.google.com/document/d/1rI1ICHfW5Jn5N0olvofHHEx-jH2C51rb/edit" class="btn btn-light ms-2" download target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
@@ -110,7 +110,7 @@ foreach ($data as $file) {
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file4" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file4" class="form-control" required>
                                     <a href="https://docs.google.com/document/d/149WJdBs6jeizIWATmjHllAoP889mHWXo/edit?usp=drive_link&ouid=111369195763391192735&rtpof=true&sd=true" class="btn btn-light ms-2" target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
@@ -136,7 +136,7 @@ foreach ($data as $file) {
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file5" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file5" class="form-control" required>
                                     <a href="https://docs.google.com/document/d/1UueR3U1PcB6NkbHRKQBPpYwm0QgcLgKR/edit#heading=h.gjdgxs" class="btn btn-light ms-2" download target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
@@ -161,7 +161,7 @@ foreach ($data as $file) {
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file6" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file6" class="form-control" required>
                                     <a href="https://docs.google.com/document/d/1jywW6IWBx-Lt57shmVRP_b9HOGz5uJst/edit" class="btn btn-light ms-2" download target="_blank"><i
                                     class="bi bi-box-arrow-up-right"></i></a>
                                 <?php endif; ?>
@@ -184,7 +184,7 @@ foreach ($data as $file) {
                                     <input type="file" name="dokumen_file[]" id="file7" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file7" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file7" class="form-control" required>
                                 <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
