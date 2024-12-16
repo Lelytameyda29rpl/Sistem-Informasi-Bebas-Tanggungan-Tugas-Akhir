@@ -288,149 +288,149 @@
 
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const rows = Array.from(document.querySelectorAll('#table-body tr'));
-            const paginationContainer = document.getElementById('pagination');
-            const searchInput = document.getElementById('search-input');
-            const filterAngkatan = document.getElementById('filter-angkatan');
-            const filterProdi = document.getElementById('filter-prodi');
-            const filterKelas = document.getElementById('filter-kelas');
+  document.addEventListener('DOMContentLoaded', function() {
+    const rows = Array.from(document.querySelectorAll('#table-body tr'));
+    const paginationContainer = document.getElementById('pagination');
+    const searchInput = document.getElementById('search-input');
+    const filterAngkatan = document.getElementById('filter-angkatan');
+    const filterProdi = document.getElementById('filter-prodi');
+    const filterKelas = document.getElementById('filter-kelas');
 
-            let currentPage = 1;
-            const rowsPerPage = 10;
+    let currentPage = 1;
+    const rowsPerPage = 10;
 
-            function displayRows(filteredRows) {
-                const startIndex = (currentPage - 1) * rowsPerPage;
-                const endIndex = startIndex + rowsPerPage;
-                rows.forEach(row => row.style.display = 'none');
-                filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
+    function displayRows(filteredRows) {
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      rows.forEach(row => row.style.display = 'none');
+      filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
 
-                if (filteredRows.length === 0) {
-                    const noDataRow = document.createElement('tr');
-                    noDataRow.innerHTML = '<td colspan="9" class="text-center table-secondary">Data tidak ditemukan.</td>';
-                    document.getElementById('table-body').appendChild(noDataRow);
-                }
-            }
+      if (filteredRows.length === 0) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = '<td colspan="9" class="text-center table-secondary">Data tidak ditemukan.</td>';
+        document.getElementById('table-body').appendChild(noDataRow);
+      }
+    }
 
-            function updatePagination(filteredRows) {
-                const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-                paginationContainer.innerHTML = '';
+    function updatePagination(filteredRows) {
+      const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+      paginationContainer.innerHTML = '';
 
-                if (totalPages > 1) {
-                    if (currentPage > 1) {
-                        const prev = document.createElement('li');
-                        prev.className = 'page-item';
-                        prev.innerHTML = '<a class="page-link" href="#">&laquo;</a>';
-                        prev.addEventListener('click', () => {
-                            currentPage -= 1;
-                            displayRows(filteredRows);
-                            updatePagination(filteredRows);
-                        });
-                        paginationContainer.appendChild(prev);
-                    }
+      if (totalPages > 1) {
+        if (currentPage > 1) {
+          const prev = document.createElement('li');
+          prev.className = 'page-item';
+          prev.innerHTML = '<a class="page-link" href="#">&laquo;</a>';
+          prev.addEventListener('click', () => {
+            currentPage -= 1;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(prev);
+        }
 
-                    for (let i = 1; i <= totalPages; i++) {
-                        const pageItem = document.createElement('li');
-                        pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
-                        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-                        pageItem.addEventListener('click', () => {
-                            currentPage = i;
-                            displayRows(filteredRows);
-                            updatePagination(filteredRows);
-                        });
-                        paginationContainer.appendChild(pageItem);
-                    }
+        for (let i = 1; i <= totalPages; i++) {
+          const pageItem = document.createElement('li');
+          pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+          pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          pageItem.addEventListener('click', () => {
+            currentPage = i;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(pageItem);
+        }
 
-                    if (currentPage < totalPages) {
-                        const next = document.createElement('li');
-                        next.className = 'page-item';
-                        next.innerHTML = '<a class="page-link" href="#">&raquo;</a>';
-                        next.addEventListener('click', () => {
-                            currentPage += 1;
-                            displayRows(filteredRows);
-                            updatePagination(filteredRows);
-                        });
-                        paginationContainer.appendChild(next);
-                    }
-                }
-            }
+        if (currentPage < totalPages) {
+          const next = document.createElement('li');
+          next.className = 'page-item';
+          next.innerHTML = '<a class="page-link" href="#">&raquo;</a>';
+          next.addEventListener('click', () => {
+            currentPage += 1;
+            displayRows(filteredRows);
+            updatePagination(filteredRows);
+          });
+          paginationContainer.appendChild(next);
+        }
+      }
+    }
 
-            function searchTable() {
-                const query = searchInput.value.toLowerCase();
-                const filteredRows = rows.filter(row => {
-                    const nim = row.cells[0].textContent.toLowerCase();
-                    const nama = row.cells[1].textContent.toLowerCase();
-                    return nim.includes(query) || nama.includes(query);
-                });
-                clearNoDataMessage();
-                currentPage = 1;
-                displayRows(filteredRows);
-                updatePagination(filteredRows);
-            }
+    function searchTable() {
+      const query = searchInput.value.toLowerCase();
+      const filteredRows = rows.filter(row => {
+        const nim = row.cells[0].textContent.toLowerCase();
+        const nama = row.cells[1].textContent.toLowerCase();
+        return nim.includes(query) || nama.includes(query);
+      });
+      clearNoDataMessage();
+      currentPage = 1;
+      displayRows(filteredRows);
+      updatePagination(filteredRows);
+    }
 
-            function filterTable() {
-                const angkatanValue = filterAngkatan.value;
-                const prodiValue = filterProdi.value;
-                const kelasValue = filterKelas.value;
+    function filterTable() {
+      const angkatanValue = filterAngkatan.value;
+      const prodiValue = filterProdi.value;
+      const kelasValue = filterKelas.value;
 
-                const filteredRows = rows.filter(row => {
-                    const angkatan = row.cells[4].textContent;
-                    const prodi = row.cells[2].textContent;
-                    const kelas = row.cells[5].textContent;
+      const filteredRows = rows.filter(row => {
+        const angkatan = row.cells[4].textContent;
+        const prodi = row.cells[2].textContent;
+        const kelas = row.cells[5].textContent;
 
-                    return (
-                        (angkatanValue === '' || angkatan === angkatanValue) &&
-                        (prodiValue === '' || prodi === prodiValue) &&
-                        (kelasValue === '' || kelas === kelasValue)
-                    );
-                });
-                clearNoDataMessage();
-                currentPage = 1;
-                displayRows(filteredRows);
-                updatePagination(filteredRows);
-            }
+        return (
+          (angkatanValue === '' || angkatan === angkatanValue) &&
+          (prodiValue === '' || prodi === prodiValue) &&
+          (kelasValue === '' || kelas === kelasValue)
+        );
+      });
+      clearNoDataMessage();
+      currentPage = 1;
+      displayRows(filteredRows);
+      updatePagination(filteredRows);
+    }
 
-            function populateKelasOptions() {
-                const prodiValue = filterProdi.value;
-                const kelasOptions = new Set();
+    function populateKelasOptions() {
+      const prodiValue = filterProdi.value;
+      const kelasOptions = new Set();
 
-                rows.forEach(row => {
-                    if (row.cells[2].textContent === prodiValue || prodiValue === '') {
-                        kelasOptions.add(row.cells[5].textContent);
-                    }
-                });
+      rows.forEach(row => {
+        if (row.cells[2].textContent === prodiValue || prodiValue === '') {
+          kelasOptions.add(row.cells[5].textContent);
+        }
+      });
 
-                filterKelas.innerHTML = '<option value="">Pilih Kelas</option>';
-                kelasOptions.forEach(kelas => {
-                    const option = document.createElement('option');
-                    option.value = kelas;
-                    option.textContent = kelas;
-                    filterKelas.appendChild(option);
-                });
+      filterKelas.innerHTML = '<option value="">Pilih Kelas</option>';
+      kelasOptions.forEach(kelas => {
+        const option = document.createElement('option');
+        option.value = kelas;
+        option.textContent = kelas;
+        filterKelas.appendChild(option);
+      });
 
-                filterKelas.disabled = kelasOptions.size === 0;
-            }
+      filterKelas.disabled = kelasOptions.size === 0;
+    }
 
-            function clearNoDataMessage() {
-                const noDataRow = document.querySelector('#table-body tr td.text-center');
-                if (noDataRow && noDataRow.textContent === 'Data tidak ditemukan.') {
-                    noDataRow.parentElement.remove();
-                }
-            }
+    function clearNoDataMessage() {
+      const noDataRow = document.querySelector('#table-body tr td.text-center');
+      if (noDataRow && noDataRow.textContent === 'Data tidak ditemukan.') {
+        noDataRow.parentElement.remove();
+      }
+    }
 
-            searchInput.addEventListener('input', searchTable);
-            filterAngkatan.addEventListener('change', filterTable);
-            filterProdi.addEventListener('change', () => {
-                populateKelasOptions();
-                filterTable();
-            });
-            filterKelas.addEventListener('change', filterTable);
+    searchInput.addEventListener('input', searchTable);
+    filterAngkatan.addEventListener('change', filterTable);
+    filterProdi.addEventListener('change', () => {
+      populateKelasOptions();
+      filterTable();
+    });
+    filterKelas.addEventListener('change', filterTable);
 
-            // Initial display
-            displayRows(rows);
-            updatePagination(rows);
-        });
-    </script>
+    // Initial display
+    displayRows(rows);
+    updatePagination(rows);
+  });
+</script>
     <!-- container verifikasi dokumen mahasiswa -->
     <script>
         // Fungsi untuk menampilkan informasi mahasiswa
@@ -454,6 +454,7 @@
             }
         }
 
+        // Function to handle "Setujui" action
         function approveDocument(button) {
             // Find the parent row of the button clicked
             var row = button.closest('tr');
@@ -472,6 +473,7 @@
             // Remove 'table-success' class if it's present (in case the user previously clicked 'Setujui')
             row.classList.remove('table-success');
         }
+
 
         // function untuk tombol verif
         function displayVerifContent() {
@@ -534,41 +536,78 @@
         });
     </script>
     <!-- dokumen-mahasiswa -->
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Ambil semua tombol dengan data-target
-            const buttons = document.querySelectorAll('button[data-target]');
+            // Ambil semua tombol "Lihat Berkas"
+            const buttons = document.querySelectorAll(".lihat-berkas");
 
-            // Loop melalui tombol-tombol tersebut
-            buttons.forEach(function (button) {
-                // Setiap tombol mendapatkan event listener click
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const nim = this.getAttribute("data-nim");
+                    console.log("NIM yang dikirim:", nim); // Cetak ke console
+                    
+                    // Kirim NIM melalui POST menggunakan Fetch API
+                    fetch("index.php?controller=adminJurusan&action=dashboard", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ nim: nim }) // Kirim NIM sebagai JSON
+                    })
+                    .then(response => response.json()) // Parse respons JSON
+                    .then(data => {
+                        console.log("Data Dokumen:", data);
 
-                    // Ambil ID target yang sesuai dengan data-target dari tombol
-                    const targetId = button.getAttribute('data-target');
-                    const targetElement = document.querySelector(targetId);
+                        // Tampilkan div dokumen-mahasiswa
+                        const dokumenContainer = document.querySelector(".dokumen-mahasiswa");
+                        dokumenContainer.style.display = "block";
 
-                    if (targetElement) {
-                        // Sembunyikan semua kontainer verifikasi lainnya
-                        document.querySelectorAll('.verif-container').forEach(function (el) {
-                            el.style.display = 'none'; // Menyembunyikan kontainer lainnya
-                        });
+                        // Isi tabel dokumen dengan data dari server
+                        const tableBodyDok = document.getElementById("table-body-dok");
+                        tableBodyDok.innerHTML = ""; // Reset isi tabel
 
-                        // Tampilkan kontainer verifikasi yang sesuai
-                        targetElement.style.display = 'block';
-
-                        // Scroll otomatis ke kontainer yang baru ditampilkan
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                        if (data.length > 0) {
+                            data.forEach(dokumen => {
+                                tableBodyDok.innerHTML += `
+                                    <tr>
+                                        <td>${dokumen.nama_dokumen}</td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)">Setujui</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
+                                        </td>
+                                        <td>
+                                            <a href="../app/Views/Mahasiswa/${dokumen.path}" 
+                                            class="btn btn-primary btn-sm" target="_blank">Lihat Dokumen</a>
+                                        </td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tableBodyDok.innerHTML = `
+                                <tr>
+                                    <td colspan="4" class="text-center">Tidak ada dokumen.</td>
+                                </tr>
+                            `;
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
                 });
             });
         });
 
+        // Function untuk "Setujui"
+        function approveDocument(button) {
+            const row = button.closest('tr');
+            row.classList.add('table-success');
+            row.classList.remove('table-danger');
+        }
+
+        // Function untuk "Tolak"
+        function rejectDocument(button) {
+            const row = button.closest('tr');
+            row.classList.add('table-danger');
+            row.classList.remove('table-success');
+        }
     </script>
 </body>
 
