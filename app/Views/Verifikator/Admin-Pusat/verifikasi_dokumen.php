@@ -38,8 +38,13 @@
                 <td><?= htmlspecialchars($mhs['no_telp']) ?></td>
                 <td><?= htmlspecialchars($mhs['tgl_upload']) ?></td>
                 <td>
-                  <button type="button" class="btn btn-success btn-sm">Lihat Berkas</button>
+                  <button type="button" class="btn btn-success btn-sm lihat-berkas"
+                    data-nim="<?= htmlspecialchars($mhs['nim']) ?>">
+                    Lihat Berkas
+                  </button>
                 </td>
+
+
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
@@ -96,36 +101,11 @@
               <th>Nama Dokumen</th>
               <th>Setujui</th>
               <th>Tolak</th>
-              <th>Lihat Berkas</th>
+              <th>Lihat Dokumen</th>
             </tr>
           </thead>
           <tbody id="table-body-dok">
-            <?php
-            // List of documents to display
-            
-            if (!empty($documents)):
-              foreach ($documents as $dokumen):
-                ?>
-                <tr>
-                  <td><?= htmlspecialchars($dokumen['nama_dokumen']) ?></td>
-                  <td>
-                    <button type="button" class="btn btn-success btn-sm" onclick="approveDocument(this)">Setujui</button>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
-                  </td>
-                  <td>
-                    <a class="btn btn-primary btn-sm"
-                      href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat
-                      Dokumen</a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <tr>
-                <td colspan="4" class="text-center">Tidak ada dokumen.</td>
-              </tr>
-            <?php endif; ?>
+            <!-- Dokumen mahasiswa akan diisi oleh JavaScript -->
           </tbody>
         </table>
       </div>
@@ -136,12 +116,11 @@
     <div class="modal-catatan">
       <h3 style="margin-bottom: 10px;">Catatan</h3>
       <textarea id="catatan-textarea" class="form-control" rows="9"
-        placeholder="Masukkan catatan di sini..."></textarea>
+      placeholder="Masukkan catatan di sini..."></textarea>
       <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
       <div class="d-flex justify-content-end mt-3">
         <button class="btn btn-secondary " onclick="closeCatatanModal()">Batal</button>
-        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send"
-            style="margin-right: 5px;"></i>Kirim</button>
+        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send" style="margin-right: 5px;"></i>Kirim</button>
       </div>
     </div>
   </div>

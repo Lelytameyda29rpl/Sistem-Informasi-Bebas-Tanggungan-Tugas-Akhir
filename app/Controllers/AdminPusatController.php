@@ -17,7 +17,8 @@ class adminPusatController
     public function dashboard() {
         try {
             $jenisDokumen = 'Pusat';
-
+    
+            // Jika bukan AJAX, kirim data default
             $terverifikasiCount22 = $this->model->getTerverifikasiCount($jenisDokumen, '2022');
             $terverifikasiCount23 = $this->model->getTerverifikasiCount($jenisDokumen, '2023');
             $terverifikasiCount24 = $this->model->getTerverifikasiCount($jenisDokumen, '2024');
@@ -28,9 +29,9 @@ class adminPusatController
             $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
             $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
             $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompletePusat();
-                
-            // Tangani AJAX POST
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+             // Tangani AJAX POST
+             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = json_decode(file_get_contents("php://input"), true);
                 if (isset($input['nim'])) {
                     $nim = $input['nim'];
@@ -41,8 +42,8 @@ class adminPusatController
                     exit;
                 }
             }
-
-            $viewPath =  __DIR__ . '/../Views/Verifikator/dashboard_admin_pusat.php';
+    
+            $viewPath = __DIR__ . '/../Views/Verifikator/dashboard_admin_pusat.php';
             if (file_exists($viewPath)) {
                 require_once $viewPath;
             } else {
@@ -52,5 +53,6 @@ class adminPusatController
             die("Error: " . $e->getMessage());
         }
     }
+    
 }
 ?>

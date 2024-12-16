@@ -545,52 +545,64 @@
                 button.addEventListener("click", function () {
                     const nim = this.getAttribute("data-nim");
                     console.log("NIM yang dikirim:", nim); // Cetak ke console
-                    
+
                     // Kirim NIM melalui POST menggunakan Fetch API
-                    fetch("index.php?controller=adminJurusan&action=dashboard", {
+                    fetch("index.php?controller=adminPusat&action=dashboard", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ nim: nim }) // Kirim NIM sebagai JSON
                     })
-                    .then(response => response.json()) // Parse respons JSON
-                    .then(data => {
-                        console.log("Data Dokumen:", data);
+                        .then(response => response.json()) // Parse respons JSON
+                        .then(data => {
+                            console.log("Data Dokumen:", data);
 
-                        // Tampilkan div dokumen-mahasiswa
-                        const dokumenContainer = document.querySelector(".dokumen-mahasiswa");
-                        dokumenContainer.style.display = "block";
+                            // Tampilkan div dokumen-mahasiswa
+                            const dokumenContainer = document.querySelector(".dokumen-mahasiswa");
+                            dokumenContainer.style.display = "block";
 
-                        // Isi tabel dokumen dengan data dari server
-                        const tableBodyDok = document.getElementById("table-body-dok");
-                        tableBodyDok.innerHTML = ""; // Reset isi tabel
+                            // Isi tabel dokumen dengan data dari server
+                            const tableBodyDok = document.getElementById("table-body-dok");
+                            tableBodyDok.innerHTML = ""; // Reset isi tabel
+                            console.log(document.getElementById("table-body-dok"));
 
-                        if (data.length > 0) {
-                            data.forEach(dokumen => {
-                                tableBodyDok.innerHTML += `
+                            if (data.length > 0) {
+                                data.forEach(dokumen => {
+                                    tableBodyDok.innerHTML += `
                                     <tr>
                                         <td>${dokumen.nama_dokumen}</td>
                                         <td>
-                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)">Setujui</button>
+                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)"
+                                            style="font-weight: 500;">
+                                            Setujui
+                                            </button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                            data-nama-dokumen="${dokumen.nama_dokumen}"
+                                            onclick="openCatatanModal(this)" 
+                                            style="font-weight: 500;">
+                                            Tolak
+                                            </button>
                                         </td>
                                         <td>
                                             <a href="../app/Views/Mahasiswa/${dokumen.path}" 
-                                            class="btn btn-primary btn-sm" target="_blank">Lihat Dokumen</a>
+                                            class="btn btn-primary btn-sm" target="_blank"
+                                            style="font-weight: 500; background-color: navy;">
+                                            <i class="bi bi-box-arrow-up-right" style="margin-right: 5px;"></i>Lihat
+                                            </a>
                                         </td>
                                     </tr>
                                 `;
-                            });
-                        } else {
-                            tableBodyDok.innerHTML = `
+                                });
+                            } else {
+                                tableBodyDok.innerHTML = `
                                 <tr>
                                     <td colspan="4" class="text-center">Tidak ada dokumen.</td>
                                 </tr>
                             `;
-                        }
-                    })
-                    .catch(error => console.error("Error:", error));
+                            }
+                        })
+                        .catch(error => console.error("Error:", error));
                 });
             });
         });
@@ -603,11 +615,40 @@
         }
 
         // Function untuk "Tolak"
-        function rejectDocument(button) {
+        function openCatatanModal(button) {
             const row = button.closest('tr');
             row.classList.add('table-danger');
             row.classList.remove('table-success');
+            const dokumenNama = button.getAttribute('data-nama-dokumen');
+            document.getElementById('dokumen-nama').textContent = dokumenNama;
+            document.getElementById('catatan-container').style.display = 'flex';
         }
+
+        function closeCatatanModal() {
+            var catatanTextarea = document.getElementById('catatan-textarea');
+            if (catatanTextarea.value.trim() !== '') {
+                catatanTextarea.value = '';
+            }
+            document.getElementById('catatan-container').style.display = 'none';
+        }
+
+
+        function submitCatatan() {
+            var catatan = document.getElementById('catatan-textarea').value;
+            if (catatan.trim() === '') {
+                alert('Catatan tidak boleh kosong!');
+                return;
+            }
+
+            console.log('Catatan dikirim:', catatan);
+            closeCatatanModal();
+        }
+
+        document.querySelectorAll('.btn-danger').forEach(function (button) {
+            button.addEventListener('click', function () {
+                openCatatanModal(button);
+            });
+        });
     </script>
 </body>
 
