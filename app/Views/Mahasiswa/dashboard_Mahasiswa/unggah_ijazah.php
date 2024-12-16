@@ -15,7 +15,7 @@ foreach ($dataIjazah as $file) {
         <div class="cards mx-1 d-flex flex-column mb-5">
             <div class="card text-start ">
                 <form id="uploadForm2" action="upload_ijazah.php" method="POST" enctype="multipart/form-data">
-                <div id="messageArea"></div>
+                <div id="messageArea2"></div>
                     <p class="fw-bold">Berkas Pengajuan Ijazah</p>
                     <hr>
                     <div class="form-group mb-3">
@@ -33,7 +33,7 @@ foreach ($dataIjazah as $file) {
                                     <input type="file" name="dokumen_file[]" id="file8" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file8" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file8" class="form-control" required>
                                 <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
@@ -54,7 +54,7 @@ foreach ($dataIjazah as $file) {
                                     <input type="file" name="dokumen_file[]" id="file9" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file9" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file9" class="form-control" required>
                                 <?php endif; ?>
                             <a href="https://drive.google.com/file/d/1G6yal9YBha4vDtP61sndFhKiErkzNBTo/view?usp=sharing" class="btn btn-primary" target="_blank">Panduan</a>
                         </div>
@@ -77,7 +77,7 @@ foreach ($dataIjazah as $file) {
                                     <input type="file" name="dokumen_file[]" id="file10" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file10" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file10" class="form-control" required>
                                 <?php endif; ?>
                             <a href=" https://drive.google.com/file/d/1IjdvqKnPWmolQPGs5ltfMXM7jj02uhuV/view?usp=sharing" class="btn btn-primary" target="_blank">Panduan</a>
                         </div>
@@ -100,7 +100,7 @@ foreach ($dataIjazah as $file) {
 
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file11" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file11" class="form-control" required>
 
                                 <?php endif; ?>
                             <a href="https://siakad.polinema.ac.id/" class="btn btn-primary" target="_blank">SIAKAD</a>
@@ -124,7 +124,7 @@ foreach ($dataIjazah as $file) {
                                     <input type="file" name="dokumen_file[]" id="file12" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file12" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file12" class="form-control" required>
                                 <?php endif; ?>
                             <a href="https://wa.link/ujcmlw" class="btn btn-primary" target="_blank">Kontak</a>
                         </div>
@@ -147,7 +147,7 @@ foreach ($dataIjazah as $file) {
                                     <input type="file" name="dokumen_file[]" id="file13" class="form-control">
                                 <?php else: ?>
                                     <!-- Input file jika belum diunggah -->
-                                    <input type="file" name="dokumen_file[]" id="file13" class="form-control">
+                                    <input type="file" name="dokumen_file[]" id="file13" class="form-control" required>
                                 <?php endif; ?>
                         </div>
                         <label class="form-text">Format PDF, Maksimal 10 MB</label>
@@ -180,7 +180,7 @@ $(document).ready(function() {
             success: function(response) {
                 console.log("Raw response from server:", response);
                 var result = JSON.parse(response);
-                var messageArea = $('#messageArea');
+                var messageArea = $('#messageArea2');
                 messageArea.empty();
 
                 if (result.status === 'success') {
@@ -194,7 +194,7 @@ $(document).ready(function() {
                 }
             },
             error: function() {
-                $('#messageArea').html('<div class="alert alert-danger">An error occurred while uploading the files.</div>');
+                $('#messageArea2').html('<div class="alert alert-danger">An error occurred while uploading the files.</div>');
                 console.log("Error details:", textStatus, errorThrown);
             }
         });
