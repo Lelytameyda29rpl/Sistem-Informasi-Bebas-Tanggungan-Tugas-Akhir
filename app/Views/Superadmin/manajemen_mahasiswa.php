@@ -625,7 +625,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                 <th>Role User</th>
                                 <th>Username</th>
                                 <th>Password</th>
-                                <th>Nama Mahasiswa</th>
+                                <th>Nama Verifikator</th>
                                 <th>No.Telepon</th>
                                 <th>Email</th>
                                 <th>Aksi</th>
@@ -756,7 +756,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                 <th>Role User</th>
                                 <th>Username</th>
                                 <th>Password</th>
-                                <th>Nama Mahasiswa</th>
+                                <th>Nama Admin</th>
                                 <th>No.Telepon</th>
                                 <th>Email</th>
                                 <th>Aksi</th>
