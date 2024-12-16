@@ -102,7 +102,7 @@
           <tbody id="table-body-dok">
             <?php
             // List of documents to display
-
+            
             if (!empty($documents)):
               foreach ($documents as $dokumen):
                 ?>
@@ -115,7 +115,9 @@
                     <button type="button" class="btn btn-danger btn-sm" onclick="rejectDocument(this)">Tolak</button>
                   </td>
                   <td>
-                    <a class="btn btn-primary btn-sm" href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat Dokumen</a>
+                    <a class="btn btn-primary btn-sm"
+                      href="../app/Views/Mahasiswa/<?= htmlspecialchars($dokumen['path']) ?>" target="_blank">Lihat
+                      Dokumen</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -129,4 +131,63 @@
       </div>
     </div>
   </div>
+  <div class="catatan-container" id="catatan-container" style="display: none;">
+    <div class="overlay"></div>
+    <div class="modal-catatan">
+      <h3 style="margin-bottom: 10px;">Catatan</h3>
+      <textarea id="catatan-textarea" class="form-control" rows="9"
+        placeholder="Masukkan catatan di sini..."></textarea>
+      <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
+      <div class="d-flex justify-content-end mt-3">
+        <button class="btn btn-secondary " onclick="closeCatatanModal()">Batal</button>
+        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send"
+            style="margin-right: 5px;"></i>Kirim</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- izin stylenya tak masukin kesini soalnya content_ver.css e gakenek (soale kene desain kebanyakan gae bootstrap. dadi edit style ndek pinggir class div e) -->
+<style>
+  .catatan-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+  }
+
+  .modal-catatan {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-catatan p{
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .modal-catatan span{
+    font-weight: 100;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+</style>
