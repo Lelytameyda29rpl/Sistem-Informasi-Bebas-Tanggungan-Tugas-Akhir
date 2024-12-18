@@ -123,7 +123,7 @@ class VerifikatorModel extends Model {
             vm.tgl_upload,
             COUNT(v.id_verifikasi) AS verifikasi_count,
             SUM(CASE WHEN v.status_verifikasi = 'Disetujui' THEN 1 ELSE 0 END) AS disetujui_count
-        FROM Verif_Mhs_Jurusan vm
+        FROM Verif_Mhs_Pusat vm
         JOIN Verifikasi v ON vm.nim = v.nim
         JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
         WHERE d.jenis_dokumen = 'Pusat'
@@ -173,22 +173,37 @@ class VerifikatorModel extends Model {
     }
     
     
-    public function updateStatusVerifikasi($id_dokumen, $statusVerifikasi) {
+    public function updateStatusVerifikasiDisetujui($id_dokumen, $nim) {
         // Query SQL untuk update status_verifikasi
         $stmt = $this->conn->prepare ("
             UPDATE Verifikasi
-            SET status_verifikasi = :statusVerifikasi
+            SET status_verifikasi = 'Disetujui'
             WHERE id_verifikasi = :idVerifikasi
+            AND nim = :nim
         ");
         
         // Parameter untuk bind data
-        $stmt->bindParam(':statusVerifikasi', $statusVerifikasi);
         $stmt->bindParam(':idVerifikasi', $id_dokumen);
+        $stmt->bindParam(':nim', $nim);
 
-        $allowedStatuses = [' Tidak Disetujui', 'Disetujui'];
-        if (!in_array($statusVerifikasi, $allowedStatuses)) {
-            throw new Exception("Status tidak valid.");
-        }
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $result['Mhs_Dokumen_Lengkap'];
+    }
+
+    public function updateStatusVerifikasiTidakDisetujui($id_dokumen, $nim) {
+        // Query SQL untuk update status_verifikasi
+        $stmt = $this->conn->prepare ("
+            UPDATE Verifikasi
+            SET status_verifikasi = ' Tidak disetujui'
+            WHERE id_verifikasi = :idVerifikasi
+            AND nim = :nim
+        ");
+        
+        // Parameter untuk bind data
+        $stmt->bindParam(':idVerifikasi', $id_dokumen);
+        $stmt->bindParam(':nim', $nim);
 
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -215,8 +230,8 @@ class VerifikatorModel extends Model {
     }
     
 
-    public function getMhsWithDocumentApproved($jenisDokumen) {
-        $query = "
+    public function getMhsWithDocumentApprovedPusat($jenisDokumen) {
+        $stmt = $this->conn->prepare("
             SELECT
                 vm.nim,
                 vm.nama,
@@ -224,26 +239,77 @@ class VerifikatorModel extends Model {
                 vm.role_prodi,
                 vm.role_jurusan,
                 vm.role_angkatan,
-                vm.kelas
-            FROM Tabel_Verif_Mhs vm
+                vm.kelas, 
+                vm.tgl_upload,
+                COUNT(v.id_verifikasi) AS verifikasi_count
+            FROM Verif_Mhs_Pusat vm
             JOIN Verifikasi v ON vm.nim = v.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
-            WHERE d.jenis_dokumen = :jenisDokumen  -- Filter berdasarkan jenis_dokumen (jenis dokumen Pusat/Jurusan)
-              AND v.status_verifikasi = 'Disetujui' -- Filter hanya dokumen dengan status verifikasi 'Disetujui'
+            WHERE d.jenis_dokumen = :jenisDokumen
+              AND v.status_verifikasi = 'Disetujui'
             GROUP BY 
-                vm.nim, 
-            HAVING COUNT(v.id_verifikasi) = 6  -- Filter mahasiswa yang memiliki 6 dokumen dengan jenis dokumen tertentu
+                vm.nim,
+                vm.nama,
+                vm.no_telp,
+                vm.role_prodi,
+                vm.role_jurusan,
+                vm.role_angkatan,
+                vm.kelas, 
+                vm.tgl_upload
+            HAVING COUNT(v.id_verifikasi) = 6
             ORDER BY
-                vm.role_angkatan DESC, -- Urutkan berdasarkan angkatan (terbaru ke yang lama)
-                vm.kelas ASC; -- Jika angkatan sama, urutkan berdasarkan abjad kelas
-        ";
-        
+                vm.tgl_upload DESC;
+        ");
+    
         // Bind parameter jenis_dokumen
-        $params = [':jenisDokumen' => $jenisDokumen];
-        
-        // Execute the query
-        $result = $this->executeQueryFetchAll($query, $params);
-        
+        $stmt->bindParam(':jenisDokumen', $jenisDokumen);
+        $stmt->execute();
+    
+        // Fetch results
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        return $result;
+    }
+    
+
+    public function getMhsWithDocumentApprovedJurusan($jenisDokumen) {
+        $stmt = $this->conn->prepare("
+            SELECT
+                vm.nim,
+                vm.nama,
+                vm.no_telp,
+                vm.role_prodi,
+                vm.role_jurusan,
+                vm.role_angkatan,
+                vm.kelas, 
+                vm.tgl_upload,
+                COUNT(v.id_verifikasi) AS verifikasi_count
+            FROM Verif_Mhs_Jurusan vm
+            JOIN Verifikasi v ON vm.nim = v.nim
+            JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
+            WHERE d.jenis_dokumen = :jenisDokumen
+              AND v.status_verifikasi = 'Disetujui'
+            GROUP BY 
+                vm.nim,
+                vm.nama,
+                vm.no_telp,
+                vm.role_prodi,
+                vm.role_jurusan,
+                vm.role_angkatan,
+                vm.kelas, 
+                vm.tgl_upload
+            HAVING COUNT(v.id_verifikasi) = 7
+            ORDER BY
+                vm.tgl_upload DESC;
+        ");
+    
+        // Bind parameter jenis_dokumen
+        $stmt->bindParam(':jenisDokumen', $jenisDokumen);
+        $stmt->execute();
+    
+        // Fetch results
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
         return $result;
     }
     

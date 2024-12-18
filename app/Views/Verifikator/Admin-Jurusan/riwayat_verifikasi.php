@@ -17,10 +17,27 @@
                     <th>Angkatan</th>
                     <th>Kelas</th>
                     <th>No.Telepon</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody id="userTableBody"></tbody>
+            <tbody id="userTableBody">
+            <?php if (!empty($riwayatVerifJurusan)): ?>
+            <?php foreach ($riwayatVerifJurusan as $riwayat): ?>
+              <tr>
+                <td><?= htmlspecialchars($riwayat['nim']) ?></td>
+                <td><?= htmlspecialchars($riwayat['nama']) ?></td>
+                <td><?= htmlspecialchars($riwayat['role_prodi']) ?></td>
+                <td><?= htmlspecialchars($riwayat['role_jurusan']) ?></td>
+                <td><?= htmlspecialchars($riwayat['role_angkatan']) ?></td>
+                <td><?= htmlspecialchars($riwayat['kelas']) ?></td>
+                <td><?= htmlspecialchars($riwayat['no_telp']) ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="8" class="text-center">Tidak ada data mahasiswa.</td>
+            </tr>
+          <?php endif; ?>
+            </tbody>
         </table>
 
         <div class="search-filter-container d-flex justify-content-between align-items-center">

@@ -29,6 +29,7 @@ class adminPusatController
             $mahasiswaCount23 = $this->model->getMahasiswaCount('2023');
             $mahasiswaCount24 = $this->model->getMahasiswaCount('2024');
             $mhsDokumenLengkap = $this->model->getMhsWithDocumentCompletePusat();
+            $riwayatVerifPusat = $this->model->getMhsWithDocumentApprovedPusat($jenisDokumen);
 
              // Tangani AJAX POST
              if ($_SERVER['REQUEST_METHOD'] === 'POST') {
