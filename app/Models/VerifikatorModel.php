@@ -155,7 +155,7 @@ class VerifikatorModel extends Model {
 
     public function getDocument($jenisDokumen, $nim) {
         $stmt = $this->conn->prepare("
-            SELECT v.path, d.nama_dokumen
+            SELECT v.path, d.nama_dokumen, d.id_dokumen, v.nim
             FROM Verifikasi v
             JOIN Mahasiswa m ON v.nim = m.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen

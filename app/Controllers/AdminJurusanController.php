@@ -35,14 +35,40 @@ class adminJurusanController
              if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = json_decode(file_get_contents("php://input"), true);
                 if (isset($input['nim'])) {
-                    $nim = $input['nim'];
-                    $documents = $this->model->getDocument($jenisDokumen, $nim);
-                    // Kirim data JSON ke client
+                    // Jika hanya NIM dikirim, ambil data dokumen
+                    $documents = $this->model->getDocument($jenisDokumen, $input['nim']);
                     header('Content-Type: application/json');
                     echo json_encode($documents);
                     exit;
                 }
-            }
+            } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                header('Content-Type: application/json'); // Pastikan header JSON di awal
+                try {
+                    $input = json_decode(file_get_contents("php://input"), true);
+            
+                    if (isset($input['id_dokumen'], $input['nim'])) {
+                        $id_dokumen = $input['id_dokumen'];
+                        $nim = $input['nim'];
+            
+                        $setujui = $this->model->updateStatusVerifikasiDisetujui($id_dokumen, $nim);
+            
+                        echo json_encode([
+                            'success' => $setujui,
+                            'message' => $setujui ? 'Dokumen berhasil disetujui.' : 'Gagal menyetujui dokumen.'
+                        ]);
+                        exit;
+                    } else {
+                        throw new Exception("Parameter tidak lengkap.");
+                    }
+                } catch (Exception $e) {
+                    // Tangani error dengan mengirimkan JSON
+                    echo json_encode([
+                        'success' => false,
+                        'message' => $e->getMessage()
+                    ]);
+                    exit;
+                }
+            }            
     
             $viewPath = __DIR__ . '/../Views/Verifikator/dashboard_admin_jurusan.php';
             if (file_exists($viewPath)) {

@@ -548,14 +548,15 @@
                                     <tr>
                                         <td>${dokumen.nama_dokumen}</td>
                                         <td>
-                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)"
-                                            style="font-weight: 500;">
-                                            Setujui
-                                            </button>
+                                            <button class="btn btn-success btn-sm"
+                                            data-id-dokumen="${dokumen.id_dokumen}"
+                                            data-nim="${dokumen.nim}"
+                                            onclick="approveDocument(this)"
+                                            style="font-weight: 500;">Setujui</button>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm"
-                                            data-nama-dokumen="${dokumen.nama_dokumen}"
+                                            data-nim="${dokumen.nim}" 
                                             onclick="openCatatanModal(this)" 
                                             style="font-weight: 500;">
                                             Tolak
@@ -586,9 +587,41 @@
 
         // Function untuk "Setujui"
         function approveDocument(button) {
-            const row = button.closest('tr');
-            row.classList.add('table-success');
-            row.classList.remove('table-danger');
+            const idDokumen = button.getAttribute('data-id-dokumen'); // Ambil id_dokumen
+            const nim = button.getAttribute('data-nim'); // Ambil nim mahasiswa
+
+            console.log("Mengirim Setujui:", { idDokumen, nim });
+
+            // Kirim data ke server dengan Fetch API
+            fetch("index.php?controller=adminJurusan&action=dashboard", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim }) // Kirim data sesuai format server
+            })
+                .then(response => {
+                    // Periksa apakah respons valid
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json(); // Parse respons JSON
+                })
+                .then(data => {
+                    console.log("Response dari Server:", data);
+
+                    // Periksa hasil dari server
+                    if (data.success) {
+                        alert("Dokumen berhasil disetujui.");
+                        location.reload(); // Reload halaman untuk memperbarui data
+                    } else {
+                        // Tampilkan pesan error jika gagal
+                        alert(data.message || "Gagal menyetujui dokumen.");
+                    }
+                })
+                .catch(error => {
+                    // Tangani error yang terjadi
+                    console.error("Error saat memproses permintaan:", error);
+                    alert("Terjadi kesalahan. Silakan coba lagi.");
+                });
         }
 
         // Function untuk "Tolak"
