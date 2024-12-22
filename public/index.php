@@ -59,10 +59,10 @@ switch ($controller) {
         }
         break;
 
-    case 'adminPusat':
+        case 'adminPusat':
             include_once __DIR__ . '/../app/Controllers/AdminPusatController.php';
             $adminPusatController = new AdminPusatController();
-        
+            
             if ($action === 'verifikasi') {
                 $adminPusatController->dashboard();
             } else {
@@ -73,8 +73,8 @@ switch ($controller) {
             include_once __DIR__ . '/../app/Controllers/AdminJurusanController.php';
             $adminJurusanController = new AdminJurusanController();
             
-            if ($action === 'verifikasi') {
-                $adminJurusanController->dashboard();
+            if ($action === 'updateStatusVerifikasi') {
+                $adminJurusanController->updateStatusVerifikasiDisetujui();
             } else {
                 $adminJurusanController->dashboard(); // Default action
             }

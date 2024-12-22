@@ -83,7 +83,7 @@ class VerifikatorModel extends Model {
         JOIN Verifikasi v ON vm.nim = v.nim
         JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
         WHERE d.jenis_dokumen = 'Jurusan'
-        AND v.status_verifikasi IN ('Menunggu Diverifikasi', ' Tidak Disetujui', 'Disetujui')
+        AND v.status_verifikasi IN ('Menunggu Diverifikasi', 'Tidak Disetujui', 'Disetujui')
         GROUP BY
             vm.nim, 
             vm.nama, 
@@ -127,7 +127,7 @@ class VerifikatorModel extends Model {
         JOIN Verifikasi v ON vm.nim = v.nim
         JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
         WHERE d.jenis_dokumen = 'Pusat'
-        AND v.status_verifikasi IN ('Menunggu Diverifikasi', ' Tidak Disetujui', 'Disetujui')
+        AND v.status_verifikasi IN ('Menunggu Diverifikasi', 'Tidak Disetujui', 'Disetujui')
         GROUP BY
             vm.nim, 
             vm.nama, 
@@ -173,61 +173,63 @@ class VerifikatorModel extends Model {
     }
     
     
-    public function updateStatusVerifikasiDisetujui($id_dokumen, $nim) {
-        // Query SQL untuk update status_verifikasi
-        $stmt = $this->conn->prepare ("
+    public function updateStatusVerifikasiTidakDisetujui($id_dokumen, $nim, $catatan) {
+        // Query SQL untuk update status_verifikasi dan catatan
+        $stmt = $this->conn->prepare("
             UPDATE Verifikasi
-            SET status_verifikasi = 'Disetujui'
-            WHERE id_verifikasi = :idVerifikasi
+            SET status_verifikasi = 'Tidak Disetujui',
+                catatan = :catatan  -- Menambahkan catatan ke dalam kolom catatan
+            WHERE id_dokumen = :idDokumen
             AND nim = :nim
         ");
         
         // Parameter untuk bind data
-        $stmt->bindParam(':idVerifikasi', $id_dokumen);
-        $stmt->bindParam(':nim', $nim);
-
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $result['Mhs_Dokumen_Lengkap'];
-    }
-
-    public function updateStatusVerifikasiTidakDisetujui($id_dokumen, $nim) {
-        // Query SQL untuk update status_verifikasi
-        $stmt = $this->conn->prepare ("
-            UPDATE Verifikasi
-            SET status_verifikasi = ' Tidak disetujui'
-            WHERE id_verifikasi = :idVerifikasi
-            AND nim = :nim
-        ");
-        
-        // Parameter untuk bind data
-        $stmt->bindParam(':idVerifikasi', $id_dokumen);
-        $stmt->bindParam(':nim', $nim);
-
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $result['Mhs_Dokumen_Lengkap'];
-    }
-
-    public function updateCatatanVerifikasi($id_dokumen, $catatan) {
-        $query = "
-            UPDATE Verifikasi
-            SET catatan = :catatan
-            WHERE id_verifikasi = :idVerifikasi
-        ";
-        
-        $params = [
-            ':catatan' => $catatan,
-            ':idVerifikasi' => $id_dokumen
-        ];
-        
-        $result = $this->executeUpdateQuery($query, $params);
+        $stmt->bindParam(':idDokumen', $id_dokumen, PDO::PARAM_INT);
+        $stmt->bindParam(':nim', $nim, PDO::PARAM_INT);
+        $stmt->bindParam(':catatan', $catatan, PDO::PARAM_STR);
     
-        // Return hasil eksekusi
-        return $result > 0; // Mengembalikan true jika berhasil, false jika gagal (jika baris terpengaruh lebih dari 0)
+        // Eksekusi query
+        if ($stmt->execute()) {
+            // Mengembalikan jumlah baris yang diperbarui
+            return $stmt->rowCount();
+        }
+    
+        // Jika terjadi kesalahan
+        return false;
     }
+    
+    
+
+    public function updateStatusVerifikasiDisetujui($id_dokumen, $nim, $status) {
+        $sql = "
+            UPDATE Verifikasi
+            SET status_verifikasi = :status
+            WHERE id_dokumen = :idDokumen
+            AND nim = :nim
+        ";
+    
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':idDokumen', $id_dokumen, PDO::PARAM_INT);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_INT);
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+    
+            // Debug query
+            error_log("Executing query: $sql with id_dokumen=$id_dokumen, nim=$nim, status=$status");
+    
+            if ($stmt->execute()) {
+                error_log("Query berhasil dijalankan");
+                return $stmt->rowCount();
+            } else {
+                error_log("Query gagal dijalankan");
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("PDOException: " . $e->getMessage());
+            return false;
+        }
+    }
+    
     
 
     public function getMhsWithDocumentApprovedPusat($jenisDokumen) {
@@ -258,7 +260,7 @@ class VerifikatorModel extends Model {
                 vm.tgl_upload
             HAVING COUNT(v.id_verifikasi) = 6
             ORDER BY
-                vm.tgl_upload DESC;
+                vm.tgl_upload ASC;
         ");
     
         // Bind parameter jenis_dokumen
@@ -300,7 +302,7 @@ class VerifikatorModel extends Model {
                 vm.tgl_upload
             HAVING COUNT(v.id_verifikasi) = 7
             ORDER BY
-                vm.tgl_upload DESC;
+                vm.tgl_upload ASC;
         ");
     
         // Bind parameter jenis_dokumen

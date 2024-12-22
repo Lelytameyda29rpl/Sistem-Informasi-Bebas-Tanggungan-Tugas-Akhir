@@ -114,17 +114,18 @@
   <div class="catatan-container" id="catatan-container" style="display: none;">
     <div class="overlay"></div>
     <div class="modal-catatan">
-      <h3 style="margin-bottom: 10px;">Catatan</h3>
-      <textarea id="catatan-textarea" class="form-control" rows="9"
-      placeholder="Masukkan catatan di sini..."></textarea>
-      <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
-      <div class="d-flex justify-content-end mt-3">
-        <button class="btn btn-secondary " onclick="closeCatatanModal()">Batal</button>
-        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send" style="margin-right: 5px;"></i>Kirim</button>
-      </div>
+        <h3 style="margin-bottom: 10px;">Catatan</h3>
+        <textarea id="catatan-textarea" class="form-control" rows="9"
+            placeholder="Masukkan catatan di sini..."></textarea>
+        <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-secondary" onclick="closeCatatanModal()">Batal</button>
+            <button class="btn btn-warning ms-2" onclick="submitCatatan()">
+                <i class="bi bi-send" style="margin-right: 5px;"></i>Kirim
+            </button>
+        </div>
     </div>
   </div>
-</div>
 
 <!-- izin stylenya tak masukin kesini soalnya content_ver.css e gakenek (soale kene desain kebanyakan gae bootstrap. dadi edit style ndek pinggir class div e) -->
 <style>

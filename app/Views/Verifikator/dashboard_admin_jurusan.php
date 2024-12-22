@@ -28,6 +28,12 @@
                 width: 100%;
             }
         }
+
+        .table-success {
+            background-color: #d4edda; /* Warna hijau terang */
+            color: #155724; /* Warna teks hijau */
+        }
+
     </style>
 </head>
 
@@ -545,28 +551,27 @@
                             if (data.length > 0) {
                                 data.forEach(dokumen => {
                                     tableBodyDok.innerHTML += `
-                                    <tr>
+                                    <tr data-id-dokumen="${dokumen.id_dokumen}">
                                         <td>${dokumen.nama_dokumen}</td>
                                         <td>
                                             <button class="btn btn-success btn-sm"
-                                            data-id-dokumen="${dokumen.id_dokumen}"
-                                            data-nim="${dokumen.nim}"
-                                            onclick="approveDocument(this)"
-                                            style="font-weight: 500;">Setujui</button>
+                                                data-id-dokumen="${dokumen.id_dokumen}"
+                                                data-nim="${dokumen.nim}"
+                                                onclick="approveDocument(this)"
+                                                style="font-weight: 500;">Setujui</button>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm"
-                                            data-nim="${dokumen.nim}" 
-                                            onclick="openCatatanModal(this)" 
-                                            style="font-weight: 500;">
-                                            Tolak
-                                            </button>
+                                                data-id-dokumen="${dokumen.id_dokumen}"
+                                                data-nim="${dokumen.nim}" 
+                                                onclick="openCatatanModal(this)" 
+                                                style="font-weight: 500;">Tolak</button>
                                         </td>
                                         <td>
                                             <a href="../app/Views/Mahasiswa/${dokumen.path}" 
-                                            class="btn btn-primary btn-sm" target="_blank"
-                                            style="font-weight: 500; background-color: navy;">
-                                            <i class="bi bi-box-arrow-up-right" style="margin-right: 5px;"></i>Lihat
+                                                class="btn btn-primary btn-sm" target="_blank"
+                                                style="font-weight: 500; background-color: navy;">
+                                                <i class="bi bi-box-arrow-up-right" style="margin-right: 5px;"></i>Lihat
                                             </a>
                                         </td>
                                     </tr>
@@ -585,54 +590,62 @@
             });
         });
 
-        // Function untuk "Setujui"
         function approveDocument(button) {
-            const idDokumen = button.getAttribute('data-id-dokumen'); // Ambil id_dokumen
-            const nim = button.getAttribute('data-nim'); // Ambil nim mahasiswa
+            const idDokumen = button.getAttribute('data-id-dokumen');
+            const nim = button.getAttribute('data-nim');
+            const status = "Disetujui";
 
-            console.log("Mengirim Setujui:", { idDokumen, nim });
+            console.log("Data yang dikirim:", { id_dokumen: idDokumen, nim: nim, status });
 
-            // Kirim data ke server dengan Fetch API
             fetch("index.php?controller=adminJurusan&action=dashboard", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim }) // Kirim data sesuai format server
+                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim, status: status })
             })
-                .then(response => {
-                    // Periksa apakah respons valid
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json(); // Parse respons JSON
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Response dari Server:", data);
-
-                    // Periksa hasil dari server
                     if (data.success) {
-                        alert("Dokumen berhasil disetujui.");
-                        location.reload(); // Reload halaman untuk memperbarui data
+                        // Tampilkan alert sukses
+                        alert(data.message || "Status berhasil diperbarui.");
+
+                        // Ubah warna baris menjadi hijau
+                        const row = button.closest('tr'); // Ambil baris tabel tempat tombol berada
+                        row.classList.add('table-success'); // Tambahkan kelas 'table-success' untuk warna hijau
+                        row.classList.remove('table-danger'); // Hapus kelas warna merah jika ada
+                        
+                        // Nonaktifkan tombol setelah berhasil disetujui
+                        button.disabled = true;
+                        button.textContent = "Disetujui"; // Ganti teks tombol
+                        button.style.cursor = "not-allowed"; // Ganti cursor menjadi tidak aktif
                     } else {
-                        // Tampilkan pesan error jika gagal
-                        alert(data.message || "Gagal menyetujui dokumen.");
+                        // Tampilkan alert gagal
+                        alert("Gagal memperbarui status: " + data.message);
                     }
                 })
                 .catch(error => {
-                    // Tangani error yang terjadi
-                    console.error("Error saat memproses permintaan:", error);
-                    alert("Terjadi kesalahan. Silakan coba lagi.");
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan pada server.");
                 });
         }
 
         // Function untuk "Tolak"
         function openCatatanModal(button) {
-            const row = button.closest('tr');
-            row.classList.add('table-danger');
-            row.classList.remove('table-success');
-            const dokumenNama = button.getAttribute('data-nama-dokumen');
+            const idDokumen = button.getAttribute('data-id-dokumen');
+            const nim = button.getAttribute('data-nim');
+            const dokumenNama = button.getAttribute('data-nama-dokumen') || "Dokumen Tidak Diketahui";
+
+            // Atur atribut modal untuk digunakan pada submit
+            const modalContainer = document.getElementById('catatan-container');
+            modalContainer.setAttribute('data-id-dokumen', idDokumen);
+            modalContainer.setAttribute('data-nim', nim);
+
+            // Tampilkan nama dokumen di modal
             document.getElementById('dokumen-nama').textContent = dokumenNama;
-            document.getElementById('catatan-container').style.display = 'flex';
+
+            // Tampilkan modal
+            modalContainer.style.display = 'flex';
         }
+
 
         function closeCatatanModal() {
             var catatanTextarea = document.getElementById('catatan-textarea');
@@ -644,21 +657,64 @@
 
 
         function submitCatatan() {
-            var catatan = document.getElementById('catatan-textarea').value;
-            if (catatan.trim() === '') {
+            const catatan = document.getElementById('catatan-textarea').value.trim();
+            if (!catatan) {
                 alert('Catatan tidak boleh kosong!');
                 return;
             }
 
-            console.log('Catatan dikirim:', catatan);
-            closeCatatanModal();
+            // Ambil id_dokumen dan nim dari modal
+            const modalContainer = document.getElementById('catatan-container');
+            const idDokumen = modalContainer.getAttribute('data-id-dokumen');
+            const nim = modalContainer.getAttribute('data-nim');
+            const status = "Tidak Disetujui";
+
+            // Debug data yang dikirim
+            console.log("Data yang dikirim:", { id_dokumen: idDokumen, nim: nim, status, catatan });
+
+            // Disable tombol Kirim untuk mencegah duplikasi
+            const sendButton = modalContainer.querySelector('button.btn-warning');
+            sendButton.disabled = true;
+
+            // Kirim data ke server menggunakan Fetch API
+            fetch("index.php?controller=adminJurusan&action=dashboard", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim, status: status, catatan: catatan })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sendButton.disabled = false; // Re-enable tombol Kirim
+                    if (data.success) {
+                        alert(data.message || "Dokumen berhasil ditolak.");
+
+                        // Ubah warna baris menjadi merah
+                        const row = document.querySelector(`tr[data-id-dokumen="${idDokumen}"]`);
+                        if (row) {
+                            row.classList.add('table-danger'); // Tambahkan warna merah
+                            row.classList.remove('table-success'); // Hapus warna hijau jika ada
+
+                            // Nonaktifkan tombol setelah berhasil
+                            const approveButton = row.querySelector('.btn-success');
+                            const rejectButton = row.querySelector('.btn-danger');
+                            if (approveButton) approveButton.disabled = true;
+                            if (rejectButton) rejectButton.disabled = true;
+                        }
+                    } else {
+                        alert("Gagal memperbarui status: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    sendButton.disabled = false; // Re-enable tombol Kirim
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan pada server.");
+                });
+
+            closeCatatanModal(); // Tutup modal setelah mengirim catatan
         }
 
-        document.querySelectorAll('.btn-danger').forEach(function (button) {
-            button.addEventListener('click', function () {
-                openCatatanModal(button);
-            });
-        });
+
+
     </script>
 </body>
 
