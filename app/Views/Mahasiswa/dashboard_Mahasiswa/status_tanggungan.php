@@ -37,23 +37,24 @@ foreach ($statusJurusan as $row) {
                             <th scope="row"><?= htmlspecialchars($row['nama_dokumen']) ?></th>
                             <td><?= $row['tgl_upload'] ? date('d-m-Y', strtotime($row['tgl_upload'])) : '-' ?></td>
                             <td>
-                                <?php if ($row['status_verifikasi'] === 'Sudah Diverifikasi'): ?>
+                                <?php if ($row['status_verifikasi'] === 'Disetujui'): ?>
                                     <button class="btn btn-success" disabled>Sudah Diverifikasi</button>
                                 <?php elseif ($row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
                                     <button class="btn btn-warning" disabled>Menunggu</button>
-                                <?php elseif ($row['status_verifikasi'] === 'Gagal Diverifikasi'): ?>
+                                <?php elseif ($row['status_verifikasi'] === 'Tidak Disetujui'): ?>
                                     <button class="btn btn-danger" disabled>Gagal</button>
-                                    <p class="text-danger mt-2">
+                                    <!-- <p class="text-danger mt-2">
                                         <?= htmlspecialchars($row['catatan'] ?? 'Tidak ada catatan.') ?>
-                                    </p>
+                                    </p> -->
                                 <?php else: ?>
                                     <button class="btn btn-secondary" disabled>Belum Diunggah</button>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <!-- Tombol Lihat Catatan -->
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#catatanModal-<?= $row['catatan'] ?>"><i class="bi bi-pencil"></i></button>
-                                
+                                <?php if ($row['status_verifikasi'] === 'Tidak Disetujui'): ?>
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#catatanModal-<?= str_replace(' ', '-', $row['catatan']) ?>"><i class="bi bi-pencil"></i></button>
+                                <?php endif; ?>
                                 <!-- Tombol Upload Ulang -->
                                 <?php if ($row['status_verifikasi'] === 'Tidak Disetujui' || $row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal-<?= $row['id_dokumen'] ?>"><i class="bi bi-upload"></i></button>
@@ -95,7 +96,7 @@ foreach ($statusJurusan as $row) {
 <!-- Modal Catatan -->
 <?php foreach ($statusJurusan as $row): ?>
     <!-- Modal Catatan -->
-    <div class="modal fade" id="catatanModal-<?= $row['catatan'] ?>" tabindex="-1" aria-labelledby="catatanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="catatanModal-<?= str_replace(' ', '-', $row['catatan']) ?>" tabindex="-1" aria-labelledby="catatanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

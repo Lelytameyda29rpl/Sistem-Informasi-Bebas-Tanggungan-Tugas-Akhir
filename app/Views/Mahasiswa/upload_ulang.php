@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $query = "
                 UPDATE Verifikasi 
-                SET path = :path, status_verifikasi = 'Menunggu Diverifikasi', tgl_upload = GETDATE()
+                SET path = :path, status_verifikasi = 'Menunggu Diverifikasi'
                 WHERE nim = :nim AND id_dokumen = :id_dokumen
             ";
             $stmt = $conn->prepare($query);
