@@ -30,10 +30,11 @@
         }
 
         .table-success {
-            background-color: #d4edda; /* Warna hijau terang */
-            color: #155724; /* Warna teks hijau */
+            background-color: #d4edda;
+            /* Warna hijau terang */
+            color: #155724;
+            /* Warna teks hijau */
         }
-
     </style>
 </head>
 
@@ -550,8 +551,14 @@
 
                             if (data.length > 0) {
                                 data.forEach(dokumen => {
+                                    let rowClass = "";
+                                    if (dokumen.status_verifikasi === "Disetujui") {
+                                        rowClass = "table-success";
+                                    } else if (dokumen.status_verifikasi === "Tidak Disetujui") {
+                                        rowClass = "table-danger";
+                                    }
                                     tableBodyDok.innerHTML += `
-                                    <tr data-id-dokumen="${dokumen.id_dokumen}">
+                                    <tr data-id-dokumen="${dokumen.id_dokumen}" class="${rowClass}">
                                         <td>${dokumen.nama_dokumen}</td>
                                         <td>
                                             <button class="btn btn-success btn-sm"
@@ -563,7 +570,8 @@
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm"
                                                 data-id-dokumen="${dokumen.id_dokumen}"
-                                                data-nim="${dokumen.nim}" 
+                                                data-nim="${dokumen.nim}"
+                                                data-nama-dokumen = "${dokumen.nama_dokumen}"
                                                 onclick="openCatatanModal(this)" 
                                                 style="font-weight: 500;">Tolak</button>
                                         </td>
@@ -576,6 +584,9 @@
                                         </td>
                                     </tr>
                                 `;
+                                    if (dokumen.status_verifikasi === "Disetujui") {
+
+                                    }
                                 });
                             } else {
                                 tableBodyDok.innerHTML = `
@@ -612,7 +623,7 @@
                         const row = button.closest('tr'); // Ambil baris tabel tempat tombol berada
                         row.classList.add('table-success'); // Tambahkan kelas 'table-success' untuk warna hijau
                         row.classList.remove('table-danger'); // Hapus kelas warna merah jika ada
-                        
+
                         // Nonaktifkan tombol setelah berhasil disetujui
                         button.disabled = true;
                         button.textContent = "Disetujui"; // Ganti teks tombol
@@ -713,8 +724,14 @@
             closeCatatanModal(); // Tutup modal setelah mengirim catatan
         }
 
+        function saveAndClose() {
+            // Cukup sembunyikan verif-container
+            const verifContainer = document.getElementById("verif-container");
+            verifContainer.style.display = "none";
 
-
+            // Debug: Tampilkan pesan di console untuk memastikan fungsi dipanggil
+            console.log("Verif-container telah ditutup.");
+        }
     </script>
 </body>
 

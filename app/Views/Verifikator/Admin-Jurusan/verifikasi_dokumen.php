@@ -89,7 +89,13 @@
     </div>
   </div>
   <div class="verif-container" id="verif-container" style="display: none;">
-    <h3>Dokumen Tanggungan TA Mahasiswa</h3>
+    <div class="header-verif">
+      <h3>Dokumen Tanggungan TA Mahasiswa
+        <button class="close-btn" onclick="saveAndClose()" aria-label="Close">
+          <i class="bi bi-x-square"></i>
+        </button>
+      </h3>
+    </div>
     <div id="student-info" class="student-info">
       <!-- Informasi mahasiswa akan diisi oleh JavaScript -->
     </div>
@@ -114,60 +120,98 @@
   <div class="catatan-container" id="catatan-container" style="display: none;">
     <div class="overlay"></div>
     <div class="modal-catatan">
-        <h3 style="margin-bottom: 10px;">Catatan</h3>
-        <textarea id="catatan-textarea" class="form-control" rows="9"
-            placeholder="Masukkan catatan di sini..."></textarea>
-        <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
-        <div class="d-flex justify-content-end mt-3">
-            <button class="btn btn-secondary" onclick="closeCatatanModal()">Batal</button>
-            <button class="btn btn-warning ms-2" onclick="submitCatatan()">
-                <i class="bi bi-send" style="margin-right: 5px;"></i>Kirim
-            </button>
-        </div>
+      <h3 style="margin-bottom: 10px;">Catatan</h3>
+      <textarea id="catatan-textarea" class="form-control" rows="9"
+        placeholder="Masukkan catatan di sini..."></textarea>
+      <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
+      <div class="d-flex justify-content-end mt-3">
+        <button class="btn btn-secondary" onclick="closeCatatanModal()">Batal</button>
+        <button class="btn btn-warning ms-2" onclick="submitCatatan()">
+          <i class="bi bi-send" style="margin-right: 5px;"></i>Kirim
+        </button>
+      </div>
     </div>
   </div>
 
-<!-- izin stylenya tak masukin kesini soalnya content_ver.css e gakenek (soale kene desain kebanyakan gae bootstrap. dadi edit style ndek pinggir class div e) -->
-<style>
-  .catatan-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1050;
-  }
+  <!-- izin stylenya tak masukin kesini soalnya content_ver.css e gakenek (soale kene desain kebanyakan gae bootstrap. dadi edit style ndek pinggir class div e) -->
+  <style>
+    .catatan-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1050;
+    }
 
-  .modal-catatan {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 800px;
-    height: auto;
-    max-width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+    .modal-catatan {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 800px;
+      height: auto;
+      max-width: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-  .modal-catatan p{
-    font-weight: 500;
-    font-size: 16px;
-  }
+    .modal-catatan p {
+      font-weight: 500;
+      font-size: 16px;
+    }
 
-  .modal-catatan span{
-    font-weight: 100;
-  }
+    .modal-catatan span {
+      font-weight: 100;
+    }
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-</style>
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    .header-verif {
+      position: relative;
+      /* Membuat posisi relative untuk elemen child */
+      display: flex;
+      align-items: center;
+      padding-right: 40px;
+      /* Tambahkan ruang untuk tombol */
+    }
+
+    .header-verif h3 {
+      margin-bottom: 20px;
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .header-verif .close-btn {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .header-verif .close-btn:hover {
+      color: red;
+    }
+
+    #student-info {
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  </style>

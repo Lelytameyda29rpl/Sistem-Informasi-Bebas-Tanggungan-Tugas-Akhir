@@ -155,7 +155,7 @@ class VerifikatorModel extends Model {
 
     public function getDocument($jenisDokumen, $nim) {
         $stmt = $this->conn->prepare("
-            SELECT v.path, d.nama_dokumen, d.id_dokumen, v.nim
+            SELECT v.path, d.nama_dokumen, d.id_dokumen, v.nim, v.status_verifikasi
             FROM Verifikasi v
             JOIN Mahasiswa m ON v.nim = m.nim
             JOIN Dokumen d ON v.id_dokumen = d.id_dokumen
@@ -200,10 +200,11 @@ class VerifikatorModel extends Model {
     
     
 
-    public function updateStatusVerifikasiDisetujui($id_dokumen, $nim, $status) {
+    public function updateStatusVerifikasiDisetujui($id_dokumen, $nim, $status, $catatan) {
         $sql = "
             UPDATE Verifikasi
-            SET status_verifikasi = :status
+            SET status_verifikasi = :status, 
+                catatan = :catatan
             WHERE id_dokumen = :idDokumen
             AND nim = :nim
         ";
@@ -213,6 +214,11 @@ class VerifikatorModel extends Model {
             $stmt->bindParam(':idDokumen', $id_dokumen, PDO::PARAM_INT);
             $stmt->bindParam(':nim', $nim, PDO::PARAM_INT);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            if ($catatan === null) {
+                $stmt->bindValue(':catatan', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindParam(':catatan', $catatan);
+            }
     
             // Debug query
             error_log("Executing query: $sql with id_dokumen=$id_dokumen, nim=$nim, status=$status");

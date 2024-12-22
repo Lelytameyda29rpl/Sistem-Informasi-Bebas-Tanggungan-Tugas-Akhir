@@ -35,8 +35,7 @@ class adminJurusanController
     
                     // Pilih operasi berdasarkan status
                     if ($status === 'Disetujui') {
-                        $result = $this->model->updateStatusVerifikasiDisetujui($idDokumen, $nim, $status);
-                        $catatan = 'NULL';
+                        $result = $this->model->updateStatusVerifikasiDisetujui($idDokumen, $nim, $status,null);
                     } elseif ($status === 'Tidak Disetujui') {
                         if (!$catatan) {
                             echo json_encode(['success' => false, 'message' => 'Catatan diperlukan untuk status Tidak Disetujui']);
