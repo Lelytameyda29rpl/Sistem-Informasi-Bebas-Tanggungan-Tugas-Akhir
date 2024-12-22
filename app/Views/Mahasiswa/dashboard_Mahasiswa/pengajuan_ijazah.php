@@ -43,17 +43,18 @@ foreach ($statusPusat as $row) {
                                     <button class="btn btn-warning" disabled>Menunggu</button>
                                 <?php elseif ($row['status_verifikasi'] === 'Tidak Disetujui'): ?>
                                     <button class="btn btn-danger" disabled>Gagal Disetujui</button>
-                                    <p class="text-danger mt-2">
+                                    <!-- <p class="text-danger mt-2">
                                         <?= htmlspecialchars($row['catatan'] ?? 'Tidak ada catatan.') ?>
-                                    </p>
+                                    </p> -->
                                 <?php else: ?>
                                     <button class="btn btn-secondary" disabled>Belum Diunggah</button>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <!-- Tombol Lihat Catatan -->
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#catatanModal-<?= $row['catatan'] ?>"><i class="bi bi-pencil"></i></button>
-                                
+                                <?php if ($row['status_verifikasi'] === 'Tidak Disetujui'): ?>
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#catatanModal-<?= str_replace(' ', '-', $row['catatan']) ?>"><i class="bi bi-pencil"></i></button>
+                                <?php endif; ?>
                                 <!-- Tombol Upload Ulang -->
                                 <?php if ($row['status_verifikasi'] === 'Tidak Disetujui' || $row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal-<?= $row['id_dokumen'] ?>"><i class="bi bi-upload"></i></button>
@@ -95,7 +96,7 @@ foreach ($statusPusat as $row) {
 <!-- Modal Catatan -->
 <?php foreach ($statusPusat as $row): ?>
     <!-- Modal Catatan -->
-    <div class="modal fade" id="catatanModal-<?= $row['catatan'] ?>" tabindex="-1" aria-labelledby="catatanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="catatanModal-<?= str_replace(' ', '-', $row['catatan']) ?>" tabindex="-1" aria-labelledby="catatanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
