@@ -37,15 +37,15 @@ foreach ($statusJurusan as $row) {
                             <th scope="row"><?= htmlspecialchars($row['nama_dokumen']) ?></th>
                             <td><?= $row['tgl_upload'] ? date('d-m-Y', strtotime($row['tgl_upload'])) : '-' ?></td>
                             <td>
-                                <?php if ($row['status_verifikasi'] === 'Sudah Diverifikasi'): ?>
+                                <?php if ($row['status_verifikasi'] === 'Disetujui'): ?>
                                     <button class="btn btn-success" disabled>Sudah Diverifikasi</button>
                                 <?php elseif ($row['status_verifikasi'] === 'Menunggu Diverifikasi'): ?>
                                     <button class="btn btn-warning" disabled>Menunggu</button>
-                                <?php elseif ($row['status_verifikasi'] === 'Gagal Diverifikasi'): ?>
+                                <?php elseif ($row['status_verifikasi'] === 'Tidak Disetujui'): ?>
                                     <button class="btn btn-danger" disabled>Gagal</button>
-                                    <p class="text-danger mt-2">
+                                    <!-- <p class="text-danger mt-2">
                                         <?= htmlspecialchars($row['catatan'] ?? 'Tidak ada catatan.') ?>
-                                    </p>
+                                    </p> -->
                                 <?php else: ?>
                                     <button class="btn btn-secondary" disabled>Belum Diunggah</button>
                                 <?php endif; ?>
