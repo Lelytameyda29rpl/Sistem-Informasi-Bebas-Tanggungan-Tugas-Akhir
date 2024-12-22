@@ -744,6 +744,10 @@
 
             // Debug: Tampilkan pesan di console untuk memastikan fungsi dipanggil
             console.log("Verif-container telah ditutup.");
+
+            setTimeout(() => {
+                location.reload(); // Reload halaman
+            });
         }
     </script>
 </body>
