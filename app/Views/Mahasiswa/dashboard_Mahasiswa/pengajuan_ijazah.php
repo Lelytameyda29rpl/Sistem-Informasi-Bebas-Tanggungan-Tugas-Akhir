@@ -2,7 +2,7 @@
 // Cek apakah semua dokumen sudah diverifikasi
 $allVerified = true;
 foreach ($statusPusat as $row) {
-    if ($row['status_verifikasi'] !== 'Sudah Diverifikasi') {
+    if ($row['status_verifikasi'] !== 'Disetujui') {
         $allVerified = false;
         break;
     }
