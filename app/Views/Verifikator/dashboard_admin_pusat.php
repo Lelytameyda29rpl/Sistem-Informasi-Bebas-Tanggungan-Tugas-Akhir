@@ -288,149 +288,149 @@
 
     <!-- tabel verifikasi dokumen mahasiswa -->
     <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const rows = Array.from(document.querySelectorAll('#table-body tr'));
-    const paginationContainer = document.getElementById('pagination');
-    const searchInput = document.getElementById('search-input');
-    const filterAngkatan = document.getElementById('filter-angkatan');
-    const filterProdi = document.getElementById('filter-prodi');
-    const filterKelas = document.getElementById('filter-kelas');
+        document.addEventListener('DOMContentLoaded', function () {
+            const rows = Array.from(document.querySelectorAll('#table-body tr'));
+            const paginationContainer = document.getElementById('pagination');
+            const searchInput = document.getElementById('search-input');
+            const filterAngkatan = document.getElementById('filter-angkatan');
+            const filterProdi = document.getElementById('filter-prodi');
+            const filterKelas = document.getElementById('filter-kelas');
 
-    let currentPage = 1;
-    const rowsPerPage = 10;
+            let currentPage = 1;
+            const rowsPerPage = 10;
 
-    function displayRows(filteredRows) {
-      const startIndex = (currentPage - 1) * rowsPerPage;
-      const endIndex = startIndex + rowsPerPage;
-      rows.forEach(row => row.style.display = 'none');
-      filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
+            function displayRows(filteredRows) {
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+                rows.forEach(row => row.style.display = 'none');
+                filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
 
-      if (filteredRows.length === 0) {
-        const noDataRow = document.createElement('tr');
-        noDataRow.innerHTML = '<td colspan="9" class="text-center table-secondary">Data tidak ditemukan.</td>';
-        document.getElementById('table-body').appendChild(noDataRow);
-      }
-    }
+                if (filteredRows.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.innerHTML = '<td colspan="9" class="text-center table-secondary">Data tidak ditemukan.</td>';
+                    document.getElementById('table-body').appendChild(noDataRow);
+                }
+            }
 
-    function updatePagination(filteredRows) {
-      const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-      paginationContainer.innerHTML = '';
+            function updatePagination(filteredRows) {
+                const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+                paginationContainer.innerHTML = '';
 
-      if (totalPages > 1) {
-        if (currentPage > 1) {
-          const prev = document.createElement('li');
-          prev.className = 'page-item';
-          prev.innerHTML = '<a class="page-link" href="#">&laquo;</a>';
-          prev.addEventListener('click', () => {
-            currentPage -= 1;
-            displayRows(filteredRows);
-            updatePagination(filteredRows);
-          });
-          paginationContainer.appendChild(prev);
-        }
+                if (totalPages > 1) {
+                    if (currentPage > 1) {
+                        const prev = document.createElement('li');
+                        prev.className = 'page-item';
+                        prev.innerHTML = '<a class="page-link" href="#">&laquo;</a>';
+                        prev.addEventListener('click', () => {
+                            currentPage -= 1;
+                            displayRows(filteredRows);
+                            updatePagination(filteredRows);
+                        });
+                        paginationContainer.appendChild(prev);
+                    }
 
-        for (let i = 1; i <= totalPages; i++) {
-          const pageItem = document.createElement('li');
-          pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
-          pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-          pageItem.addEventListener('click', () => {
-            currentPage = i;
-            displayRows(filteredRows);
-            updatePagination(filteredRows);
-          });
-          paginationContainer.appendChild(pageItem);
-        }
+                    for (let i = 1; i <= totalPages; i++) {
+                        const pageItem = document.createElement('li');
+                        pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                        pageItem.addEventListener('click', () => {
+                            currentPage = i;
+                            displayRows(filteredRows);
+                            updatePagination(filteredRows);
+                        });
+                        paginationContainer.appendChild(pageItem);
+                    }
 
-        if (currentPage < totalPages) {
-          const next = document.createElement('li');
-          next.className = 'page-item';
-          next.innerHTML = '<a class="page-link" href="#">&raquo;</a>';
-          next.addEventListener('click', () => {
-            currentPage += 1;
-            displayRows(filteredRows);
-            updatePagination(filteredRows);
-          });
-          paginationContainer.appendChild(next);
-        }
-      }
-    }
+                    if (currentPage < totalPages) {
+                        const next = document.createElement('li');
+                        next.className = 'page-item';
+                        next.innerHTML = '<a class="page-link" href="#">&raquo;</a>';
+                        next.addEventListener('click', () => {
+                            currentPage += 1;
+                            displayRows(filteredRows);
+                            updatePagination(filteredRows);
+                        });
+                        paginationContainer.appendChild(next);
+                    }
+                }
+            }
 
-    function searchTable() {
-      const query = searchInput.value.toLowerCase();
-      const filteredRows = rows.filter(row => {
-        const nim = row.cells[0].textContent.toLowerCase();
-        const nama = row.cells[1].textContent.toLowerCase();
-        return nim.includes(query) || nama.includes(query);
-      });
-      clearNoDataMessage();
-      currentPage = 1;
-      displayRows(filteredRows);
-      updatePagination(filteredRows);
-    }
+            function searchTable() {
+                const query = searchInput.value.toLowerCase();
+                const filteredRows = rows.filter(row => {
+                    const nim = row.cells[0].textContent.toLowerCase();
+                    const nama = row.cells[1].textContent.toLowerCase();
+                    return nim.includes(query) || nama.includes(query);
+                });
+                clearNoDataMessage();
+                currentPage = 1;
+                displayRows(filteredRows);
+                updatePagination(filteredRows);
+            }
 
-    function filterTable() {
-      const angkatanValue = filterAngkatan.value;
-      const prodiValue = filterProdi.value;
-      const kelasValue = filterKelas.value;
+            function filterTable() {
+                const angkatanValue = filterAngkatan.value;
+                const prodiValue = filterProdi.value;
+                const kelasValue = filterKelas.value;
 
-      const filteredRows = rows.filter(row => {
-        const angkatan = row.cells[4].textContent;
-        const prodi = row.cells[2].textContent;
-        const kelas = row.cells[5].textContent;
+                const filteredRows = rows.filter(row => {
+                    const angkatan = row.cells[4].textContent;
+                    const prodi = row.cells[2].textContent;
+                    const kelas = row.cells[5].textContent;
 
-        return (
-          (angkatanValue === '' || angkatan === angkatanValue) &&
-          (prodiValue === '' || prodi === prodiValue) &&
-          (kelasValue === '' || kelas === kelasValue)
-        );
-      });
-      clearNoDataMessage();
-      currentPage = 1;
-      displayRows(filteredRows);
-      updatePagination(filteredRows);
-    }
+                    return (
+                        (angkatanValue === '' || angkatan === angkatanValue) &&
+                        (prodiValue === '' || prodi === prodiValue) &&
+                        (kelasValue === '' || kelas === kelasValue)
+                    );
+                });
+                clearNoDataMessage();
+                currentPage = 1;
+                displayRows(filteredRows);
+                updatePagination(filteredRows);
+            }
 
-    function populateKelasOptions() {
-      const prodiValue = filterProdi.value;
-      const kelasOptions = new Set();
+            function populateKelasOptions() {
+                const prodiValue = filterProdi.value;
+                const kelasOptions = new Set();
 
-      rows.forEach(row => {
-        if (row.cells[2].textContent === prodiValue || prodiValue === '') {
-          kelasOptions.add(row.cells[5].textContent);
-        }
-      });
+                rows.forEach(row => {
+                    if (row.cells[2].textContent === prodiValue || prodiValue === '') {
+                        kelasOptions.add(row.cells[5].textContent);
+                    }
+                });
 
-      filterKelas.innerHTML = '<option value="">Pilih Kelas</option>';
-      kelasOptions.forEach(kelas => {
-        const option = document.createElement('option');
-        option.value = kelas;
-        option.textContent = kelas;
-        filterKelas.appendChild(option);
-      });
+                filterKelas.innerHTML = '<option value="">Pilih Kelas</option>';
+                kelasOptions.forEach(kelas => {
+                    const option = document.createElement('option');
+                    option.value = kelas;
+                    option.textContent = kelas;
+                    filterKelas.appendChild(option);
+                });
 
-      filterKelas.disabled = kelasOptions.size === 0;
-    }
+                filterKelas.disabled = kelasOptions.size === 0;
+            }
 
-    function clearNoDataMessage() {
-      const noDataRow = document.querySelector('#table-body tr td.text-center');
-      if (noDataRow && noDataRow.textContent === 'Data tidak ditemukan.') {
-        noDataRow.parentElement.remove();
-      }
-    }
+            function clearNoDataMessage() {
+                const noDataRow = document.querySelector('#table-body tr td.text-center');
+                if (noDataRow && noDataRow.textContent === 'Data tidak ditemukan.') {
+                    noDataRow.parentElement.remove();
+                }
+            }
 
-    searchInput.addEventListener('input', searchTable);
-    filterAngkatan.addEventListener('change', filterTable);
-    filterProdi.addEventListener('change', () => {
-      populateKelasOptions();
-      filterTable();
-    });
-    filterKelas.addEventListener('change', filterTable);
+            searchInput.addEventListener('input', searchTable);
+            filterAngkatan.addEventListener('change', filterTable);
+            filterProdi.addEventListener('change', () => {
+                populateKelasOptions();
+                filterTable();
+            });
+            filterKelas.addEventListener('change', filterTable);
 
-    // Initial display
-    displayRows(rows);
-    updatePagination(rows);
-  });
-</script>
+            // Initial display
+            displayRows(rows);
+            updatePagination(rows);
+        });
+    </script>
     <!-- container verifikasi dokumen mahasiswa -->
     <script>
         // Fungsi untuk menampilkan informasi mahasiswa
@@ -567,22 +567,29 @@
 
                             if (data.length > 0) {
                                 data.forEach(dokumen => {
+                                    let rowClass = "";
+                                    if (dokumen.status_verifikasi === "Disetujui") {
+                                        rowClass = "table-success";
+                                    } else if (dokumen.status_verifikasi === "Tidak Disetujui") {
+                                        rowClass = "table-danger";
+                                    }
                                     tableBodyDok.innerHTML += `
-                                    <tr>
+                                    <tr data-id-dokumen="${dokumen.id_dokumen}" class="${rowClass}">
                                         <td>${dokumen.nama_dokumen}</td>
                                         <td>
-                                            <button class="btn btn-success btn-sm" onclick="approveDocument(this)"
-                                            style="font-weight: 500;">
-                                            Setujui
-                                            </button>
+                                            <button class="btn btn-success btn-sm"
+                                                data-id-dokumen="${dokumen.id_dokumen}"
+                                                data-nim="${dokumen.nim}"
+                                                onclick="approveDocument(this)"
+                                                style="font-weight: 500;">Setujui</button>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm"
-                                            data-nama-dokumen="${dokumen.nama_dokumen}"
-                                            onclick="openCatatanModal(this)" 
-                                            style="font-weight: 500;">
-                                            Tolak
-                                            </button>
+                                                data-id-dokumen="${dokumen.id_dokumen}"
+                                                data-nim="${dokumen.nim}"
+                                                data-nama-dokumen = "${dokumen.nama_dokumen}"
+                                                onclick="openCatatanModal(this)" 
+                                                style="font-weight: 500;">Tolak</button>
                                         </td>
                                         <td>
                                             <a href="../app/Views/Mahasiswa/${dokumen.path}" 
@@ -609,19 +616,59 @@
 
         // Function untuk "Setujui"
         function approveDocument(button) {
-            const row = button.closest('tr');
-            row.classList.add('table-success');
-            row.classList.remove('table-danger');
+            const idDokumen = button.getAttribute('data-id-dokumen');
+            const nim = button.getAttribute('data-nim');
+            const status = "Disetujui";
+
+            console.log("Data yang dikirim:", { id_dokumen: idDokumen, nim: nim, status });
+
+            fetch("index.php?controller=adminJurusan&action=dashboard", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim, status: status })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tampilkan alert sukses
+                        alert(data.message || "Status berhasil diperbarui.");
+
+                        // Ubah warna baris menjadi hijau
+                        const row = button.closest('tr'); // Ambil baris tabel tempat tombol berada
+                        row.classList.add('table-success'); // Tambahkan kelas 'table-success' untuk warna hijau
+                        row.classList.remove('table-danger'); // Hapus kelas warna merah jika ada
+
+                        // Nonaktifkan tombol setelah berhasil disetujui
+                        button.disabled = true;
+                        button.textContent = "Disetujui"; // Ganti teks tombol
+                        button.style.cursor = "not-allowed"; // Ganti cursor menjadi tidak aktif
+                    } else {
+                        // Tampilkan alert gagal
+                        alert("Gagal memperbarui status: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan pada server.");
+                });
         }
 
         // Function untuk "Tolak"
         function openCatatanModal(button) {
-            const row = button.closest('tr');
-            row.classList.add('table-danger');
-            row.classList.remove('table-success');
-            const dokumenNama = button.getAttribute('data-nama-dokumen');
+            const idDokumen = button.getAttribute('data-id-dokumen');
+            const nim = button.getAttribute('data-nim');
+            const dokumenNama = button.getAttribute('data-nama-dokumen') || "Dokumen Tidak Diketahui";
+
+            // Atur atribut modal untuk digunakan pada submit
+            const modalContainer = document.getElementById('catatan-container');
+            modalContainer.setAttribute('data-id-dokumen', idDokumen);
+            modalContainer.setAttribute('data-nim', nim);
+
+            // Tampilkan nama dokumen di modal
             document.getElementById('dokumen-nama').textContent = dokumenNama;
-            document.getElementById('catatan-container').style.display = 'flex';
+
+            // Tampilkan modal
+            modalContainer.style.display = 'flex';
         }
 
         function closeCatatanModal() {
@@ -634,21 +681,70 @@
 
 
         function submitCatatan() {
-            var catatan = document.getElementById('catatan-textarea').value;
-            if (catatan.trim() === '') {
+            const catatan = document.getElementById('catatan-textarea').value.trim();
+            if (!catatan) {
                 alert('Catatan tidak boleh kosong!');
                 return;
             }
 
-            console.log('Catatan dikirim:', catatan);
-            closeCatatanModal();
+            // Ambil id_dokumen dan nim dari modal
+            const modalContainer = document.getElementById('catatan-container');
+            const idDokumen = modalContainer.getAttribute('data-id-dokumen');
+            const nim = modalContainer.getAttribute('data-nim');
+            const status = "Tidak Disetujui";
+
+            // Debug data yang dikirim
+            console.log("Data yang dikirim:", { id_dokumen: idDokumen, nim: nim, status, catatan });
+
+            // Disable tombol Kirim untuk mencegah duplikasi
+            const sendButton = modalContainer.querySelector('button.btn-warning');
+            sendButton.disabled = true;
+
+            // Kirim data ke server menggunakan Fetch API
+            fetch("index.php?controller=adminJurusan&action=dashboard", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_dokumen: idDokumen, nim: nim, status: status, catatan: catatan })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sendButton.disabled = false; // Re-enable tombol Kirim
+                    if (data.success) {
+                        alert(data.message || "Dokumen berhasil ditolak.");
+
+                        // Ubah warna baris menjadi merah
+                        const row = document.querySelector(`tr[data-id-dokumen="${idDokumen}"]`);
+                        if (row) {
+                            row.classList.add('table-danger'); // Tambahkan warna merah
+                            row.classList.remove('table-success'); // Hapus warna hijau jika ada
+
+                            // Nonaktifkan tombol setelah berhasil
+                            const approveButton = row.querySelector('.btn-success');
+                            const rejectButton = row.querySelector('.btn-danger');
+                            if (approveButton) approveButton.disabled = true;
+                            if (rejectButton) rejectButton.disabled = true;
+                        }
+                    } else {
+                        alert("Gagal memperbarui status: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    sendButton.disabled = false; // Re-enable tombol Kirim
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan pada server.");
+                });
+
+            closeCatatanModal(); // Tutup modal setelah mengirim catatan
         }
 
-        document.querySelectorAll('.btn-danger').forEach(function (button) {
-            button.addEventListener('click', function () {
-                openCatatanModal(button);
-            });
-        });
+        function saveAndClose() {
+            // Cukup sembunyikan verif-container
+            const verifContainer = document.getElementById("verif-container");
+            verifContainer.style.display = "none";
+
+            // Debug: Tampilkan pesan di console untuk memastikan fungsi dipanggil
+            console.log("Verif-container telah ditutup.");
+        }
     </script>
 </body>
 

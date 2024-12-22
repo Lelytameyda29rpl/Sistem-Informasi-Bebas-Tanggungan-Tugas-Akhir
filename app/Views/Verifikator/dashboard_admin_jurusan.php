@@ -584,9 +584,6 @@
                                         </td>
                                     </tr>
                                 `;
-                                    if (dokumen.status_verifikasi === "Disetujui") {
-
-                                    }
                                 });
                             } else {
                                 tableBodyDok.innerHTML = `

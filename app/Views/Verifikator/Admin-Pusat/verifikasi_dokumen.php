@@ -89,7 +89,13 @@
     </div>
   </div>
   <div class="verif-container" id="verif-container" style="display: none;">
-    <h3>Dokumen Tanggungan TA Mahasiswa</h3>
+    <div class="header-verif">
+      <h3>Dokumen Tanggungan TA Mahasiswa
+        <button class="close-btn" onclick="saveAndClose()" aria-label="Close">
+          <i class="bi bi-x-square"></i>
+        </button>
+      </h3>
+    </div>
     <div id="student-info" class="student-info">
       <!-- Informasi mahasiswa akan diisi oleh JavaScript -->
     </div>
@@ -116,11 +122,12 @@
     <div class="modal-catatan">
       <h3 style="margin-bottom: 10px;">Catatan</h3>
       <textarea id="catatan-textarea" class="form-control" rows="9"
-      placeholder="Masukkan catatan di sini..."></textarea>
+        placeholder="Masukkan catatan di sini..."></textarea>
       <p style="margin-top: 10px;">Jenis Dokumen: <span id="dokumen-nama"></span></p>
       <div class="d-flex justify-content-end mt-3">
         <button class="btn btn-secondary " onclick="closeCatatanModal()">Batal</button>
-        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send" style="margin-right: 5px;"></i>Kirim</button>
+        <button class="btn btn-warning ms-2" onclick="submitCatatan()"><i class="bi bi-send"
+            style="margin-right: 5px;"></i>Kirim</button>
       </div>
     </div>
   </div>
@@ -151,12 +158,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
-  .modal-catatan p{
+  .modal-catatan p {
     font-weight: 500;
     font-size: 16px;
   }
 
-  .modal-catatan span{
+  .modal-catatan span {
     font-weight: 100;
   }
 
@@ -168,5 +175,43 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
+  }
+
+  .header-verif {
+    position: relative;
+    /* Membuat posisi relative untuk elemen child */
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    /* Tambahkan ruang untuk tombol */
+  }
+
+  .header-verif h3 {
+    margin-bottom: 20px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .header-verif .close-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+  }
+
+  .header-verif .close-btn:hover {
+    color: red;
+  }
+
+  #student-info {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
   }
 </style>
