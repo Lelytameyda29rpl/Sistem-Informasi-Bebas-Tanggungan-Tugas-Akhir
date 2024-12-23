@@ -130,7 +130,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         }
         .content {
             margin-left: 300px;
-            transition: margin-left 0.3s;
+            transition: margin-left 0.3s ease-in-out;
             padding-top: 70px;
         }
         .content .welcome {
@@ -158,20 +158,42 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         }
         .content .cards {
             display: flex;
+            flex-wrap: wrap; 
             gap: 22px;
-            margin-bottom: 20px;
-            margin: 32px 50px;
+            margin: 0 10px;
             
         }
         .content .card {
             background-color: #FFAF01;
-            width: 507px;
-            height: 170px;
+            flex: 1 1 calc(33.33% - 22px); 
+            min-width: 200px; 
+            height: auto;
             padding: 20px;
             border-radius: 10px;
-            flex: 1;
             text-align: center;
             box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h3, .card h2, .card p {
+            margin: 0;
+            padding: 5px;
+        }
+
+        .bg-warning {
+            background-color: #FFC107 !important; /* Warna kuning cerah */
+        }
+
+        .text-white {
+            color: #fff !important;
         }
         .content .card h2 {
             margin: 0;
@@ -182,11 +204,15 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
             font-size: 16px;
         }
         .summary {
-            margin: 32px 50px;
+            margin: 20px;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.25);
+        }
+        .table-responsive {
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch; 
         }
         .summary h3 {
             margin-bottom: 15px;
@@ -197,13 +223,13 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
         .summary-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
-            text-align: left;
+            border: 1px solid #ddd;
         }
         .summary-table th,
         .summary-table td {
-            padding: 10px 15px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            white-space: nowrap; 
         }
         .summary-table th {
             background-color: #f7f7f7;
@@ -259,6 +285,9 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                 width: 100%;
                 left: 0;
             }
+            .card {
+                margin: 10px 0;
+    }
         }
   </style>
  </head>
@@ -310,65 +339,74 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
             Anda berada di halaman admin
             </p>
         </div>
-        <div class="cards">
-            <div class="card">
+        <div class="container">
+    <div class="row text-center">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card bg-warning text-white p-3">
                 <h3>Data Mahasiswa</h3>
                 <h2><?= htmlspecialchars($mahasiswaCount ?? 0); ?></h2>
                 <p>Data Mahasiswa Saat Ini</p>
             </div>
-            <div class="card">
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card bg-warning text-white p-3">
                 <h3>Data Verifikator</h3>
                 <h2><?= htmlspecialchars($verifikatorCount ?? 0); ?></h2>
                 <p>Data Verifikator Saat Ini</p>
             </div>
-            <div class="card">
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card bg-warning text-white p-3">
                 <h3>Data Admin</h3>
                 <h2><?= htmlspecialchars($adminCount ?? 0); ?></h2>
                 <p>Data Admin Saat Ini</p>
             </div>
         </div>
-        <div class="summary">
-            <h3>Ringkasan Manajemen Dokumen</h3>
-            <table class="summary-table">
-                <thead>
-                    <tr>
-                        <th>Nama Mahasiswa</th>
-                        <th>Tanggal Upload</th>
-                        <th>Status</th>
-                        <th>Nama Dokumen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                            <?php if (!empty($documents)): ?>
-                                <?php foreach ($documents as $doc): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
-                                        <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
-                                        <td>
-                                        <span class="status 
-                                            <?php 
-                                                if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
-                                                echo 'status-rejected';
-                                                } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
-                                                echo 'status-approved';
-                                                } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi'|| $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
-                                                echo 'status-waited';
-                                                }
-                                            ?>">
-                                            <?= htmlspecialchars($doc['status_verifikasi']); ?>
-                                        </span>
-                                        </td>
-                                        </td>
-                                        <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr><td colspan="4">Tidak ada data dokumen</td></tr>
-                            <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
     </div>
+</div>
+
+<div class="summary">
+    <h3>Ringkasan Manajemen Dokumen</h3>
+    <div class="table-responsive">
+        <table class="table summary-table">
+            <thead>
+                <tr>
+                    <th>Nama Mahasiswa</th>
+                    <th>Tanggal Upload</th>
+                    <th>Status Verifikasi</th>
+                    <th>Nama Dokumen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($documents)): ?>
+                    <?php foreach ($documents as $doc): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($doc['nama_mahasiswa']); ?></td>
+                            <td><?= htmlspecialchars($doc['tgl_upload']); ?></td>
+                            <td>
+                                <span class="status 
+                                    <?php 
+                                        if ($doc['status_verifikasi'] === 'Belum Diunggah' || $doc['status_verifikasi'] === 'Tidak Disetujui') {
+                                            echo 'status-rejected';
+                                        } elseif ($doc['status_verifikasi'] === 'Sudah Diunggah' || $doc['status_verifikasi'] === 'Disetujui') {
+                                            echo 'status-approved';
+                                        } elseif ($doc['status_verifikasi'] === 'Menunggu DIverifikasi' || $doc['status_verifikasi'] === 'Menunggu Diverifikasi') {
+                                            echo 'status-waited';
+                                        }
+                                    ?>">
+                                    <?= htmlspecialchars($doc['status_verifikasi']); ?>
+                                </span>
+                            </td>
+                            <td><?= htmlspecialchars($doc['nama_dokumen']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="4">Tidak ada data dokumen</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
   <div class="footer">
    ©2024 Jurusan Teknologi Informasi
@@ -388,9 +426,9 @@ document.querySelector('.toggle-sidebar i').addEventListener('click', function()
                 footer.style.left = '0';
             } else {
                 content.style.marginLeft = sidebar.offsetWidth + 'px';
-                // content.style.marginLeft = '250px';
-                footer.style.width = 'calc(100% - 250px)';
-                footer.style.left = '250px';
+                // content.style.marginLeft = '300px';
+                footer.style.width = 'calc(100% - 300px)';
+                footer.style.left = '300px';
             }
         });
   </script>

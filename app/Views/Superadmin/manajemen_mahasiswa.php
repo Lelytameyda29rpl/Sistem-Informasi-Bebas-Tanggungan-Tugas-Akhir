@@ -445,7 +445,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
                     <!-- Kolom pencarian -->
                     <div class="d-flex justify-content-start mt-3">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari data mahasiswa..." style="width: 250px; max-width: 100%;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari data Mahasiswa..." style="width: 250px; max-width: 100%;">
                     </div>
                 </div>
                 <div style="overflow-x: auto;">
@@ -640,6 +640,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                 <td><?= $verifikator['no_telp'] ?></td>
                                 <td><?= $verifikator['email'] ?></td>
                                 <td>
+                                    <div class="btn-container">
                                     <button class="btn btn-edit"
                                         data-toggle="modal"
                                         data-target="#modalEdit<?= $verifikator['id_user'] ?>">
@@ -705,6 +706,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                         data-target="#modalHapus<?= $verifikator['id_user'] ?>">
                                         Hapus
                                     </button>
+                                    </div>
                                     <!-- Modal Hapus -->
                                     <div class="modal fade modal-hapus" id="modalHapus<?= $verifikator['id_user'] ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -771,6 +773,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                 <td><?= $admin['no_telp'] ?></td>
                                 <td><?= $admin['email'] ?></td>
                                 <td>
+                                    <div class="btn-container">
                                     <button class="btn btn-edit"
                                         data-toggle="modal"
                                         data-target="#modalEdit<?= $admin['id_user'] ?>">
@@ -829,6 +832,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
                                         data-target="#modalHapus<?= $admin['id_user'] ?>">
                                         Hapus
                                     </button>
+                                    </div>
                                     <!-- Modal Hapus -->
                                     <div class="modal fade modal-hapus" id="modalHapus<?= $admin['id_user'] ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
                                         <div class="modal-dialog">

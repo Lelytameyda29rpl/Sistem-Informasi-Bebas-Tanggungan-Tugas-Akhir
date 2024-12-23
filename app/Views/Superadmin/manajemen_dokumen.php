@@ -322,7 +322,7 @@ $role_user = $_SESSION['role_user'] ?? 'Tidak diketahui';
 
                         <!-- Kolom pencarian -->
                         <div class="d-flex justify-content-start mt-3">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Cari data mahasiswa..." style="width: 250px; max-width: 100%;">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari data Mahasiswa..." style="width: 250px; max-width: 100%;">
                         </div>
                     </div>
                     <div style="overflow-x: auto;">
